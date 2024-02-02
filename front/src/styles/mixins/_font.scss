@@ -1,0 +1,6 @@
+@mixin font($fs: $body1, $fw: $regular, $fc: $main-font, $ff: $noto-sans) {
+  font-size: $fs;
+  font-weight: $fw;
+  color: $fc;
+  font-family: $ff;
+}
