@@ -1,4 +1,4 @@
-@mixin font($fs: $body1, $fw: $regular, $fc: $main-font, $ff: $noto-sans) {
+@mixin font($fs: $body2, $fw: $regular, $fc: $gray, $ff: $noto-sans) {
   font-size: $fs;
   font-weight: $fw;
   color: $fc;

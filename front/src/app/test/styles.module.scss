@@ -1,4 +1,3 @@
 .test {
-  font-family: $noto-serif;
-  font-size: $h1;
+  @include font($fs: $caption);
 }
