@@ -1,0 +1,12 @@
+.button {
+  @include font($fs: $body2, $fw: $regular, $fc: $gray, $ff: $noto-sans);
+  background-color: $white;
+  border-radius: $radius-button;
+  line-height: 1.2rem;
+  padding: 0.4rem 0.5rem 0.4rem 0.5rem;
+
+  &.active {
+    color: $white;
+    background-color: $gray;
+  }
+}
