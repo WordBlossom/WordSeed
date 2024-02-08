@@ -12,7 +12,7 @@ export default function FeedListNavbar() {
   return (
     <IncludeMenu>
       <div className={styles["right-icon-container"]}>
-        <FilterButton setIsHidden={setIsHidden} />
+        <FilterButton isHidden={isHidden} setIsHidden={setIsHidden} />
         <CreateFeedButton />
       </div>
       <div
