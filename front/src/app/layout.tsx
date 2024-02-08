@@ -8,7 +8,7 @@ import "@/styles/base/base.scss";
 // 표시 영역은 웹페이지가 그려지는 영역입니다. 표시 영역의 전체 가시 영역은 화면을 완전히 확대했을 때의 화면 크기와 일치하지만 표시 영역마다 웹페이지에 사용 가능하게 만드는 고유 픽셀 크기가 있습니다. 예를 들어 기기 화면의 실제 너비가 480픽셀일 수 있으면 표시 영역의 너비는 800픽셀이 될 수 있습니다. 따라서 800픽셀 너비로 디자인된 웹페이지는 표시 영역 스케일이 1.0일 때 화면에 완전히 표시됩니다. Chrome을 포함하여 Android의 대부분 웹브라우저는 기본적으로 표시 영역을 큰 크기로 설정합니다(약 980픽셀 너비에서는 '와이드 표시 영역 모드'라고 함). 또한 기본적으로 대다수 브라우저는 전체 표시 영역 너비('개요 모드'라고 함)를 표시하기 위해 가능한 한 축소됩니다.
 export const viewport: Viewport = {
   height: "device-height",
-  width: "device-height",
+  width: "device-width",
   initialScale: 1.0,
   minimumScale: 1.0,
   maximumScale: 1.0,
