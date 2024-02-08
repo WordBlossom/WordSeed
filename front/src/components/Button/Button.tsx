@@ -12,7 +12,7 @@ import styles from "./Button.module.scss";
 // setIsActive : store 상태 변화 함수
 type ButtonProps = {
   content: string | React.ReactNode;
-  isActive?: boolean | undefined;
+  isActive?: boolean;
   setIsActive?: () => void;
 };
 export default function Button({
