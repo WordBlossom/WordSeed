@@ -1,0 +1,36 @@
+.navbar {
+  @include flex;
+  width: 100%;
+  height: 4rem;
+  padding: 1rem 1.5rem;
+  justify-content: space-between;
+}
+
+.right-icon-container {
+  @include flex;
+  gap: 1rem;
+}
+
+.date {
+  @include font($fs: $body3, $fw: $regular, $fc: $gray, $ff: $noto-serif);
+}
+
+.title {
+  @include font($fs: $body2, $fw: $regular, $fc: $gray, $ff: $noto-sans);
+  line-height: 1.2rem;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.wordseed {
+  @include font($fs: $body1, $fw: $regular, $fc: $black, $ff: $noto-serif);
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.blank {
+  width: 24px;
+  height: 24px;
+}
