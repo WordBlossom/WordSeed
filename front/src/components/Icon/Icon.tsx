@@ -23,6 +23,7 @@ type IconType =
   | "alignLeft"
   | "beforeFollow"
   | "afterFollow"
+  | "upDownArrow"
   | "comment";
 
 interface Props {

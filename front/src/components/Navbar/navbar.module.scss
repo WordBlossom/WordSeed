@@ -11,6 +11,22 @@
   gap: 1rem;
 }
 
+.filter-container {
+  $wd: calc(100dvw - 3rem);
+  position: absolute;
+  width: $wd;
+  top: 4rem;
+  left: calc($wd / 2);
+  transform: translate(-50%, 0%);
+  margin: 0 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 0.1px $gray solid;
+
+  &.hidden {
+    visibility: hidden;
+  }
+}
+
 .date {
   @include font($fs: $body3, $fw: $regular, $fc: $gray, $ff: $noto-serif);
 }
@@ -26,6 +42,7 @@
 .wordseed {
   @include font($fs: $body1, $fw: $regular, $fc: $black, $ff: $noto-serif);
   position: absolute;
+  top: 0.75rem;
   left: 50%;
   transform: translate(-50%, 0%);
 }

@@ -5,6 +5,7 @@ type SearchFilterState = {
   paint: boolean;
   video: boolean;
   music: boolean;
+  isLatest: boolean;
 };
 
 type SearchFilterStateStore = {
@@ -17,6 +18,7 @@ export const initialState: SearchFilterState = {
   paint: true,
   video: true,
   music: true,
+  isLatest: true,
 };
 
 const useSearchFilterStateStore = create<
@@ -26,6 +28,7 @@ const useSearchFilterStateStore = create<
   paint: true,
   video: true,
   music: true,
+  isLatest: true,
   setIsActive: (clickedType: keyof SearchFilterState) =>
     set((state) => ({ [clickedType]: !state[clickedType] })),
   clearSearchFilterState: () => set(initialState),
