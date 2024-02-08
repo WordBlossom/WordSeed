@@ -4,6 +4,10 @@
   border-radius: $radius-button;
   line-height: 1.2rem;
 
+  &.text {
+    padding: 0.3rem 0.5rem;
+  }
+
   &.active {
     color: $white;
     background-color: $gray;

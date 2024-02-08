@@ -10,8 +10,8 @@ type ButtonProps = {
 export default function Button({ content, isActive, onClick }: ButtonProps) {
   return (
     <button
-      className={`${styles.button} ${
-        typeof content === "string" && isActive ? styles.active : ""
+      className={`${styles.button} ${isActive ? styles.active : ""} ${
+        typeof content === "string" ? styles.text : ""
       }`}
       onClick={onClick}
     >
