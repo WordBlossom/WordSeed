@@ -1,6 +1,8 @@
 import Image from "next/image";
 
 type IconType =
+  | "menu"
+  | "search"
   | "add"
   | "addFile"
   | "artist"
