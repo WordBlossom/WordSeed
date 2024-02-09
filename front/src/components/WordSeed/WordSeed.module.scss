@@ -3,9 +3,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 60px;
+  height: 70px;
   background-color: $light-gray;
   border-radius: $radius-button;
+  background-color: white;
+  text-decoration: none;
+  margin-bottom: 1rem;
+
+  &:active {
+    background-color: $light-gray;
+  }
 }
 
 .date {

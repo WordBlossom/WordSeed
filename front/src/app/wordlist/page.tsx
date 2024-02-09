@@ -53,7 +53,6 @@ const datas: {
     wordSeed: "한 걸음",
   },
 ];
-
 export default function Wordlist() {
   return (
     <>
