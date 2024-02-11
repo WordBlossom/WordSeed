@@ -1,0 +1,32 @@
+.filter-wrapper {
+  @include flex;
+  height: 1.8rem;
+  justify-content: space-between;
+}
+
+.switch-container {
+  @include flex;
+  width: fit-content;
+  height: 100%;
+  overflow: hidden;
+}
+
+.switch-wrapper {
+  @include flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  transform: translateY(-0.95rem);
+  transition: transform 0.3192s 0.1s cubic-bezier(0.04, 0.04, 0.12, 0.96);
+
+  &.latest {
+    transform: translateY(0.75rem);
+    transition: transform 0.3192s 0.1s cubic-bezier(0.04, 0.04, 0.12, 0.96);
+  }
+
+  span {
+    @include font($fs: $body2, $fw: $regular, $fc: $gray, $ff: $noto-sans);
+    text-align: end;
+  }
+}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { Viewport } from "next";
 import { AppProvider } from "@/providers/app";
 import { fontClassName } from "@/styles/fonts";
+import Navbar from "@/components/Navbar/navbar";
 import "@/styles/base/base.scss";
 
 // 표시 영역 속성 지정
@@ -28,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={fontClassName}>
       <body>
+        <Navbar />
         <AppProvider>{children}</AppProvider>
       </body>
     </html>

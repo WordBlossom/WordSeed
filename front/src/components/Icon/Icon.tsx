@@ -1,6 +1,8 @@
 import Image from "next/image";
 
 type IconType =
+  | "menu"
+  | "search"
   | "add"
   | "addFile"
   | "artist"
@@ -21,6 +23,7 @@ type IconType =
   | "alignLeft"
   | "beforeFollow"
   | "afterFollow"
+  | "upDownArrow"
   | "comment";
 
 interface Props {
