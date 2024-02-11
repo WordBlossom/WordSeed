@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Icon } from "..";
 import styles from "./ArtistCard.module.scss";
 import Link from "next/link";
+import { formatNumber } from "@/utils/numberUtils";
 
 type ArtistCardProps = {
   userId: number;
@@ -36,8 +37,8 @@ export default function ArtistCard({
         <div className={styles["top-left-section"]}>
           <p className={styles["user-name"]}>{userName}</p>
           <div className={styles.follow}>
-            <p>구독 {recvCnt}</p>
-            <p>관심작가 {sendCnt}</p>
+            <p>구독 {formatNumber(recvCnt)}</p>
+            <p>관심작가 {formatNumber(sendCnt)}</p>
           </div>
         </div>
         <div className={styles.icon} onClick={followHandler}>
