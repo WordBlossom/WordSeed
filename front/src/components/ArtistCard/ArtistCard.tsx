@@ -30,10 +30,8 @@ export default function ArtistCard({
     // 여기에 팔로우 팔로워 api 로직
   };
 
-  const profileUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/profile/${userId}`;
-
   return (
-    <Link className={styles.container} href={profileUrl}>
+    <Link className={styles.container} href={`/profile/${userId}`}>
       <div className={styles["top-section"]}>
         <div className={styles["top-left-section"]}>
           <p className={styles["user-name"]}>{userName}</p>
