@@ -14,8 +14,8 @@ export default function SortSwitch() {
           isLatest ? styles["latest"] : ""
         }`}
       >
-        <span>최신순</span>
-        <span>좋아요순</span>
+        <div>최신순</div>
+        <div>좋아요순</div>
       </div>
       <Icon iconName="upDownArrow" size={12} />
     </div>
