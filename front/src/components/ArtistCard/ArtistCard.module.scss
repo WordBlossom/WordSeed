@@ -9,6 +9,10 @@
   text-decoration: none;
   margin-bottom: 1rem;
   padding: 1rem 1.5rem;
+
+  &:active:not(:has(.icon:active)) {
+    background-color: $light-gray;
+  }
 }
 
 .top-section {
