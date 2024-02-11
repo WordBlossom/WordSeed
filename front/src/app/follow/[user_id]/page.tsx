@@ -6,8 +6,8 @@ const fakeDatas = [
     userName: "초아누리",
     userDecp:
       "모든순간을 사랑하며 살고싶은 사람 모든순간을 사랑하며 살고싶은 사람",
-    recvCnt: 10,
-    sendCnt: 200,
+    recvCnt: 1500,
+    sendCnt: 232122131,
     subscribed: true,
   },
   {
