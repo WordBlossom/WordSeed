@@ -6,10 +6,10 @@ import Link from "next/link";
 
 type ArtistCardProps = {
   userId: number;
-  recvCnt: number;
-  sendCnt: number;
   userName: string;
   userDecp: string;
+  recvCnt: number;
+  sendCnt: number;
   subscribed: boolean;
 };
 
@@ -30,13 +30,10 @@ export default function ArtistCard({
     // 여기에 팔로우 팔로워 api 로직
   };
 
-  const url = process.env.BASE_URL;
+  const profileUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/profile/${userId}`;
 
   return (
-    <Link
-      className={styles.container}
-      href={`http://192.168.219.101:3000/profile/${userId}`}
-    >
+    <Link className={styles.container} href={profileUrl}>
       <div className={styles["top-section"]}>
         <div className={styles["top-left-section"]}>
           <p className={styles["user-name"]}>{userName}</p>
