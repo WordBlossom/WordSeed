@@ -1,10 +1,13 @@
 import Button from "./Button";
 import Icon from "@/components/Icon/Icon";
-
+import { useRouter } from "next/navigation";
 export default function BackButton() {
-  const onClick = () => {
-    // 뒤로 가기
-  };
+  const router = useRouter();
 
-  return <Button content={<Icon iconName="leftArrow" />} onClick={onClick} />;
+  return (
+    <Button
+      content={<Icon iconName="leftArrow" />}
+      onClick={() => router.back()}
+    />
+  );
 }
