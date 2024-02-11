@@ -15,13 +15,11 @@ export default function FeedListNavbar() {
         <FilterButton isHidden={isHidden} setIsHidden={setIsHidden} />
         <CreateFeedButton />
       </div>
-      <div
-        className={`${styles["filter-container"]} ${
-          isHidden ? styles["hidden"] : ""
-        }`}
-      >
-        <Filter />
-      </div>
+      {!isHidden && (
+        <div className={styles["filter-container"]}>
+          <Filter />
+        </div>
+      )}
     </IncludeMenu>
   );
 }

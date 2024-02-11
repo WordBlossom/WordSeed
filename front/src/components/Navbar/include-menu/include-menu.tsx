@@ -1,5 +1,3 @@
-"use client";
-
 import MenuButton from "@/components/Button/menu-button";
 import styles from "../navbar.module.scss";
 

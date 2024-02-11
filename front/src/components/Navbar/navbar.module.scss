@@ -1,9 +1,12 @@
 .navbar {
   @include flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
   width: 100%;
   height: 4rem;
   padding: 1rem 1.5rem;
-  justify-content: space-between;
+  background-color: $white;
 }
 
 .right-icon-container {
@@ -12,19 +15,15 @@
 }
 
 .filter-container {
-  $wd: calc(100dvw - 3rem);
   position: absolute;
-  width: $wd;
+  width: 100%;
   top: 4rem;
-  left: calc($wd / 2);
+  left: calc(100% / 2);
   transform: translate(-50%, 0%);
-  margin: 0 1.5rem;
+  padding: 0 1.5rem;
   padding-bottom: 0.5rem;
   border-bottom: 0.1px $gray solid;
-
-  &.hidden {
-    visibility: hidden;
-  }
+  background-color: $white;
 }
 
 .date {

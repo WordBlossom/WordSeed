@@ -4,8 +4,6 @@ import useSearchFilterStateStore from "@/stores/search-filter";
 
 export default function SortSwitch() {
   const { isLatest, setIsActive } = useSearchFilterStateStore();
-  const a = useSearchFilterStateStore();
-  console.log(a);
   return (
     <div
       className={styles["switch-container"]}
