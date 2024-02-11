@@ -31,7 +31,7 @@ interface Props {
   size?: number;
 }
 
-export default function Icon({ iconName, size = 24 }: Props) {
+export default function Icon({ iconName, size = 35 }: Props) {
   const iconPath = `/icons/${iconName}.svg`;
   return (
     <Image

@@ -68,3 +68,8 @@ address {
   margin: 0;
   font: inherit;
 }
+
+a,
+img {
+  -webkit-user-drag: none;
+}

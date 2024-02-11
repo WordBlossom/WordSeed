@@ -1,13 +1,14 @@
 .filter-wrapper {
   @include flex;
-  height: 1.8rem;
+  width: 100%;
+  height: 100%;
   justify-content: space-between;
 }
 
 .switch-container {
   @include flex;
   width: fit-content;
-  height: 100%;
+  height: 2.38rem;
   overflow: hidden;
 }
 
@@ -15,18 +16,19 @@
   @include flex;
   position: relative;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: end;
-  transform: translateY(-0.95rem);
+  justify-content: flex-start;
+  align-items: flex-end;
+  transform: translateY(-1.2rem);
   transition: transform 0.3192s 0.1s cubic-bezier(0.04, 0.04, 0.12, 0.96);
 
   &.latest {
-    transform: translateY(0.75rem);
+    transform: translateY(1.1rem);
     transition: transform 0.3192s 0.1s cubic-bezier(0.04, 0.04, 0.12, 0.96);
   }
 
-  span {
-    @include font($fs: $body2, $fw: $regular, $fc: $gray, $ff: $noto-sans);
-    text-align: end;
+  div {
+    @include font($fs: $body1, $fw: $regular, $fc: $gray, $ff: $noto-sans);
+    display: flex;
+    align-items: center;
   }
 }
