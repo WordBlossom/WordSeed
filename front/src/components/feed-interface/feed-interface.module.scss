@@ -1,0 +1,43 @@
+.feed-interface-container {
+  @include flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: 5rem * 1.75;
+  padding: 0 2rem 1rem 2rem;
+}
+
+.interface-top-container {
+  @include flex;
+  flex-grow: 1;
+  padding-left: 1rem;
+}
+.create-date {
+  @include font($fs: $body2, $fw: $regular, $fc: $gray, $ff: $noto-sans);
+}
+
+.interface-bottom-container {
+  @include flex;
+  justify-content: space-between;
+  flex-grow: 2;
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-top: 0.1px $gray solid;
+}
+
+.artist-wrapper {
+  @include flex;
+  gap: 1rem;
+}
+
+.artist-name {
+  @include font($fs: $body1, $fw: $regular, $fc: $gray, $ff: $noto-sans);
+}
+
+.button-wrapper {
+  @include flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
