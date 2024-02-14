@@ -33,11 +33,11 @@
 }
 
 .artist-name {
-  @include font($fs: $body1, $fw: $regular, $fc: $gray, $ff: $noto-sans);
+  @include font($fs: $h3, $fw: $regular, $fc: $gray, $ff: $noto-sans);
 }
 
 .button-wrapper {
   @include flex;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 2rem;
 }
