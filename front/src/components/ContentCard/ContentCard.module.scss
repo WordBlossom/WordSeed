@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @include shadow-drop1();
+}
+
+.title {
+  @include font($body1, $bold, $black, $noto-serif);
+}
+
+.content {
+  @include font($body2, $regular, $black, $noto-serif);
+  white-space: pre-line;
+  text-align: center;
+}
+
+.start {
+  text-align: start;
+}
+
+.center {
+  text-align: center;
+}
+
+.end {
+  text-align: end;
+}

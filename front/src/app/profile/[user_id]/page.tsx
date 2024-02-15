@@ -2,6 +2,7 @@
 
 import { useInView } from "react-intersection-observer";
 import useFilterButtonHiddenStateStore from "@/stores/profile-filter";
+import { ContentCard } from "@/components";
 
 export default function Profile({ params }: { params: { user_id: string } }) {
   const userId = params.user_id;
@@ -40,6 +41,7 @@ export default function Profile({ params }: { params: { user_id: string } }) {
       <div>good morning</div>
       <div>good morning</div>
       <div ref={ref}>Target</div>
+      <ContentCard />
       <div>good morning</div>
       <div>good morning</div>
       <div>good morning</div>
