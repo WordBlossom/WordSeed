@@ -3,6 +3,7 @@
 import { useInView } from "react-intersection-observer";
 import useFilterButtonHiddenStateStore from "@/stores/profile-filter";
 import { ContentCardList } from "@/components";
+import Header from "../_component/Header";
 
 interface ContentCardProps {
   postId: number;
@@ -13,6 +14,16 @@ interface ContentCardProps {
   userName: string;
   url: string;
 }
+
+const userData = {
+  userId: 1,
+  userName: "초아누리",
+  userDecp:
+    "모든순간을 사랑하며 살고싶은 사람 모든순간을 사랑하며 살고싶은 사람",
+  recvCnt: 12000001,
+  sendCnt: 2100,
+  subscribed: false,
+};
 
 const datas: ContentCardProps[] = [
   {
@@ -40,7 +51,16 @@ const datas: ContentCardProps[] = [
     content: "어설프어설프게 시작한 소개는\n 그렇게 나를 인식시킨다.",
     textAlign: "center",
     userName: "초아누리",
-    url: "https://player.vimeo.com/video/910530517?title=0&portrait=0&byline=0&muted=1",
+    url: "https://i2.ruliweb.net/ori/24/02/17/18db50369258db08.mp4",
+  },
+  {
+    postId: 4,
+    type: "video",
+    title: "자기 소개",
+    content: "어설프어설프게 시작한 소개는\n 그렇게 나를 인식시킨다.",
+    textAlign: "center",
+    userName: "초아누리",
+    url: "https://i2.ruliweb.net/ori/24/02/15/18dab844b3f484f84.mp4",
   },
 ];
 
@@ -56,32 +76,60 @@ export default function Profile({ params }: { params: { user_id: string } }) {
 
   return (
     <>
-      <h1>Profile</h1>
+      <Header {...userData} />
       <h2>userId : {userId}</h2>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
-      <div>good morning</div>
       <div ref={ref}>Target</div>
       <ContentCardList datas={datas} />
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
+      <div>page</div>
     </>
   );
 }
