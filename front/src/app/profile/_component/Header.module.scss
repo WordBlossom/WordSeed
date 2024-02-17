@@ -1,0 +1,66 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 1.5rem;
+  gap: 1rem;
+
+  border-bottom: solid 0.2rem $gray;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1rem;
+}
+
+.top-left-section {
+  display: flex;
+}
+
+.nickname {
+  @include font($h1, $regular, $black, $noto-serif);
+}
+
+.link {
+  padding-top: 0.2rem;
+}
+
+.button {
+  padding-top: 0.2rem;
+}
+
+.top-right-section {
+  display: flex;
+  gap: 1.5rem;
+  text-decoration: none;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      @include font($body2, $regular, $black);
+    }
+  }
+}
+
+.bottom-section {
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: 1rem;
+  }
+}
+
+.description-name {
+  @include font($body3, $regular, $gray);
+}
+
+.description {
+  @include font($body2, $regular, $black, $noto-serif);
+  white-space: pre-line;
+}

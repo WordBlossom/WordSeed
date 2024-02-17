@@ -24,7 +24,8 @@ type IconType =
   | "beforeFollow"
   | "afterFollow"
   | "upDownArrow"
-  | "comment";
+  | "comment"
+  | "profileEdit";
 
 interface Props {
   iconName: IconType;
