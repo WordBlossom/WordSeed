@@ -7,3 +7,4 @@ export { default as Button } from "./Button/Button";
 export { default as Navbar } from "./Navbar/Navbar";
 export { default as filter } from "./filter/filter";
 export { default as ContentCard } from "./ContentCard/ContentCard";
+export { default as ContentCardList } from "./ContentCardList/ContentCardList";

@@ -1,22 +1,45 @@
-"use client";
-import { useState } from "react";
 import styles from "./ContentCard.module.scss";
+import Image from "next/image";
+import Link from "next/link";
 
-interface ContentCardProps<T> {
-  type: "text" | "img" | "video" | "sound"
+interface ContentCardProps {
+  postId: number;
+  type: "text" | "img" | "video" | "sound";
   title: string;
   content: string;
   textAlign: "start" | "center" | "end";
   userName: string;
+  url: string;
 }
 
-export default function ContentCard() {
-  const content = "어설프어설프게 시작한 소개는\n 그렇게 나를 인식시킨다.";
+export default function ContentCard({
+  postId,
+  type,
+  title,
+  content,
+  textAlign,
+  userName,
+  url,
+}: ContentCardProps) {
+  const contentClassName = `${styles.content} ${styles[textAlign]}`;
+
   return (
-    <main className={styles.container}>
-      <p className={styles.title}>자기 소개</p>
-      <p className={styles.content}>{content}</p>
-      <p className={styles.artist}>초아누리</p>
-    </main>
+    <Link className={styles.link} href={`/feed/${postId}`}>
+      {type === "text" ? (
+        <main className={styles.container}>
+          <div className={styles.wrapper}>
+            <p className={styles.title}>{title}</p>
+            <p className={contentClassName}>{content}</p>
+            <p className={styles.artist}>{userName}</p>
+          </div>
+        </main>
+      ) : (
+        <main className={styles.media}>
+          {type === "img" && <Image src={url} alt="12" fill />}
+          {type === "video" && <iframe src={url} width={"100%"} />}
+          {type === "sound" && <audio src={url} controls />}
+        </main>
+      )}
+    </Link>
   );
 }
