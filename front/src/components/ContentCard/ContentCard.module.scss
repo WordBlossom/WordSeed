@@ -16,12 +16,19 @@
 .media {
   @include shadow-drop1();
   position: relative;
+  background-color: $light-gray;
 
   // 이미지 크기임시 값
-  height: 30rem;
+  min-height: 20rem;
 
   // z-index 는 임시
   z-index: -1;
+
+  video {
+    width: 100%;
+    height: 30rem;
+    object-fit: cover;
+  }
 }
 
 .wrapper {

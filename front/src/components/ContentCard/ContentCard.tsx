@@ -1,6 +1,10 @@
+"use client";
+
 import styles from "./ContentCard.module.scss";
 import Image from "next/image";
 import Link from "next/link";
+import { useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 interface ContentCardProps {
   postId: number;
@@ -22,9 +26,21 @@ export default function ContentCard({
   url,
 }: ContentCardProps) {
   const contentClassName = `${styles.content} ${styles[textAlign]}`;
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [ref] = useInView({
+    threshold: 0.8,
+    onChange(inView) {
+      if (inView) {
+        videoRef?.current?.play();
+      } else {
+        videoRef?.current?.pause();
+      }
+    },
+    initialInView: true,
+  });
 
   return (
-    <Link className={styles.link} href={`/feed/${postId}`}>
+    <Link className={styles.link} href={`/feed/${postId}`} ref={ref}>
       {type === "text" ? (
         <main className={styles.container}>
           <div className={styles.wrapper}>
@@ -36,7 +52,17 @@ export default function ContentCard({
       ) : (
         <main className={styles.media}>
           {type === "img" && <Image src={url} alt="12" fill />}
-          {type === "video" && <iframe src={url} width={"100%"} />}
+          {type === "video" && (
+            <video
+              ref={videoRef}
+              muted
+              width={"100%"}
+              poster="placeholder.png"
+              preload={"none"}
+              playsInline
+              src={url}
+            ></video>
+          )}
           {type === "sound" && <audio src={url} controls />}
         </main>
       )}
