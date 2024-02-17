@@ -1,0 +1,58 @@
+.link {
+  text-decoration: none;
+}
+
+.container {
+  @include shadow-drop1();
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+
+  min-height: 20rem;
+}
+
+.media {
+  @include shadow-drop1();
+  position: relative;
+
+  // 이미지 크기임시 값
+  height: 30rem;
+
+  // z-index 는 임시
+  z-index: -1;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.title {
+  @include font($body1, $bold, $black, $noto-serif);
+}
+
+.content {
+  @include font($body2, $regular, $black, $noto-serif);
+  white-space: pre-line;
+}
+
+.start {
+  text-align: start;
+}
+
+.center {
+  text-align: center;
+}
+
+.end {
+  text-align: end;
+}
+
+.artist {
+  @include font($body2, $regular, $black, $noto-sans);
+}
