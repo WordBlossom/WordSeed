@@ -27,6 +27,6 @@ public class UserInfo extends BaseTimeEntity{
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Informable informable;
-    @OneToOne(mappedBy = "userInfo", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "userInfo")
     private User user;
 }
