@@ -2,7 +2,7 @@
 
 import { useInView } from "react-intersection-observer";
 import useFilterButtonHiddenStateStore from "@/stores/profile-filter";
-import { ContentCardList } from "@/components";
+import { Button, ContentCardList } from "@/components";
 import Header from "../_component/Header";
 
 interface ContentCardProps {
@@ -78,6 +78,8 @@ export default function Profile({ params }: { params: { user_id: string } }) {
     <>
       <Header {...userData} />
       <h2>userId : {userId}</h2>
+      <Button type="wide" content="버튼" onClick={() => {}} />
+      <Button type="wide" content="활성화" onClick={() => {}} isActive />
       <div ref={ref}>Target</div>
       <ContentCardList datas={datas} />
       <div>page</div>
