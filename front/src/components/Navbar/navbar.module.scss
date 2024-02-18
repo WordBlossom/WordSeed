@@ -9,6 +9,7 @@
   padding: 1rem 1.5rem;
   background-color: $white;
   z-index: 1;
+  touch-action: none;
 }
 
 .right-icon-container {
