@@ -1,6 +1,6 @@
 package com.spring.wordseed.dto.out;
 
-import com.spring.wordseed.dto.tool.WordDTO;
+import com.spring.wordseed.dto.tool.UserDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +11,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ReadWordsByQueryOutDTO {
-    List<WordDTO> words;
+public class ReadUserOutDTOs {
+    List<UserDTO> users;
     @Builder
-    public ReadWordsByQueryOutDTO(List<WordDTO> words) {
-        this.words = words;
+    public ReadUserOutDTOs(List<UserDTO> users) {
+        this.users = users;
     }
 }

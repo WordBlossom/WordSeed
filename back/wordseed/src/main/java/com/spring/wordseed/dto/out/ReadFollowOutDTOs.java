@@ -11,10 +11,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ReadFollowsByQueryOutDTO {
+public class ReadFollowOutDTOs {
     List<UserDTO> users;
     @Builder
-    public ReadFollowsByQueryOutDTO(List<UserDTO> users) {
+    public ReadFollowOutDTOs(List<UserDTO> users) {
         this.users = users;
     }
 }

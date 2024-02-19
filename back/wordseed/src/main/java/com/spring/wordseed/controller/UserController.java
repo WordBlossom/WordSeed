@@ -59,9 +59,9 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<ReadUsersByQueryOutDTO> readUsersByQuery(@RequestParam("query") String query,
-                                                                   @RequestParam("page") long page,
-                                                                   @RequestParam("size") long size) throws Exception {
+    public ResponseEntity<ReadUserOutDTOs> readUsers(@RequestParam("query") String query,
+                                                     @RequestParam("page") long page,
+                                                     @RequestParam("size") long size) throws Exception {
         List<UserDTO> users = new ArrayList<>();
         for(int i=1;i<=size;i++) {
             UserDTO user = UserDTO.builder()
@@ -74,8 +74,8 @@ public class UserController {
                     .build();
             users.add(user);
         }
-        ReadUsersByQueryOutDTO readUsersByQueryOutDTO = new ReadUsersByQueryOutDTO(users);
-        return ResponseEntity.status(HttpStatus.OK).body(readUsersByQueryOutDTO);
+        ReadUserOutDTOs readUserOutDTOs = new ReadUserOutDTOs(users);
+        return ResponseEntity.status(HttpStatus.OK).body(readUserOutDTOs);
     }
 
     @GetMapping("/info")
@@ -91,10 +91,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(readUserInfoByIdOutDTO);
     }
     @GetMapping("/follow") // out dto에 구독자인지 관심작가인지 enum 만들어서 보내주는 것도 좋을듯?
-    public ResponseEntity<ReadFollowsByQueryOutDTO> readFollowsByQuery(@RequestParam("userId") long userId,
-                                                                       @RequestParam("type") FollowType type,
-                                                                       @RequestParam("page") long page,
-                                                                       @RequestParam("size") long size) throws Exception {
+    public ResponseEntity<ReadFollowOutDTOs> readFollows(@RequestParam("userId") long userId,
+                                                         @RequestParam("type") FollowType type,
+                                                         @RequestParam("page") long page,
+                                                         @RequestParam("size") long size) throws Exception {
         List<UserDTO> users = new ArrayList<>();
         for(int i=1;i<=size;i++) {
             UserDTO user = UserDTO.builder()
@@ -107,8 +107,8 @@ public class UserController {
                     .build();
             users.add(user);
         }
-        ReadFollowsByQueryOutDTO readFollowsByQueryOutDTO = new ReadFollowsByQueryOutDTO(users);
-        return ResponseEntity.status(HttpStatus.OK).body(readFollowsByQueryOutDTO);
+        ReadFollowOutDTOs readFollowOutDTOs = new ReadFollowOutDTOs(users);
+        return ResponseEntity.status(HttpStatus.OK).body(readFollowOutDTOs);
     }
 
     @PostMapping("follow")

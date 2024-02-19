@@ -1,7 +1,7 @@
 package com.spring.wordseed.controller;
 
 import com.spring.wordseed.dto.out.ReadWordByDateOutDTO;
-import com.spring.wordseed.dto.out.ReadWordsByQueryOutDTO;
+import com.spring.wordseed.dto.out.ReadWordOutDTOs;
 import com.spring.wordseed.dto.tool.WordDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -29,9 +29,9 @@ public class WordController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<ReadWordsByQueryOutDTO> readWordsByQuery(@RequestParam("query") String query,
-                                                                   @RequestParam("page") long page,
-                                                                   @RequestParam("size") long size) throws Exception {
+    public ResponseEntity<ReadWordOutDTOs> readWords(@RequestParam("query") String query,
+                                                     @RequestParam("page") long page,
+                                                     @RequestParam("size") long size) throws Exception {
         List<WordDTO> words = new ArrayList<>();
         for(int i=1;i<=size;i++) {
             WordDTO word = WordDTO.builder()
@@ -41,7 +41,7 @@ public class WordController {
                     .build();
             words.add(word);
         }
-        ReadWordsByQueryOutDTO readWordsByQueryOutDTO = new ReadWordsByQueryOutDTO(words);
-        return ResponseEntity.status(HttpStatus.OK).body(readWordsByQueryOutDTO);
+        ReadWordOutDTOs readWordOutDTOs = new ReadWordOutDTOs(words);
+        return ResponseEntity.status(HttpStatus.OK).body(readWordOutDTOs);
     }
 }
