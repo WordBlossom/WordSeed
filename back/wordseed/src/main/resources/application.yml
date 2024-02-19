@@ -1,6 +1,6 @@
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
+    driver-class-name: ${yml.file.datasource.driver}
     username: ${yml.file.datasource.username}
     url: ${yml.file.datasource.url}
     password: ${yml.file.datasource.password}
