@@ -1,0 +1,75 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: $white;
+  font-family: var(--font-noto-sans-kr);
+  margin: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  // 버튼 터치시 나오는 음영 삭제
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  // 링크 롱 터치 막기
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: 100%;
+  background-color: $white;
+}
+
+button {
+  padding: 0;
+  outline: none;
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+}
+
+input {
+  padding: 0;
+  margin: 0;
+  outline: none;
+  border: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+em,
+figure,
+figcaption,
+address {
+  padding: 0;
+  margin: 0;
+  font: inherit;
+}
+
+a,
+img {
+  -webkit-user-drag: none;
+}

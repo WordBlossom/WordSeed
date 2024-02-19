@@ -1,0 +1,7 @@
+@mixin font($fs: $body2, $fw: $regular, $fc: $gray, $ff: $noto-sans) {
+  font-size: $fs;
+  line-height: $fs * 1.7;
+  font-weight: $fw;
+  color: $fc;
+  font-family: $ff;
+}

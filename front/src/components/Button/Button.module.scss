@@ -1,0 +1,17 @@
+.button {
+  @include font($fs: $body1, $fw: $regular, $fc: $gray, $ff: $noto-sans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $white;
+  border-radius: $radius-button;
+
+  &.text {
+    padding: 0.3rem 0.7rem;
+  }
+
+  &.active {
+    color: $white;
+    background-color: $gray;
+  }
+}

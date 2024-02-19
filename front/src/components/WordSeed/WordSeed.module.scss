@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  background-color: $light-gray;
+  border-radius: $radius-button;
+  background-color: white;
+  text-decoration: none;
+  margin-bottom: 1rem;
+
+  &:active {
+    background-color: $light-gray;
+  }
+}
+
+.date {
+  @include font($fs: $body3, $fw: $regular, $fc: $gray, $ff: $noto-sans);
+}
+
+.wordSeed {
+  @include font($fs: $h3, $fw: $regular, $fc: $black, $ff: $noto-serif);
+}
