@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DeleteBookMarkInDTO {
+public class DeletePostInDTO {
     private Long postId;
 }

@@ -2,17 +2,13 @@ package com.spring.wordseed.controller;
 
 import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
-import com.spring.wordseed.enu.PostAlign;
-import com.spring.wordseed.enu.PostSort;
-import com.spring.wordseed.enu.PostType;
-import com.spring.wordseed.enu.PostVisibility;
+import com.spring.wordseed.enu.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -21,7 +17,6 @@ public class PostController {
     // 작품 업로드
     @PostMapping("")
     public ResponseEntity<CreatePostOutDTO> createPost(@RequestBody CreatePostInDTO createPostInDTO) throws Exception {
-        // add request for userId
         CreatePostOutDTO createPostOutDTO = CreatePostOutDTO.builder()
                 .postId(1L)
                 .url(createPostInDTO.getUrl())
@@ -35,21 +30,23 @@ public class PostController {
                 .wordId(1L)
                 .word("random")
                 .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now()).build();
+                .updatedAt(LocalDateTime.now())
+                .build();
 
         return ResponseEntity.status(HttpStatus.OK).body(createPostOutDTO);
     }
     // 작품 목록 조회
     @GetMapping("/list")
-    public ResponseEntity<List<ReadPostOutDTO>> readPosts(@RequestParam String postType,
-                                                          @RequestParam String mark,
-                                                          @RequestParam Long userId,
-                                                          @RequestParam PostSort sort,
-                                                          @RequestParam String query,
-                                                          @RequestParam Long page,
-                                                          @RequestParam Long size) throws Exception {
-
-        List<ReadPostOutDTO> readPostOutDTOs = new ArrayList<>();
+    public ResponseEntity<ReadPostOutDTOs> readPosts(@RequestParam("postType") String postType,
+                                                          @RequestParam("mark") String mark,
+                                                          @RequestParam("userId") Long userId,
+                                                          @RequestParam("sort") PostSort sort,
+                                                          @RequestParam("query") String query,
+                                                          @RequestParam("page") Long page,
+                                                          @RequestParam("size") Long size) throws Exception {
+        ReadPostOutDTOs readPostOutDTOs = ReadPostOutDTOs.builder()
+                .posts(new ArrayList<>())
+                .build();
 
         for (int i = 0; i < 5; i++) {
             ReadPostOutDTO readPostOutDTO = ReadPostOutDTO.builder()
@@ -69,14 +66,14 @@ public class PostController {
                     .updatedAt(LocalDateTime.now())
                     .build();
 
-            readPostOutDTOs.add(readPostOutDTO);
+            readPostOutDTOs.getPosts().add(readPostOutDTO);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
     }
     // 작품 상세 조회
     @GetMapping("/detail")
-    public ResponseEntity<ReadPostByPostIdOutDTO> readPostByPostId(@RequestParam Long postId) throws Exception {
+    public ResponseEntity<ReadPostByPostIdOutDTO> readPostByPostId(@RequestParam("postId") Long postId) throws Exception {
         ReadPostByPostIdOutDTO readPostByPostIdOutDTO = ReadPostByPostIdOutDTO.builder()
                 .postId(1L)
                 .userId(1L)
@@ -126,15 +123,16 @@ public class PostController {
     }
     // 작품 삭제
     @DeleteMapping("")
-    public ResponseEntity<HttpStatus> deletePost(@RequestParam Long postId) throws Exception {
+    public ResponseEntity<HttpStatus> deletePost(@RequestBody DeletePostInDTO deletePostInDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     // 댓글 조회
     @GetMapping("/comment")
-    public ResponseEntity<List<ReadCommentOutDTO>> readComments(@RequestParam Long postId,
-                                                                @RequestParam Long page,
-                                                                @RequestParam Long size) {
-        List<ReadCommentOutDTO> readCommentOutDTOs = new ArrayList<>();
+    public ResponseEntity<ReadCommentOutDTOs> readComments(@RequestParam("postId") Long postId,
+                                                                @RequestParam("page") Long page,
+                                                                @RequestParam("size") Long size) {
+        ReadCommentOutDTOs readCommentOutDTOs = ReadCommentOutDTOs.builder()
+                .comments(new ArrayList<>()).build();
 
         for (int i = 0; i < 5; i++) {
             ReadCommentOutDTO readCommentOutDTO = ReadCommentOutDTO.builder()
@@ -145,7 +143,7 @@ public class PostController {
                     .createdAt(LocalDateTime.now())
                     .build();
 
-            readCommentOutDTOs.add(readCommentOutDTO);
+            readCommentOutDTOs.getComments().add(readCommentOutDTO);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(readCommentOutDTOs);

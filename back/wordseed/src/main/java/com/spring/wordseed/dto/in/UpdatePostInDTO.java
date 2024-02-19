@@ -5,11 +5,12 @@ import com.spring.wordseed.enu.PostType;
 import com.spring.wordseed.enu.PostVisibility;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
+@NoArgsConstructor
 public class UpdatePostInDTO {
     private Long postId;
     private String content;
