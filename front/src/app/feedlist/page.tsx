@@ -45,7 +45,6 @@ export default function Feedlist() {
   const [isTransition, setIsTransition] = useState<boolean>(false);
 
   const attatchListener = (swiper: any) => {
-    console.log("onTransitionStart");
     // 이전 content 스크롤 최상단으로 이동
     if (swiper.previousIndex !== undefined) {
       const prevIndex = swiper.previousIndex;
