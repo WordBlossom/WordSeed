@@ -3,6 +3,8 @@ package com.spring.wordseed.controller;
 import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.enu.*;
+import com.spring.wordseed.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,24 +16,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/post")
 public class PostController {
+    private final PostService postService;
+    @Autowired
+    PostController(PostService postService){
+        this.postService = postService;
+    }
     // 작품 업로드
     @PostMapping("")
     public ResponseEntity<CreatePostOutDTO> createPost(@RequestBody CreatePostInDTO createPostInDTO) throws Exception {
-        CreatePostOutDTO createPostOutDTO = CreatePostOutDTO.builder()
-                .postId(1L)
-                .url(createPostInDTO.getUrl())
-                .postType(createPostInDTO.getPostType())
-                .postAlign(createPostInDTO.getPostAlign())
-                .postVisibility(createPostInDTO.getPostVisibility())
-                .likedCnt(0L)
-                .bookMarkCnt(0L)
-                .commentCnt(0L)
-                .userId(1L)
-                .wordId(1L)
-                .word("random")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        CreatePostOutDTO createPostOutDTO = postService.createPost(createPostInDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(createPostOutDTO);
     }
