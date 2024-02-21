@@ -9,4 +9,9 @@ export { default as filter } from "./filter/filter";
 export { default as ContentCard } from "./ContentCard/ContentCard";
 export { default as ContentCardList } from "./ContentCardList/ContentCardList";
 export { default as FeedInterface } from "./feed-interface/feed-interface";
+<<<<<<< HEAD
 export { default as Comment } from "./comment/comment";
+=======
+export { default as ToggleButton } from "./ToggleButton/ToggleButton";
+export * from "./filter";
+>>>>>>> front

@@ -2,8 +2,8 @@
 
 import { useInView } from "react-intersection-observer";
 import useFilterButtonHiddenStateStore from "@/stores/profile-filter";
-import { Button, ContentCardList } from "@/components";
-import Header from "../_component/Header";
+import { ContentCardList } from "@/components";
+import { Header, ProfileCategory } from "../_component";
 
 interface ContentCardProps {
   postId: number;
@@ -65,9 +65,9 @@ const datas: ContentCardProps[] = [
 ];
 
 export default function Profile({ params }: { params: { user_id: string } }) {
-  const userId = params.user_id;
   const { setIsFilterButtonHidden } = useFilterButtonHiddenStateStore();
   const [ref] = useInView({
+    threshold: 1,
     onChange: (inView) => {
       setIsFilterButtonHidden(inView);
     },
@@ -77,61 +77,8 @@ export default function Profile({ params }: { params: { user_id: string } }) {
   return (
     <>
       <Header {...userData} />
-      <h2>userId : {userId}</h2>
-      <Button type="wide" content="버튼" onClick={() => {}} />
-      <Button type="wide" content="활성화" onClick={() => {}} isActive />
-      <div ref={ref}>Target</div>
+      <ProfileCategory categoryRef={ref} params={params} />
       <ContentCardList datas={datas} />
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
-      <div>page</div>
     </>
   );
 }
