@@ -37,30 +37,9 @@ public class PostController {
                                                           @RequestParam("query") String query,
                                                           @RequestParam("page") Long page,
                                                           @RequestParam("size") Long size) throws Exception {
-        ReadPostOutDTOs readPostOutDTOs = ReadPostOutDTOs.builder()
-                .posts(new ArrayList<>())
-                .build();
+        ReadPostOutDTOs readPostOutDTOs = postService.readPosts(postType, mark, userId, sort, query, page, size);
 
-        for (int i = 0; i < 5; i++) {
-            ReadPostOutDTO readPostOutDTO = ReadPostOutDTO.builder()
-                    .postId((long) (i + 1))
-                    .userId((long) (i + 1))
-                    .userName("userName")
-                    .postType(PostType.TEXT)
-                    .content("content")
-                    .url("url")
-                    .likedCnt(0L)
-                    .bookMarkCnt(0L)
-                    .commentCnt(0L)
-                    .liked(true)
-                    .bookMarked(true)
-                    .subscribed(true)
-                    .createdAt(LocalDateTime.now())
-                    .updatedAt(LocalDateTime.now())
-                    .build();
 
-            readPostOutDTOs.getPosts().add(readPostOutDTO);
-        }
 
         return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
     }

@@ -2,22 +2,20 @@ package com.spring.wordseed.service.impl;
 
 import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
-import com.spring.wordseed.entity.Post;
-import com.spring.wordseed.entity.User;
-import com.spring.wordseed.entity.Word;
-import com.spring.wordseed.enu.PostAlign;
+import com.spring.wordseed.entity.*;
 import com.spring.wordseed.enu.PostSort;
-import com.spring.wordseed.enu.PostType;
-import com.spring.wordseed.enu.PostVisibility;
 import com.spring.wordseed.repo.PostRepo;
 import com.spring.wordseed.repo.UserRepo;
 import com.spring.wordseed.repo.WordRepo;
 import com.spring.wordseed.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
@@ -34,7 +32,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public CreatePostOutDTO createPost(CreatePostInDTO createPostInDTO) {
+    public CreatePostOutDTO createPost(CreatePostInDTO createPostInDTO) throws Exception{
+
         Post post = Post.builder()
                 .content(createPostInDTO.getContent())
                 .url(createPostInDTO.getUrl())
@@ -44,8 +43,8 @@ public class PostServiceImpl implements PostService {
                 .likedCnt(0L)
                 .bookMarkCnt(0L)
                 .commentCnt(0L)
-                .user(userRepo.getById(3L)) // token 유입
-                .word(wordRepo.getById(1L)) // word 유입
+                .user(userRepo.findById(3L).orElseThrow(Exception::new)) // token 유입
+                .word(wordRepo.findById(1L).orElseThrow(Exception::new)) // word 유입
                 .build();
 
         post.setCreatedAt(LocalDateTime.now());
@@ -53,7 +52,8 @@ public class PostServiceImpl implements PostService {
 
         Post result = postRepo.save(post);
 
-        CreatePostOutDTO createPostOutDTO = CreatePostOutDTO.builder()
+        CreatePostOutDTO createPostOutDTO =
+                CreatePostOutDTO.builder()
                 .content(result.getContent())
                 .postId(result.getPostId())
                 .url(result.getUrl())
@@ -75,6 +75,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public ReadPostOutDTOs readPosts(String postType, String mark, Long userId, PostSort sort, String query, Long page, Long size) {
+
         return null;
     }
 

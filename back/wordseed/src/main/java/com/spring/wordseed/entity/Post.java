@@ -4,10 +4,7 @@ import com.spring.wordseed.enu.PostAlign;
 import com.spring.wordseed.enu.PostType;
 import com.spring.wordseed.enu.PostVisibility;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.ArrayList;
@@ -17,6 +14,8 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "posts")
 public class Post extends BaseTimeEntity {
@@ -46,12 +45,19 @@ public class Post extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "word_id")
     private Word word;
+    @Builder.Default
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PostLiked> postLikeds = new ArrayList<>();
+    @Builder.Default
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookMark> bookMarks = new ArrayList<>();
+    @Builder.Default
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-    //public Post() {}
+    //
+    public <T> T DataToDTO(T data){
+
+        return data;
+    }
 }

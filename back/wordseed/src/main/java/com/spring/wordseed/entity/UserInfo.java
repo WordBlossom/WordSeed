@@ -2,15 +2,15 @@ package com.spring.wordseed.entity;
 
 import com.spring.wordseed.enu.Informable;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "user_infos")
 public class UserInfo extends BaseTimeEntity{

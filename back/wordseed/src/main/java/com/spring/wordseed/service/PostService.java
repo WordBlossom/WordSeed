@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface PostService {
-    CreatePostOutDTO createPost(CreatePostInDTO createPostInDTO);
+    CreatePostOutDTO createPost(CreatePostInDTO createPostInDTO) throws Exception;
     ReadPostOutDTOs readPosts(String postType, String mark, Long userId, PostSort sort, String query, Long page, Long size);
     ReadPostByPostIdOutDTO readPostByPostId(Long postId);
     UpdatePostOutDTO updatePost(UpdatePostInDTO updatePostInDTO);
