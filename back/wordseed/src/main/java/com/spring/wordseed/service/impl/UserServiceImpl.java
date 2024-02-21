@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
                     .userDecp("")
                     .build();
             userInfo = userInfoRepo.save(userInfo);
-            System.out.println(userInfo.getUserInfoId());
             User user = User.builder()
                     .userName(createUserInDTO.getUserName())
                     .email(createUserInDTO.getEmail())
