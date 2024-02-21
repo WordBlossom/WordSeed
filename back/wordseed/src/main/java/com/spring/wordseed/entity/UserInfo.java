@@ -17,7 +17,7 @@ public class UserInfo extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userInfoId;
-    private String userDesc;
+    private String userDecp;
     @Column(nullable = false)
     private Long postCnt;
     @Column(nullable = false)

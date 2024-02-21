@@ -8,6 +8,9 @@ import com.spring.wordseed.dto.tool.UserDTO;
 import com.spring.wordseed.enu.FollowType;
 import com.spring.wordseed.enu.Informable;
 import com.spring.wordseed.enu.UserType;
+import com.spring.wordseed.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,16 +22,16 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/user", produces = "application/json; charset=utf-8")
 public class UserController {
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
     @GetMapping
-    public ResponseEntity<ReadUserOutDTO> readUser() throws Exception {
-        ReadUserOutDTO readUserOutDTO = ReadUserOutDTO.builder()
-                .userId(1)
-                .userName("초아누리")
-                .userType(UserType.USER)
-                .email("cho0123@wordseed.com")
-                .userDecp("모든 순간을 사랑하며 살고 싶은 사람")
-                .informable(Informable.TRUE)
-                .build();
+    public ResponseEntity<ReadUserOutDTO> readUser(HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        ReadUserOutDTO readUserOutDTO = userService.readUser(userId);
         return ResponseEntity.status(HttpStatus.OK).body(readUserOutDTO);
     }
     @PutMapping
