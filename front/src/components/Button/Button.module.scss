@@ -31,3 +31,18 @@
     background-color: $gray;
   }
 }
+
+.button-small {
+  @include font($fs: $body2, $fw: $regular, $fc: $gray, $ff: $noto-sans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $black;
+  background-color: $light-gray;
+  border-radius: $radius-button;
+  padding: 0.2rem 0.7rem;
+
+  &:active {
+    background-color: $gray;
+  }
+}
