@@ -49,12 +49,8 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-//clean {
-//    delete file('src/main/generated')
-//}
-
 // === Querydsl 빌드 옵션 (선택사항) ===
-def querydslDir = "$buildDir/generated/querydsl"
+def querydslDir = "/src/main/generated/"
 
 sourceSets {
     main.java.srcDirs += [ querydslDir ]
