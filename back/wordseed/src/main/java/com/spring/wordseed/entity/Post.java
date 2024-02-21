@@ -54,10 +54,4 @@ public class Post extends BaseTimeEntity {
     @Builder.Default
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
-
-    //
-    public <T> T DataToDTO(T data){
-
-        return data;
-    }
 }
