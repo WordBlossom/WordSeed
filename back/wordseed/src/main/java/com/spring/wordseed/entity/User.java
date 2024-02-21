@@ -32,16 +32,22 @@ public class User extends BaseTimeEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_info_id")
     private UserInfo userInfo;
+    @Builder.Default
     @OneToMany(mappedBy = "srcUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Follow> srcUsers = new ArrayList<>();
+    @Builder.Default
     @OneToMany(mappedBy = "dstUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Follow> dstUsers = new ArrayList<>();
+    @Builder.Default
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
+    @Builder.Default
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PostLiked> postLikeds = new ArrayList<>();
+    @Builder.Default
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookMark> bookMarks = new ArrayList<>();
+    @Builder.Default
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 }

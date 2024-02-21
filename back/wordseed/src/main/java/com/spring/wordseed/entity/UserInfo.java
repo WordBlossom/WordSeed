@@ -3,7 +3,6 @@ package com.spring.wordseed.entity;
 import com.spring.wordseed.enu.Informable;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity

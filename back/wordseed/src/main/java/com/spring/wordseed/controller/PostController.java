@@ -3,6 +3,8 @@ package com.spring.wordseed.controller;
 import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.enu.*;
+import com.spring.wordseed.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,24 +16,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/post")
 public class PostController {
+    private final PostService postService;
+    @Autowired
+    PostController(PostService postService){
+        this.postService = postService;
+    }
     // 작품 업로드
     @PostMapping("")
     public ResponseEntity<CreatePostOutDTO> createPost(@RequestBody CreatePostInDTO createPostInDTO) throws Exception {
-        CreatePostOutDTO createPostOutDTO = CreatePostOutDTO.builder()
-                .postId(1L)
-                .url(createPostInDTO.getUrl())
-                .postType(createPostInDTO.getPostType())
-                .postAlign(createPostInDTO.getPostAlign())
-                .postVisibility(createPostInDTO.getPostVisibility())
-                .likedCnt(0L)
-                .bookMarkCnt(0L)
-                .commentCnt(0L)
-                .userId(1L)
-                .wordId(1L)
-                .word("random")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        CreatePostOutDTO createPostOutDTO = postService.createPost(createPostInDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(createPostOutDTO);
     }
@@ -44,30 +37,9 @@ public class PostController {
                                                           @RequestParam("query") String query,
                                                           @RequestParam("page") Long page,
                                                           @RequestParam("size") Long size) throws Exception {
-        ReadPostOutDTOs readPostOutDTOs = ReadPostOutDTOs.builder()
-                .posts(new ArrayList<>())
-                .build();
+        ReadPostOutDTOs readPostOutDTOs = postService.readPosts(postType, mark, userId, sort, query, page, size);
 
-        for (int i = 0; i < 5; i++) {
-            ReadPostOutDTO readPostOutDTO = ReadPostOutDTO.builder()
-                    .postId((long) (i + 1))
-                    .userId((long) (i + 1))
-                    .userName("userName")
-                    .postType(PostType.TEXT)
-                    .content("content")
-                    .url("url")
-                    .likedCnt(0L)
-                    .bookMarkCnt(0L)
-                    .commentCnt(0L)
-                    .liked(true)
-                    .bookMarked(true)
-                    .subscribed(true)
-                    .createdAt(LocalDateTime.now())
-                    .updatedAt(LocalDateTime.now())
-                    .build();
 
-            readPostOutDTOs.getPosts().add(readPostOutDTO);
-        }
 
         return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
     }

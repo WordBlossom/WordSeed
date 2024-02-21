@@ -38,3 +38,6 @@ out/
 
 ### env ###
 env.properties
+
+### queryDSL ###
+/src/main/generated/
