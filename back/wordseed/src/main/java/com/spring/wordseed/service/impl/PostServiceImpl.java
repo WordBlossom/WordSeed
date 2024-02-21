@@ -47,9 +47,6 @@ public class PostServiceImpl implements PostService {
                 .word(wordRepo.findById(1L).orElseThrow(Exception::new)) // word 유입
                 .build();
 
-        post.setCreatedAt(LocalDateTime.now());
-        post.setUpdatedAt(LocalDateTime.now());
-
         Post result = postRepo.save(post);
 
         CreatePostOutDTO createPostOutDTO =
