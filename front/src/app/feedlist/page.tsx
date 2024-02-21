@@ -2,7 +2,8 @@
 
 import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FeedInterface } from "@/components";
+import { FeedInterface, Comment } from "@/components";
+import useCommentToggleStateStore from "@/stores/comment-toggle";
 import style from "./feedlist.module.scss";
 
 type ListenerProps = {
@@ -43,6 +44,7 @@ export default function Feedlist() {
   const touchStartY = useRef<number | null>(null);
   const hasListenerFirstSlide = useRef<boolean>(false);
   const [isTransition, setIsTransition] = useState<boolean>(false);
+  const { commentToggle } = useCommentToggleStateStore();
 
   const attatchListener = (swiper: any) => {
     // 이전 content 스크롤 최상단으로 이동
@@ -240,6 +242,7 @@ export default function Feedlist() {
           );
         }
       })}
+      {commentToggle && <Comment />}
     </Swiper>
   );
 }

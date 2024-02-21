@@ -34,6 +34,7 @@
   }
 }
 .swiper-container {
+  overflow: hidden;
   height: calc(100dvh - 5rem);
 }
 
