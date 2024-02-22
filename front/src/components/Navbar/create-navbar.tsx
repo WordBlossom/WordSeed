@@ -1,12 +1,13 @@
 "use client";
-import CreateCategory from "./create-category/create-category";
+
 import Button from "../Button/Button";
 import styles from "./navbar.module.scss";
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+
 export default function CreateNavbar() {
   const router = useRouter();
-  const [selectedCategory, setSelectedCategory] = useState("글");
+
   const params = useParams();
   const wordseed = decodeURIComponent(params.wordseed as string);
   // selectedCategory 형식으로 게시글 업로드 요청
@@ -22,10 +23,6 @@ export default function CreateNavbar() {
         <header className={styles.wordseed}>{wordseed}</header>
         <Button content={"완료"} onClick={handleSubmitButtonClick} />
       </div>
-      <CreateCategory
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
     </div>
   );
 }

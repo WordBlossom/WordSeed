@@ -1,13 +1,17 @@
-export default function CreateFeed({
-  params,
-}: {
-  params: { wordseed: string };
-}) {
-  const wordseed = params.wordseed;
+"use client";
+
+import CreateCategory from "@/components/Navbar/create-category/create-category";
+import { useState } from "react";
+
+export default function CreateFeed() {
+  const [selectedCategory, setSelectedCategory] = useState("글");
+
   return (
     <>
-      <h1>CreateFeed</h1>
-      <h2>wordseed : {wordseed}</h2>
+      <CreateCategory
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
     </>
   );
 }
