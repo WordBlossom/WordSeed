@@ -1,19 +1,16 @@
 "use client";
 
 import CreateCategory from "@/components/Navbar/create-category/create-category";
-import { useState } from "react";
 import { PostWrite } from "../_component";
+import createContentStore from "@/stores/create-content";
 
 export default function CreateFeed() {
-  const [selectedCategory, setSelectedCategory] = useState("글");
+  const type = createContentStore((state) => state.type);
 
   return (
     <>
-      <CreateCategory
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
-      {selectedCategory === "글" ? <PostWrite /> : ""}
+      <CreateCategory />
+      {type === "text" ? <PostWrite /> : ""}
     </>
   );
 }
