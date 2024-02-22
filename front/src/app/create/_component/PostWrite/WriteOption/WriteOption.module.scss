@@ -1,0 +1,39 @@
+.container {
+  @include flex(row, space-between);
+  position: fixed;
+  bottom: 0;
+  height: 4rem;
+  width: 100dvw;
+  border-top: solid $gray 0.1rem;
+  overflow: hidden;
+
+  button {
+    @include flex-center;
+    width: 5.5rem;
+    height: 4rem;
+    @include font($body2);
+
+    &::after {
+      content: "";
+      width: 8rem;
+      height: 8rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.1);
+      position: absolute;
+      transform: scale(0);
+      transition: transform 0.1s;
+      z-index: -1;
+    }
+
+    &:active::after {
+      transform: scale(1);
+    }
+  }
+
+  div {
+    @include flex-center;
+    width: 5.5rem;
+    height: 4rem;
+    @include font($body2);
+  }
+}
