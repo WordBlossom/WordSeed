@@ -1,7 +1,7 @@
 "use client";
 
 import CreateCategory from "@/components/Navbar/create-category/create-category";
-import { PostWrite } from "../_component";
+import { PostMedia, PostWrite } from "../_component";
 import createContentStore from "@/stores/create-content";
 
 export default function CreateFeed() {
@@ -10,7 +10,7 @@ export default function CreateFeed() {
   return (
     <>
       <CreateCategory />
-      {type === "text" ? <PostWrite /> : ""}
+      {type === "text" ? <PostWrite /> : <PostMedia />}
     </>
   );
 }
