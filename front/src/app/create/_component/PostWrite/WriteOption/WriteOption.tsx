@@ -1,12 +1,14 @@
 import { Icon } from "@/components";
 import styles from "./WriteOption.module.scss";
 import { useState } from "react";
+import createContentStore from "@/stores/create-content";
 
 export default function WriteOption() {
   const [textAlign, setTextAlign] = useState<
     "alignLeft" | "alignCenter" | "alignRight"
   >("alignLeft");
-  const textCnt = 0;
+  const useContentStore = createContentStore();
+  const setAlign = useContentStore.setTextAlign;
 
   const copyHandler = () => {};
 
@@ -14,12 +16,15 @@ export default function WriteOption() {
     switch (textAlign) {
       case "alignLeft":
         setTextAlign("alignCenter");
+        setAlign("alignCenter");
         break;
       case "alignCenter":
         setTextAlign("alignRight");
+        setAlign("alignRight");
         break;
       case "alignRight":
         setTextAlign("alignLeft");
+        setAlign("alignLeft");
         break;
       default:
         break;
@@ -38,7 +43,7 @@ export default function WriteOption() {
       <button onClick={textAlignHandler}>
         <Icon iconName={textAlign} />
       </button>
-      <div>{textCnt} 자</div>
+      <div>{useContentStore.textContent.length} 자</div>
       <button onClick={saveHandler}>임시저장</button>
     </footer>
   );

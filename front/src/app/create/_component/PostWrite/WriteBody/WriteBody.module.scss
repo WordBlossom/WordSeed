@@ -14,14 +14,14 @@
   @include font($body1, $regular, $black, $noto-serif);
 }
 
-.left {
+.alignLeft {
   text-align: left;
 }
 
-.center {
+.alignCenter {
   text-align: center;
 }
 
-.right {
+.alignRight {
   text-align: right;
 }

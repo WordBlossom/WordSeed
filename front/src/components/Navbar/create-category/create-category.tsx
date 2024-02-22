@@ -1,6 +1,7 @@
 import Button from "@/components/Button/Button";
 import styles from "./create-category.module.scss";
 import { Dispatch, SetStateAction } from "react";
+import createContentStore from "@/stores/create-content";
 
 type CreateCategoryProps = {
   selectedCategory: string;
@@ -11,16 +12,32 @@ export default function CreateCategory({
   selectedCategory,
   setSelectedCategory,
 }: CreateCategoryProps) {
-  const categories = ["글", "그림", "영상", "음악"];
+  const useContentStore = createContentStore();
+
+  type CategoryType = "text" | "paint" | "video" | "music";
+
+  const categories: { [key: string]: CategoryType } = {
+    글: "text",
+    그림: "paint",
+    영상: "video",
+    음악: "music",
+  };
+
+  const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const categoryKey = e.currentTarget.textContent as string;
+    const categoryValue = categories[categoryKey];
+    setSelectedCategory(categoryKey);
+    useContentStore.setType(categoryValue);
+  };
 
   return (
     <div className={styles["filter-wrapper"]}>
-      {categories.map((category) => (
+      {Object.keys(categories).map((category) => (
         <Button
           key={category}
           content={category}
           isActive={selectedCategory === category ? true : false}
-          onClick={() => setSelectedCategory(category)}
+          onClick={clickHandler}
         />
       ))}
     </div>

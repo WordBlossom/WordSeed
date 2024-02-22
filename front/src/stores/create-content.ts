@@ -8,6 +8,7 @@ interface CreateContentProps {
 }
 
 interface CreateContentState extends CreateContentProps {
+  setType: (type: "text" | "paint" | "video" | "music") => void;
   setTextAlign: (align: "alignLeft" | "alignCenter" | "alignRight") => void;
   setTextContent: (content: string) => void;
   setMideaFile: (file: File) => void;
@@ -23,6 +24,7 @@ const initialState: CreateContentProps = {
 
 const createContentStore = create<CreateContentState>((set) => ({
   ...initialState,
+  setType: (type) => set({ type: type }),
   setTextAlign: (align) => set({ textAlign: align }),
   setTextContent: (content) => set({ textContent: content }),
   setMideaFile: (file: File) => set({ mediaFile: file }),
