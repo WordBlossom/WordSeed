@@ -7,6 +7,7 @@ import com.spring.wordseed.enu.PostSort;
 import com.spring.wordseed.repo.PostRepo;
 import com.spring.wordseed.repo.UserRepo;
 import com.spring.wordseed.repo.WordRepo;
+import com.spring.wordseed.repo.custom.CustomPostRepo;
 import com.spring.wordseed.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -78,8 +79,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public ReadPostByPostIdOutDTO readPostByPostId(Long postId) {
-        //
-
+        ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postRepo.findPostByPostId(postId);
+        return readPostByPostIdOutDTO;
     }
 
     @Override
