@@ -10,6 +10,7 @@ import com.spring.wordseed.enu.PostVisibility;
 import com.spring.wordseed.repo.PostRepo;
 import com.spring.wordseed.repo.UserRepo;
 import com.spring.wordseed.repo.WordRepo;
+import com.spring.wordseed.repo.custom.CustomPostRepo;
 import com.spring.wordseed.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -18,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 @Service
 @Transactional
@@ -75,14 +78,21 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ReadPostOutDTOs readPosts(String postType, String mark, Long userId, PostSort sort, String query, Long page, Long size) {
+    public ReadPostOutDTOs readPosts(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size) {
+        List<ReadPostOutDTO> readPostOutDTOs = postRepo.FindPostAllBy(postTypes, mark, userId, sort, query, page, size);
 
-        return null;
+        ReadPostOutDTOs posts = ReadPostOutDTOs.builder().posts(new ArrayList<>()).build();
+
+        for (ReadPostOutDTO readPostOutDTO : readPostOutDTOs)
+            posts.getPosts().add(readPostOutDTO);
+
+        return posts;
     }
 
     @Override
     public ReadPostByPostIdOutDTO readPostByPostId(Long postId) {
-        return null;
+        ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postRepo.findPostByPostId(postId);
+        return readPostByPostIdOutDTO;
     }
 
     @Override

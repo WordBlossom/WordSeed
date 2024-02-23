@@ -39,34 +39,12 @@ public class PostController {
                                                           @RequestParam("size") Long size) throws Exception {
         ReadPostOutDTOs readPostOutDTOs = postService.readPosts(postType, mark, userId, sort, query, page, size);
 
-
-
         return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
     }
     // 작품 상세 조회
     @GetMapping("/detail")
     public ResponseEntity<ReadPostByPostIdOutDTO> readPostByPostId(@RequestParam("postId") Long postId) throws Exception {
-        ReadPostByPostIdOutDTO readPostByPostIdOutDTO = ReadPostByPostIdOutDTO.builder()
-                .postId(1L)
-                .userId(1L)
-                .userName("userName")
-                .postType(PostType.TEXT)
-                .postAlign(PostAlign.LEFT)
-                .postVisibility(PostVisibility.PRIVATE)
-                .content("content")
-                .url("url")
-                .likedCnt(0L)
-                .bookMarkCnt(0L)
-                .commentCnt(0L)
-                .liked(true)
-                .bookMarked(true)
-                .subscribed(true)
-                .wordId(1L)
-                .word("word")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
-
+        ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postService.readPostByPostId(postId);
         return ResponseEntity.status(HttpStatus.OK).body(readPostByPostIdOutDTO);
     }
     // 작품 수정
