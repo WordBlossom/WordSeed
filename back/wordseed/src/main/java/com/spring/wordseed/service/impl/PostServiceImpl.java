@@ -3,7 +3,10 @@ package com.spring.wordseed.service.impl;
 import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.entity.*;
+import com.spring.wordseed.enu.PostAlign;
 import com.spring.wordseed.enu.PostSort;
+import com.spring.wordseed.enu.PostType;
+import com.spring.wordseed.enu.PostVisibility;
 import com.spring.wordseed.repo.PostRepo;
 import com.spring.wordseed.repo.UserRepo;
 import com.spring.wordseed.repo.WordRepo;
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -82,8 +86,38 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public UpdatePostOutDTO updatePost(UpdatePostInDTO updatePostInDTO) {
-        return null;
+    public UpdatePostOutDTO updatePost(UpdatePostInDTO updatePostInDTO) throws Exception {
+        Post post = postRepo.findById(updatePostInDTO.getPostId()).orElseThrow(Exception::new);
+
+        post.setPostId(updatePostInDTO.getPostId());
+        post.setContent(updatePostInDTO.getContent());
+        post.setUrl(updatePostInDTO.getUrl());
+        post.setPostType(updatePostInDTO.getPostType());
+        post.setPostAlign(updatePostInDTO.getPostAlign());
+        post.setPostVisibility(updatePostInDTO.getPostVisibility());
+
+        postRepo.save(post);
+
+        ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postRepo.findPostByPostId(post.getPostId());
+
+        return UpdatePostOutDTO.builder()
+                .postId(readPostByPostIdOutDTO.getPostId())
+                .userId(readPostByPostIdOutDTO.getUserId())
+                .postType(readPostByPostIdOutDTO.getPostType())
+                .postAlign(readPostByPostIdOutDTO.getPostAlign())
+                .postVisibility(readPostByPostIdOutDTO.getPostVisibility())
+                .content(readPostByPostIdOutDTO.getContent())
+                .url(readPostByPostIdOutDTO.getUrl())
+                .likedCnt(readPostByPostIdOutDTO.getLikedCnt())
+                .BookMarkCnt(readPostByPostIdOutDTO.getBookMarkCnt())
+                .commentCnt(readPostByPostIdOutDTO.getCommentCnt())
+                .liked(readPostByPostIdOutDTO.getLiked())
+                .bookMarked(readPostByPostIdOutDTO.getBookMarked())
+                .wordId(readPostByPostIdOutDTO.getWordId())
+                .word(readPostByPostIdOutDTO.getWord())
+                .createdAt(readPostByPostIdOutDTO.getCreatedAt())
+                .updatedAt(readPostByPostIdOutDTO.getUpdatedAt())
+                .build();
     }
 
     @Override

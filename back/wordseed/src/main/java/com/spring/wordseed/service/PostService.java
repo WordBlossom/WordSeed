@@ -10,7 +10,7 @@ public interface PostService {
     CreatePostOutDTO createPost(CreatePostInDTO createPostInDTO) throws Exception;
     ReadPostOutDTOs readPosts(String postType, String mark, Long userId, PostSort sort, String query, Long page, Long size);
     ReadPostByPostIdOutDTO readPostByPostId(Long postId);
-    UpdatePostOutDTO updatePost(UpdatePostInDTO updatePostInDTO);
+    UpdatePostOutDTO updatePost(UpdatePostInDTO updatePostInDTO) throws Exception;
     void deletePost(DeletePostInDTO deletePostInDTO);
     CreateCommentOutDTO createPost(CreateCommentInDTO createCommentInDTO);
     UpdateCommentOutDTO UpdatePost(UpdateCommentInDTO updateCommentInDTO);

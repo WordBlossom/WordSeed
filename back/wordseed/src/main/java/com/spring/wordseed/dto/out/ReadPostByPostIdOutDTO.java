@@ -3,14 +3,14 @@ package com.spring.wordseed.dto.out;
 import com.spring.wordseed.enu.PostAlign;
 import com.spring.wordseed.enu.PostType;
 import com.spring.wordseed.enu.PostVisibility;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class ReadPostByPostIdOutDTO {
     private Long postId;
