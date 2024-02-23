@@ -1,15 +1,15 @@
 package com.spring.wordseed.dto.out;
 
 import com.spring.wordseed.enu.PostType;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReadPostOutDTO {
     private Long postId;
     private Long userId;
