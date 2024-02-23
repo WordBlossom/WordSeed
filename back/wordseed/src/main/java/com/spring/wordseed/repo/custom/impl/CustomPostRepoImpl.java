@@ -33,36 +33,60 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
     @Override
     public List<ReadPostOutDTO> FindByCustom(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size) {
+        // postType
         List<String> postType = new ArrayList<>(Arrays.asList(postTypes.split(",")));
-
         String postTypesInSQL = "";
+
         for (String type : postType)
             postTypesInSQL += ("\"" + type + "\",");
 
         postTypesInSQL = postTypesInSQL.substring(0, postTypesInSQL.length() - 1);
+        String postSQL = "AND P.POST_TYPE IN (" + postTypesInSQL + ") ";
 
-        String sql = "SELECT P.POST_ID PID, P.USER_ID, U.USER_NAME, P.POST_TYPE, P.CONTENT, P.URL, P.LIKED_CNT, P.BOOK_MARK_CNT, P.COMMENT_CNT, " +
+        // sort
+        String sortSQL = "ORDER BY ";
+
+        if (sort == PostSort.DATE_ASC)
+            sortSQL += "CREATED_AT ASC";
+
+        else if (sort == PostSort.DATE_DSC)
+            sortSQL += "CREATED_AT DESC";
+
+        else if (sort == PostSort.LIKE_ASC)
+            sortSQL += "LIKECNT ASC";
+
+        else if (sort == PostSort.LIKE_DSC)
+            sortSQL += "LIKECNT DESC";
+
+        // word
+
+        // native query
+        String sql = "SELECT P.POST_ID PID, P.USER_ID, U.USER_NAME, P.POST_TYPE, P.CONTENT, P.URL, P.LIKED_CNT LIKECNT, P.BOOK_MARK_CNT, P.COMMENT_CNT, " +
                 "EXISTS(SELECT * FROM BOOK_MARKS BM JOIN POSTS P ON BM.POST_ID = P.POST_ID WHERE BM.USER_ID = :bind1 AND P.POST_ID = PID), " +
                 "EXISTS(SELECT * FROM POST_LIKEDS PL JOIN POSTS P ON PL.POST_ID = P.POST_ID WHERE PL.USER_ID = :bind2 AND P.POST_ID = PID), " +
                 "EXISTS(SELECT * FROM FOLLOWS F WHERE F.SRC_ID = :bind3 AND F.DST_ID = P.USER_ID), " +
-                "P.CREATED_AT, P.UPDATED_AT " +
+                "DATE_FORMAT(P.CREATED_AT, '%Y-%m-%d %H:%i:%s') AS CREATED_AT," +
+                 "DATE_FORMAT(P.UPDATED_AT, '%Y-%m-%d %H:%i:%s') AS UPDATED_AT " +
                 "FROM POSTS P " +
                 "JOIN USERS U ON P.USER_ID = U.USER_ID " +
                 "JOIN WORDS W ON P.WORD_ID = W.WORD_ID " +
-                "WHERE P.USER_ID = :bind4 ";
-                //"AND P.POST_TYPE IN (:bind5) " +
-                //"AND W.WORD LIKE \"%%\"";
+                "WHERE P.USER_ID = :bind4 " +
+                postSQL +
+                sortSQL;
 
+        // create query
         Query nativeQuery = em.createNativeQuery(sql);
-        nativeQuery.setParameter("bind1", "7"); // 본인 user Id
-        nativeQuery.setParameter("bind2", "7"); // 본인 user Id
-        nativeQuery.setParameter("bind3", "3"); // 본인 user Id
-        nativeQuery.setParameter("bind4", "3"); // 본인 user Id
-        //nativeQuery.setParameter("bind5", postTypesInSQL);
+
+        // %should change
+        nativeQuery.setParameter("bind1", "7"); // post user Id
+        nativeQuery.setParameter("bind2", "7"); // post user Id
+        nativeQuery.setParameter("bind3", "3"); // user Id
+        nativeQuery.setParameter("bind4", "3"); // user Id
 
         List<Object[]> resultList = nativeQuery.getResultList();
         List<ReadPostOutDTO> readPostOutDTOs = new ArrayList<>();
 
+        // initialize data
         for (Object[] row : resultList){
             Long rPostId = (Long) row[0];
             Long rUserId = (Long) row[1];
@@ -79,14 +103,15 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
             // createAt
             String createAtString = (String) row[12];
-            DateTimeFormatter createAtFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-            LocalDateTime rCreatedAt = LocalDateTime.parse(createAtString, createAtFormat);
+            DateTimeFormatter createFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime rCreatedAt = LocalDateTime.parse(createAtString, createFormatter);
 
             // updateAt
             String updateAtString = (String) row[13];
-            DateTimeFormatter updateAtFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-            LocalDateTime rUpdatedAt = LocalDateTime.parse(updateAtString, updateAtFormat);
+            DateTimeFormatter updateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime rUpdatedAt = LocalDateTime.parse(updateAtString, updateFormatter);
 
+            // build
             ReadPostOutDTO readPostOutDTO = ReadPostOutDTO.builder()
                     .postId(rPostId)
                     .userId(rUserId)
@@ -106,6 +131,11 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
             readPostOutDTOs.add(readPostOutDTO);
         }
+
+        // if bookMark is true
+        if (mark.equals("true"))
+            readPostOutDTOs.removeIf(element -> !element.getBookMarked());
+
         return readPostOutDTOs;
     }
 }
