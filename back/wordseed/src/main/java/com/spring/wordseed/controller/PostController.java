@@ -39,8 +39,6 @@ public class PostController {
                                                           @RequestParam("size") Long size) throws Exception {
         ReadPostOutDTOs readPostOutDTOs = postService.readPosts(postType, mark, userId, sort, query, page, size);
 
-
-
         return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
     }
     // 작품 상세 조회
