@@ -50,6 +50,7 @@ public class PostController {
     // 작품 수정
     @PutMapping("")
     public ResponseEntity<UpdatePostOutDTO> updatePost(@RequestBody UpdatePostInDTO updatePostInDTO) throws Exception {
+        /*
         UpdatePostOutDTO updatePostOutDTO = UpdatePostOutDTO.builder()
                 .postId(updatePostInDTO.getPostId())
                 .content(updatePostInDTO.getContent())
@@ -68,6 +69,8 @@ public class PostController {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
+        */
+        UpdatePostOutDTO updatePostOutDTO = postService.updatePost(updatePostInDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(updatePostOutDTO);
     }
