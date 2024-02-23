@@ -43,22 +43,26 @@ public class CustomPostRepoImpl implements CustomPostRepo {
         postTypesInSQL = postTypesInSQL.substring(0, postTypesInSQL.length() - 1);
         String postSQL = "AND P.POST_TYPE IN (" + postTypesInSQL + ") ";
 
+        // word
+
+
         // sort
         String sortSQL = "ORDER BY ";
 
         if (sort == PostSort.DATE_ASC)
-            sortSQL += "CREATED_AT ASC";
+            sortSQL += "CREATED_AT ASC ";
 
         else if (sort == PostSort.DATE_DSC)
-            sortSQL += "CREATED_AT DESC";
+            sortSQL += "CREATED_AT DESC ";
 
         else if (sort == PostSort.LIKE_ASC)
-            sortSQL += "LIKECNT ASC";
+            sortSQL += "LIKECNT ASC ";
 
         else if (sort == PostSort.LIKE_DSC)
-            sortSQL += "LIKECNT DESC";
+            sortSQL += "LIKECNT DESC ";
 
-        // word
+        // paging
+        String pagingSQL = String.format("LIMIT %d OFFSET %s", size, (page - 1) * size);
 
         // native query
         String sql = "SELECT P.POST_ID PID, P.USER_ID, U.USER_NAME, P.POST_TYPE, P.CONTENT, P.URL, P.LIKED_CNT LIKECNT, P.BOOK_MARK_CNT, P.COMMENT_CNT, " +
@@ -72,7 +76,8 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 "JOIN WORDS W ON P.WORD_ID = W.WORD_ID " +
                 "WHERE P.USER_ID = :bind4 " +
                 postSQL +
-                sortSQL;
+                sortSQL +
+                pagingSQL;
 
         // create query
         Query nativeQuery = em.createNativeQuery(sql);
