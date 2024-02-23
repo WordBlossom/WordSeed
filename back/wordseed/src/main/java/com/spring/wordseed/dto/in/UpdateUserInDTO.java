@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UpdateUserInDTO {
+    long userId;
     String userName;
     UserType userType;
     String userDecp;

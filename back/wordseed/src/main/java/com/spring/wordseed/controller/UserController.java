@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,17 +34,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(readUserOutDTO);
     }
     @PutMapping
-    public ResponseEntity<UpdateUserOutDTO> updateUser(@RequestBody UpdateUserInDTO updateUserInDTO) throws Exception {
-        UpdateUserOutDTO updateUserOutDTO = UpdateUserOutDTO.builder()
-                .userId(1)
-                .userName(updateUserInDTO.getUserName())
-                .userType(updateUserInDTO.getUserType())
-                .email("cho0123@wordseed.com")
-                .userDecp(updateUserInDTO.getUserDecp())
-                .informable(updateUserInDTO.getInformable())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+    public ResponseEntity<UpdateUserOutDTO> updateUser(@RequestBody UpdateUserInDTO updateUserInDTO,
+                                                       HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        updateUserInDTO.setUserId(userId);
+        UpdateUserOutDTO updateUserOutDTO = userService.updateUser(updateUserInDTO);
         return ResponseEntity.status(HttpStatus.OK).body(updateUserOutDTO);
     }
     @DeleteMapping
