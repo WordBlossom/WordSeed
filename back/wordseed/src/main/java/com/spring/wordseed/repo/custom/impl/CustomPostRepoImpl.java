@@ -32,7 +32,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
     private final QWord qWord = QWord.word1;
 
     @Override
-    public List<ReadPostOutDTO> FindByCustom(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size) {
+    public List<ReadPostOutDTO> FindPostAllBy(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size) {
         // postType
         List<String> postType = new ArrayList<>(Arrays.asList(postTypes.split(",")));
         String postTypesInSQL = "";

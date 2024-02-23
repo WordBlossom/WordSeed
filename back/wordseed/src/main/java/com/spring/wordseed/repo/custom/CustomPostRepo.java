@@ -8,5 +8,5 @@ import com.spring.wordseed.enu.PostType;
 import java.util.List;
 
 public interface CustomPostRepo {
-    List<ReadPostOutDTO> FindByCustom(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size);
+    List<ReadPostOutDTO> FindPostAllBy(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size);
 }
