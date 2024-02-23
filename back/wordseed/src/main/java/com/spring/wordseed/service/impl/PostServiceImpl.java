@@ -78,7 +78,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public ReadPostByPostIdOutDTO readPostByPostId(Long postId) {
-        return null;
+        //
+
     }
 
     @Override
