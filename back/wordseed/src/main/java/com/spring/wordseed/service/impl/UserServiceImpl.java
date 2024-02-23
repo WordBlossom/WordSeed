@@ -1,7 +1,9 @@
 package com.spring.wordseed.service.impl;
 
 import com.spring.wordseed.dto.in.CreateUserInDTO;
+import com.spring.wordseed.dto.in.UpdateUserInDTO;
 import com.spring.wordseed.dto.out.ReadUserOutDTO;
+import com.spring.wordseed.dto.out.UpdateUserOutDTO;
 import com.spring.wordseed.entity.User;
 import com.spring.wordseed.entity.UserInfo;
 import com.spring.wordseed.enu.Informable;
@@ -9,7 +11,6 @@ import com.spring.wordseed.enu.UserType;
 import com.spring.wordseed.repo.UserInfoRepo;
 import com.spring.wordseed.repo.UserRepo;
 import com.spring.wordseed.service.UserService;
-import jakarta.security.auth.message.AuthException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,6 +59,27 @@ public class UserServiceImpl implements UserService {
                 .userDecp(user.getUserInfo().getUserDecp())
                 .email(user.getEmail())
                 .informable(user.getUserInfo().getInformable())
+                .build();
+    }
+
+    @Override
+    public UpdateUserOutDTO updateUser(UpdateUserInDTO updateUserInDTO) throws Exception {
+        User user = userRepo.findWithUserInfoById(updateUserInDTO.getUserId())
+                .orElseThrow(IllegalArgumentException::new);
+        if(updateUserInDTO.getUserName() == null) throw new IllegalArgumentException();
+        user.setUserName(updateUserInDTO.getUserName());
+        user.setUserType(updateUserInDTO.getUserType());
+        user.getUserInfo().setUserDecp(updateUserInDTO.getUserDecp());
+        user.getUserInfo().setInformable(updateUserInDTO.getInformable());
+        return UpdateUserOutDTO.builder()
+                .userId(user.getUserId())
+                .userName(user.getUserName())
+                .userType(user.getUserType())
+                .email(user.getEmail())
+                .userDecp(user.getUserInfo().getUserDecp())
+                .informable(user.getUserInfo().getInformable())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
                 .build();
     }
 }

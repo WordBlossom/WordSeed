@@ -30,7 +30,7 @@ public class User extends BaseTimeEntity {
     private String deviceToken;
     private String refreshToken;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_info_id")
+    @JoinColumn(name = "user_info_id", nullable = false)
     private UserInfo userInfo;
     @Builder.Default
     @OneToMany(mappedBy = "srcUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
