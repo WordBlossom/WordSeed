@@ -2,6 +2,7 @@ package com.spring.wordseed.service.impl;
 
 import com.spring.wordseed.dto.in.CreateUserInDTO;
 import com.spring.wordseed.dto.in.UpdateUserInDTO;
+import com.spring.wordseed.dto.out.DeleteUserOutDTO;
 import com.spring.wordseed.dto.out.ReadUserOutDTO;
 import com.spring.wordseed.dto.out.UpdateUserOutDTO;
 import com.spring.wordseed.entity.User;
@@ -80,6 +81,19 @@ public class UserServiceImpl implements UserService {
                 .informable(user.getUserInfo().getInformable())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
+                .build();
+    }
+
+    @Override
+    public DeleteUserOutDTO deleteUser(long userId) throws Exception {
+        User user = userRepo.findById(userId)
+                .orElseThrow(IllegalArgumentException::new);
+        user.setUserType(UserType.QUIT);
+        return DeleteUserOutDTO.builder()
+                .userId(userId)
+                .userName(user.getUserName())
+                .userType(user.getUserType())
+                .email(user.getEmail())
                 .build();
     }
 }
