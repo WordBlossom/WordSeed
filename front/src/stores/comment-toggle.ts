@@ -15,7 +15,7 @@ export const initialState: CommentToggleState = {
 const useCommentToggleStateStore = create<
   CommentToggleState & CommentToggleStateStore
 >((set) => ({
-  commentToggle: true,
+  commentToggle: false,
   setCommentToggle: (onOff) => set(() => ({ commentToggle: onOff })),
 }));
 
