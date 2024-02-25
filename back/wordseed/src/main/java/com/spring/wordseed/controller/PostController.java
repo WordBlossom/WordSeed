@@ -105,16 +105,9 @@ public class PostController {
     @PostMapping("/comment")
     public ResponseEntity<CreateCommentOutDTO> createComment(@RequestBody CreateCommentInDTO createCommentInDTO) throws Exception {
         // add request for userId
-        CreateCommentOutDTO createCommentOutDTO = CreateCommentOutDTO.builder()
-                .commentId(1L)
-                .userId(1L)
-                .postId(createCommentInDTO.getPostId())
-                .content(createCommentInDTO.getContent())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
 
-        return ResponseEntity.status(HttpStatus.OK).body(createCommentOutDTO);
+
+        return null;
     }
     // 댓글 수정
     @PutMapping("/comment")

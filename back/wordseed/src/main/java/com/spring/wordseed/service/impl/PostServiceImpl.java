@@ -136,12 +136,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public CreateCommentOutDTO createPost(CreateCommentInDTO createCommentInDTO) {
+    public CreateCommentOutDTO createComment(CreateCommentInDTO createCommentInDTO) {
         return null;
     }
 
     @Override
-    public UpdateCommentOutDTO UpdatePost(UpdateCommentInDTO updateCommentInDTO) {
+    public UpdateCommentOutDTO UpdateComment(UpdateCommentInDTO updateCommentInDTO) {
         return null;
     }
 
