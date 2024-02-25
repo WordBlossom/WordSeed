@@ -3,23 +3,27 @@ package com.spring.wordseed.controller;
 import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.enu.*;
+import com.spring.wordseed.service.BookMarkService;
 import com.spring.wordseed.service.PostService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final BookMarkService bookMarkService;
     @Autowired
-    PostController(PostService postService){
+    PostController(PostService postService, BookMarkService bookMarkService){
         this.postService = postService;
+        this.bookMarkService = bookMarkService;
     }
     // 작품 업로드
     @PostMapping("")
@@ -156,14 +160,9 @@ public class PostController {
     }
     // 북마크 등록
     @PostMapping("/mark")
-    public ResponseEntity<CreateBookMarkOutDTO> createBookMark(@RequestBody CreateBookMarkInDTO createBookMarkInDTO) throws Exception{
-        CreateBookMarkOutDTO createBookMarkOutDTO = CreateBookMarkOutDTO.builder()
-                .bookMarkId(1L)
-                .userId(1L)
-                .postId(1L)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+    public ResponseEntity<CreateBookMarkOutDTO> createBookMark(@RequestBody CreateBookMarkInDTO createBookMarkInDTO, HttpServletRequest request) throws Exception{
+        long userId = (long) request.getAttribute("userId");
+        CreateBookMarkOutDTO createBookMarkOutDTO = bookMarkService.createBookMark(createBookMarkInDTO, userId);
 
         return ResponseEntity.status(HttpStatus.OK).body(createBookMarkOutDTO);
     }
