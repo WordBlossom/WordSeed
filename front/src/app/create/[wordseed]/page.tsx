@@ -1,13 +1,16 @@
-export default function CreateFeed({
-  params,
-}: {
-  params: { wordseed: string };
-}) {
-  const wordseed = params.wordseed;
+"use client";
+
+import CreateCategory from "@/components/Navbar/create-category/create-category";
+import { PostMedia, PostWrite } from "../_component";
+import createContentStore from "@/stores/create-content";
+
+export default function CreateFeed() {
+  const type = createContentStore((state) => state.type);
+
   return (
     <>
-      <h1>CreateFeed</h1>
-      <h2>wordseed : {wordseed}</h2>
+      <CreateCategory />
+      {type === "text" ? <PostWrite /> : <PostMedia />}
     </>
   );
 }

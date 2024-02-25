@@ -1,0 +1,27 @@
+.container {
+  @include flex-center();
+  height: calc(100dvh - 13rem);
+  padding: 1rem;
+}
+
+.textarea {
+  height: 100%;
+  width: 100%;
+  background-color: $white;
+  resize: none;
+  border: none;
+  outline: none;
+  @include font($body1, $regular, $black, $noto-serif);
+}
+
+.alignLeft {
+  text-align: left;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.alignRight {
+  text-align: right;
+}

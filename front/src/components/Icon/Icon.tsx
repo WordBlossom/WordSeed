@@ -25,7 +25,9 @@ type IconType =
   | "afterFollow"
   | "upDownArrow"
   | "comment"
-  | "profileEdit";
+  | "profileEdit"
+  | "audioPlay"
+  | "audioStop";
 
 interface Props {
   iconName: IconType;
