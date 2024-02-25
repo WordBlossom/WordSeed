@@ -3,7 +3,9 @@ package com.spring.wordseed.controller;
 import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.enu.*;
+import com.spring.wordseed.service.PostLikedService;
 import com.spring.wordseed.service.PostService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,15 +13,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final PostLikedService postLikedService;
     @Autowired
-    PostController(PostService postService){
+    PostController(PostService postService, PostLikedService postLikedService){
         this.postService = postService;
+        this.postLikedService = postLikedService;
     }
     // 작품 업로드
     @PostMapping("")
@@ -151,7 +154,9 @@ public class PostController {
     }
     // 좋아요 취소
     @DeleteMapping("/like")
-    public ResponseEntity<HttpStatus> deleteLike(@RequestBody DeleteLikeInDTO deleteLikeInDTO) throws Exception {
+    public ResponseEntity<HttpStatus> deleteLike(@RequestBody DeleteLikeInDTO deleteLikeInDTO, HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        postLikedService.deleteLike(deleteLikeInDTO, userId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     // 북마크 등록
