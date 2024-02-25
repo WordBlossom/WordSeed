@@ -3,6 +3,7 @@ package com.spring.wordseed.controller;
 import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.enu.*;
+import com.spring.wordseed.service.PostLikedService;
 import com.spring.wordseed.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,11 @@ import java.util.List;
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final PostLikedService postLikedService;
     @Autowired
-    PostController(PostService postService){
+    PostController(PostService postService, PostLikedService postLikedService){
         this.postService = postService;
+        this.postLikedService = postLikedService;
     }
     // 작품 업로드
     @PostMapping("")
@@ -139,13 +142,7 @@ public class PostController {
     // 좋아요 등록
     @PostMapping("/like")
     public ResponseEntity<CreateLikeOutDTO> createLike(@RequestBody CreateLikeInDTO createLikeInDTO) throws Exception{
-        CreateLikeOutDTO createLikeOutDTO = CreateLikeOutDTO.builder()
-                .postLikedId(1L)
-                .userId(1L)
-                .postId(1L)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        CreateLikeOutDTO createLikeOutDTO = postLikedService.createLike(createLikeInDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(createLikeOutDTO);
     }
