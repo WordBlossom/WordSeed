@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final CommentService commentService;
     @Autowired
     PostController(PostService postService){
         this.postService = postService;
@@ -120,14 +121,7 @@ public class PostController {
     @PutMapping("/comment")
     public ResponseEntity<UpdateCommentOutDTO> UpdatePost(@RequestBody UpdateCommentInDTO updateCommentInDTO) throws Exception {
         // add request for userId
-        UpdateCommentOutDTO updateCommentOutDTO = UpdateCommentOutDTO.builder()
-                .commentId(updateCommentInDTO.getCommentId())
-                .userId(1L)
-                .postId(1L)
-                .content(updateCommentInDTO.getContent())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        UpdateCommentOutDTO updateCommentOutDTO = commentService
 
         return ResponseEntity.status(HttpStatus.OK).body(updateCommentOutDTO);
     }
