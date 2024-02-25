@@ -1,5 +1,7 @@
 .info-wrapper {
   @include flex;
+  align-items: flex-start;
+  width: 100%;
   flex-direction: column;
   gap: 3rem;
   padding: 2rem 5rem 0 5rem;
@@ -8,7 +10,7 @@
 .info-item {
   @include flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   width: 100%;
   .title {
     padding-left: 0.5rem;
@@ -16,7 +18,7 @@
   }
   .content {
     @include flex;
-    justify-content: start;
+    justify-content: flex-start;
     width: 100%;
     border-left: 3px solid $gray;
     padding-left: 0.4rem;
@@ -26,11 +28,16 @@
       width: 100%;
       border: none;
       background-color: $white;
-      overflow-wrap: normal;
+      overflow-wrap: break-word;
       caret-color: $gray;
       &:focus {
         outline: none;
       }
     }
   }
+}
+
+.withdrawal {
+  @include flex;
+  align-items: center;
 }
