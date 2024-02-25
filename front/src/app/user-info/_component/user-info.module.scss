@@ -1,0 +1,36 @@
+.info-wrapper {
+  @include flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 2rem 5rem 0 5rem;
+}
+
+.info-item {
+  @include flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  .title {
+    padding-left: 0.5rem;
+    @include font($fs: $h4, $fw: $regular, $fc: $black, $ff: $noto-sans);
+  }
+  .content {
+    @include flex;
+    justify-content: start;
+    width: 100%;
+    border-left: 3px solid $gray;
+    padding-left: 0.4rem;
+    textarea {
+      @include font($fs: $h4, $fw: $regular, $fc: $gray, $ff: $noto-serif);
+      resize: none;
+      width: 100%;
+      border: none;
+      background-color: $white;
+      overflow-wrap: normal;
+      caret-color: $gray;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
