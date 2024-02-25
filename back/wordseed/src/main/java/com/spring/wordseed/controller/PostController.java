@@ -105,9 +105,9 @@ public class PostController {
     @PostMapping("/comment")
     public ResponseEntity<CreateCommentOutDTO> createComment(@RequestBody CreateCommentInDTO createCommentInDTO) throws Exception {
         // add request for userId
+        CreateCommentOutDTO createCommentOutDTO = postService.createComment(createCommentInDTO);
 
-
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(createCommentOutDTO);
     }
     // 댓글 수정
     @PutMapping("/comment")

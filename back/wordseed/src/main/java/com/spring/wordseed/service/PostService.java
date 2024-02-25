@@ -13,7 +13,7 @@ public interface PostService {
     ReadPostByPostIdOutDTO readPostByPostId(Long postId);
     UpdatePostOutDTO updatePost(UpdatePostInDTO updatePostInDTO) throws Exception;
     void deletePost(DeletePostInDTO deletePostInDTO);
-    CreateCommentOutDTO createComment(CreateCommentInDTO createCommentInDTO);
+    CreateCommentOutDTO createComment(CreateCommentInDTO createCommentInDTO) throws Exception;
     UpdateCommentOutDTO UpdateComment(UpdateCommentInDTO updateCommentInDTO);
     void deleteComment(DeleteCommentInDTO deleteCommentInDTO);
     CreateLikeOutDTO createLike(CreateLikeInDTO createLikeInDTO);
