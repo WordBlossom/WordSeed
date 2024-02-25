@@ -103,7 +103,7 @@ public class PostController {
     }
     // 댓글 작성
     @PostMapping("/comment")
-    public ResponseEntity<CreateCommentOutDTO> createPost(@RequestBody CreateCommentInDTO createCommentInDTO) throws Exception {
+    public ResponseEntity<CreateCommentOutDTO> createComment(@RequestBody CreateCommentInDTO createCommentInDTO) throws Exception {
         // add request for userId
         CreateCommentOutDTO createCommentOutDTO = CreateCommentOutDTO.builder()
                 .commentId(1L)
@@ -118,7 +118,7 @@ public class PostController {
     }
     // 댓글 수정
     @PutMapping("/comment")
-    public ResponseEntity<UpdateCommentOutDTO> UpdatePost(@RequestBody UpdateCommentInDTO updateCommentInDTO) throws Exception {
+    public ResponseEntity<UpdateCommentOutDTO> UpdateComment(@RequestBody UpdateCommentInDTO updateCommentInDTO) throws Exception {
         // add request for userId
         UpdateCommentOutDTO updateCommentOutDTO = UpdateCommentOutDTO.builder()
                 .commentId(updateCommentInDTO.getCommentId())
