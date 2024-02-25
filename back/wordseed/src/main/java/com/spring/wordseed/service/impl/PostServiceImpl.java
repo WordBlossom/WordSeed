@@ -106,8 +106,6 @@ public class PostServiceImpl implements PostService {
         post.setPostAlign(updatePostInDTO.getPostAlign());
         post.setPostVisibility(updatePostInDTO.getPostVisibility());
 
-        postRepo.save(post);
-
         ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postRepo.findPostByPostId(post.getPostId());
 
         return UpdatePostOutDTO.builder()
