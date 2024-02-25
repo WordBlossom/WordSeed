@@ -50,26 +50,6 @@ public class PostController {
     // 작품 수정
     @PutMapping("")
     public ResponseEntity<UpdatePostOutDTO> updatePost(@RequestBody UpdatePostInDTO updatePostInDTO) throws Exception {
-        /*
-        UpdatePostOutDTO updatePostOutDTO = UpdatePostOutDTO.builder()
-                .postId(updatePostInDTO.getPostId())
-                .content(updatePostInDTO.getContent())
-                .url(updatePostInDTO.getUrl())
-                .postType(updatePostInDTO.getPostType())
-                .postAlign(updatePostInDTO.getPostAlign())
-                .postVisibility(updatePostInDTO.getPostVisibility())
-                .likedCnt(0L)
-                .BookMarkCnt(0L)
-                .commentCnt(0L)
-                .userId(1L)
-                .wordId(1L)
-                .word("word")
-                .liked(true)
-                .bookMarked(true)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
-        */
         UpdatePostOutDTO updatePostOutDTO = postService.updatePost(updatePostInDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(updatePostOutDTO);
@@ -77,6 +57,7 @@ public class PostController {
     // 작품 삭제
     @DeleteMapping("")
     public ResponseEntity<HttpStatus> deletePost(@RequestBody DeletePostInDTO deletePostInDTO) throws Exception {
+        postService.deletePost(deletePostInDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     // 댓글 조회
