@@ -2,7 +2,9 @@ package com.spring.wordseed.controller;
 
 import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
+import com.spring.wordseed.entity.Post;
 import com.spring.wordseed.enu.*;
+import com.spring.wordseed.service.CommentService;
 import com.spring.wordseed.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,15 +13,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final CommentService commentService;
+
     @Autowired
-    PostController(PostService postService){
+    PostController(PostService postService, CommentService commentService){
         this.postService = postService;
+        this.commentService = commentService;
     }
     // 작품 업로드
     @PostMapping("")
@@ -134,6 +138,7 @@ public class PostController {
     // 댓글 삭제
     @DeleteMapping("/comment")
     public ResponseEntity<HttpStatus> deleteComment(@RequestBody DeleteCommentInDTO deleteCommentInDTO) throws Exception {
+        commentService.deleteComment(deleteCommentInDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     // 좋아요 등록
