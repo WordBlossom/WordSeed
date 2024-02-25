@@ -169,7 +169,9 @@ public class PostController {
     
     // 북마크 취소
     @DeleteMapping("/mark")
-    public ResponseEntity<HttpStatus> deleteBookMark(@RequestBody DeleteBookMarkInDTO deleteBookMarkInDTO) throws Exception {
+    public ResponseEntity<HttpStatus> deleteBookMark(@RequestBody DeleteBookMarkInDTO deleteBookMarkInDTO, HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        bookMarkService.deleteBookMark(deleteBookMarkInDTO, userId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

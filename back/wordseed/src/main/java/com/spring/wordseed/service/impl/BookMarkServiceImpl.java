@@ -1,6 +1,7 @@
 package com.spring.wordseed.service.impl;
 
 import com.spring.wordseed.dto.in.CreateBookMarkInDTO;
+import com.spring.wordseed.dto.in.DeleteBookMarkInDTO;
 import com.spring.wordseed.dto.out.CreateBookMarkOutDTO;
 import com.spring.wordseed.entity.BookMark;
 import com.spring.wordseed.repo.BookMarkRepo;
@@ -40,5 +41,11 @@ public class BookMarkServiceImpl implements BookMarkService {
                 .createdAt(bookMark.getCreatedAt())
                 .updatedAt(bookMark.getUpdatedAt())
                 .build();
+    }
+
+    @Override
+    public void deleteBookMark(DeleteBookMarkInDTO deleteBookMarkInDTO, long userId) {
+        BookMark bookMark = bookMarkRepo.findBookMarkBy(deleteBookMarkInDTO.getPostId(), userId);
+        bookMarkRepo.delete(bookMark);
     }
 }
