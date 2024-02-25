@@ -1,0 +1,9 @@
+.container {
+  @include flex;
+  position: relative;
+  height: 100%;
+}
+
+.audio {
+  display: none;
+}

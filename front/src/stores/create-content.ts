@@ -1,33 +1,39 @@
 import { create } from "zustand";
 
 interface CreateContentProps {
+  wordseed: string;
   type: "text" | "paint" | "video" | "music";
   textAlign: "alignLeft" | "alignCenter" | "alignRight";
   textContent: string;
-  mediaFile: File | null;
+  file: File | null;
 }
 
 interface CreateContentState extends CreateContentProps {
+  setWordseed: (wordseed: string) => void;
   setType: (type: "text" | "paint" | "video" | "music") => void;
   setTextAlign: (align: "alignLeft" | "alignCenter" | "alignRight") => void;
   setTextContent: (content: string) => void;
-  setMideaFile: (file: File) => void;
+  setFile: (paint: File) => void;
+  cleanFile: () => void;
   cleanCreateContentState: () => void;
 }
 
 const initialState: CreateContentProps = {
+  wordseed: "",
   type: "text",
   textAlign: "alignLeft",
   textContent: "",
-  mediaFile: null,
+  file: null,
 };
 
 const createContentStore = create<CreateContentState>((set) => ({
   ...initialState,
-  setType: (type) => set({ type: type }),
+  setWordseed: (wordseed) => set({ wordseed }),
+  setType: (type) => set({ type }),
   setTextAlign: (align) => set({ textAlign: align }),
   setTextContent: (content) => set({ textContent: content }),
-  setMideaFile: (file: File) => set({ mediaFile: file }),
+  setFile: (file) => set({ file }),
+  cleanFile: () => set({ file: null }),
   cleanCreateContentState: () => set(initialState),
 }));
 export default createContentStore;

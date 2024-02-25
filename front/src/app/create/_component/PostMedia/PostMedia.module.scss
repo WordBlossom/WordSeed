@@ -1,7 +1,59 @@
 .container {
   @include flex-center();
-  height: calc(100dvh - 9rem);
+  height: calc(100vh - 9rem);
+  width: 100%;
   padding: 1rem;
+}
+
+.preview-container {
+  width: 100%;
+  height: 100%;
+}
+
+.another-select {
+  @include flex(row, end);
+  height: 3rem;
+
+  label {
+    @include flex;
+    @include font($body1, $regular, $black);
+    gap: 0.2rem;
+  }
+}
+
+.preview-wrapper {
+  @include flex-center();
+  height: calc(100% - 6rem);
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 125%;
+
+  &:not(:has(audio)) {
+    @include shadow-drop1();
+    background-color: $light-gray;
+  }
+
+  img {
+    object-fit: cover;
+  }
+
+  &:has(video) {
+    height: fit-content;
+    padding-bottom: 0;
+  }
+
+  video {
+    max-height: 50rem;
+  }
+
+  &:has(audio) {
+    height: 100%;
+    padding-bottom: 0;
+  }
 }
 
 .upload {
@@ -13,4 +65,8 @@
   p {
     @include font($body1);
   }
+}
+
+.input {
+  display: none;
 }

@@ -14,20 +14,29 @@
 }
 
 .media {
-  @include shadow-drop1();
   position: relative;
   background-color: $light-gray;
 
   // 이미지 크기임시 값
-  min-height: 20rem;
+  width: 100%;
+  height: 0;
+  padding-bottom: 125%;
+
+  img {
+    object-fit: cover;
+  }
 
   // z-index 는 임시
   z-index: -1;
 
   video {
+    max-height: 50rem;
     width: 100%;
-    height: 30rem;
-    object-fit: cover;
+  }
+
+  &:has(video) {
+    height: fit-content;
+    padding-bottom: 0;
   }
 }
 

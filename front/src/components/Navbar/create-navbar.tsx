@@ -4,6 +4,7 @@ import createContentStore from "@/stores/create-content";
 import Button from "../Button/Button";
 import styles from "./navbar.module.scss";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function CreateNavbar() {
   const router = useRouter();
@@ -18,6 +19,10 @@ export default function CreateNavbar() {
     // 스토어에 저장된 내용 초기화
     useContentStore.cleanCreateContentState();
   };
+
+  useEffect(() => {
+    useContentStore.setWordseed(wordseed);
+  }, []);
 
   return (
     <div>
