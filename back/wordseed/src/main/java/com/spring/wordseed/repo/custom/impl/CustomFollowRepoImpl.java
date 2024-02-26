@@ -12,7 +12,8 @@ public class CustomFollowRepoImpl implements CustomFollowRepo {
     EntityManager em;
     QFollow qFollow = QFollow.follow;
     @Override
-    public void deleteFollowByIds(long srcUserId, long dstUserId) throws Exception{
+    public void deleteFollowBy(long srcUserId, long dstUserId) throws Exception{
+        if(srcUserId == dstUserId) throw new IllegalArgumentException();
         new JPADeleteClause(em, qFollow)
                 .where(qFollow.srcUser.userId.eq(srcUserId))
                 .where(qFollow.dstUser.userId.eq(dstUserId))
