@@ -219,6 +219,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                         qComment.createdAt))
                 .from(qComment)
                 .where(qComment.post.postId.eq(postId))
+                .orderBy(qComment.createdAt.desc())
                 .offset((page - 1) * size)
                 .limit(size)
                 .fetch();
