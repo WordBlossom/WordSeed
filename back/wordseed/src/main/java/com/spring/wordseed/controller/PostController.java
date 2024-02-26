@@ -2,6 +2,7 @@ package com.spring.wordseed.controller;
 
 import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
+import com.spring.wordseed.entity.Post;
 import com.spring.wordseed.enu.*;
 import com.spring.wordseed.service.CommentService;
 import com.spring.wordseed.service.PostService;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class PostController {
     private final PostService postService;
     private final CommentService commentService;
+
     @Autowired
     PostController(PostService postService, CommentService commentService){
         this.postService = postService;
@@ -53,28 +55,7 @@ public class PostController {
     // 작품 수정
     @PutMapping("")
     public ResponseEntity<UpdatePostOutDTO> updatePost(@RequestBody UpdatePostInDTO updatePostInDTO) throws Exception {
-        /*
-        UpdatePostOutDTO updatePostOutDTO = UpdatePostOutDTO.builder()
-                .postId(updatePostInDTO.getPostId())
-                .content(updatePostInDTO.getContent())
-                .url(updatePostInDTO.getUrl())
-                .postType(updatePostInDTO.getPostType())
-                .postAlign(updatePostInDTO.getPostAlign())
-                .postVisibility(updatePostInDTO.getPostVisibility())
-                .likedCnt(0L)
-                .BookMarkCnt(0L)
-                .commentCnt(0L)
-                .userId(1L)
-                .wordId(1L)
-                .word("word")
-                .liked(true)
-                .bookMarked(true)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
-        */
         UpdatePostOutDTO updatePostOutDTO = postService.updatePost(updatePostInDTO);
-
         return ResponseEntity.status(HttpStatus.OK).body(updatePostOutDTO);
     }
     // 작품 삭제
@@ -123,6 +104,7 @@ public class PostController {
     // 댓글 삭제
     @DeleteMapping("/comment")
     public ResponseEntity<HttpStatus> deleteComment(@RequestBody DeleteCommentInDTO deleteCommentInDTO) throws Exception {
+        commentService.deleteComment(deleteCommentInDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     // 좋아요 등록

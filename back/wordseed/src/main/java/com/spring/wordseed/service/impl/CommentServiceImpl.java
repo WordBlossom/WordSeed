@@ -4,6 +4,7 @@ import com.spring.wordseed.dto.in.UpdateCommentInDTO;
 import com.spring.wordseed.dto.out.UpdateCommentOutDTO;
 import com.spring.wordseed.dto.in.CreateCommentInDTO;
 import com.spring.wordseed.dto.out.CreateCommentOutDTO;
+import com.spring.wordseed.dto.in.DeleteCommentInDTO;
 import com.spring.wordseed.entity.Comment;
 import com.spring.wordseed.repo.CommentRepo;
 import com.spring.wordseed.repo.PostRepo;
@@ -27,6 +28,7 @@ public class CommentServiceImpl implements CommentService {
         this.userRepo = userRepo;
         this.postRepo = postRepo;
     }
+  
     @Override
     public UpdateCommentOutDTO updateComment(UpdateCommentInDTO updateCommentInDTO) throws Exception {
         Comment comment = commentRepo.findById(updateCommentInDTO.getCommentId()).orElseThrow(Exception::new);
@@ -62,5 +64,11 @@ public class CommentServiceImpl implements CommentService {
                 .createdAt(comment.getCreatedAt())
                 .updatedAt(comment.getUpdatedAt())
                 .build();
+    }
+  
+    @Override
+    public void deleteComment(DeleteCommentInDTO deleteCommentInDTO) throws Exception {
+        Comment comment = commentRepo.findById(deleteCommentInDTO.getCommentId()).orElseThrow(Exception::new);
+        commentRepo.delete(comment);
     }
 }
