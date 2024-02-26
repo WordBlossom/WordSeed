@@ -116,14 +116,7 @@ public class PostController {
     @PutMapping("/comment")
     public ResponseEntity<UpdateCommentOutDTO> UpdateComment(@RequestBody UpdateCommentInDTO updateCommentInDTO) throws Exception {
         // add request for userId
-        UpdateCommentOutDTO updateCommentOutDTO = UpdateCommentOutDTO.builder()
-                .commentId(updateCommentInDTO.getCommentId())
-                .userId(1L)
-                .postId(1L)
-                .content(updateCommentInDTO.getContent())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        UpdateCommentOutDTO updateCommentOutDTO = commentService.updateComment(updateCommentInDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(updateCommentOutDTO);
     }
