@@ -24,14 +24,13 @@ public class PostLikedServiceImpl implements PostLikedService {
     }
 
     @Override
-    public CreateLikeOutDTO createLike(CreateLikeInDTO createLikeInDTO) throws Exception {
+    public CreateLikeOutDTO createLike(CreateLikeInDTO createLikeInDTO, Long userId) throws Exception {
         PostLiked postLiked = PostLiked.builder()
-                .user(userRepo.findById(7L).orElseThrow(Exception::new))
+                .user(userRepo.findById(userId).orElseThrow(Exception::new))
                 .post(postRepo.findById(createLikeInDTO.getPostId()).orElseThrow(Exception::new))
                 .build();
 
         postLikedRepo.save(postLiked);
-        postLikedRepo.flush();
 
         return CreateLikeOutDTO.builder()
                 .postLikedId(postLiked.getPostLikedId())

@@ -5,5 +5,5 @@ import com.spring.wordseed.dto.out.CreateLikeOutDTO;
 
 public interface PostLikedService {
 
-    CreateLikeOutDTO createLike(CreateLikeInDTO createLikeInDTO) throws Exception;
+    CreateLikeOutDTO createLike(CreateLikeInDTO createLikeInDTO, Long userId) throws Exception;
 }

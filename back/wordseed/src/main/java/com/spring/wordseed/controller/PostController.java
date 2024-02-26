@@ -5,6 +5,7 @@ import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.enu.*;
 import com.spring.wordseed.service.PostLikedService;
 import com.spring.wordseed.service.PostService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -141,8 +142,9 @@ public class PostController {
     }
     // 좋아요 등록
     @PostMapping("/like")
-    public ResponseEntity<CreateLikeOutDTO> createLike(@RequestBody CreateLikeInDTO createLikeInDTO) throws Exception{
-        CreateLikeOutDTO createLikeOutDTO = postLikedService.createLike(createLikeInDTO);
+    public ResponseEntity<CreateLikeOutDTO> createLike(@RequestBody CreateLikeInDTO createLikeInDTO, HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        CreateLikeOutDTO createLikeOutDTO = postLikedService.createLike(createLikeInDTO, userId);
 
         return ResponseEntity.status(HttpStatus.OK).body(createLikeOutDTO);
     }
