@@ -24,18 +24,14 @@ import java.util.List;
 public class CustomPostLikedRepoImpl implements CustomPostLikedRepo {
     @PersistenceContext
     EntityManager em;
-    private final QPost qPost = QPost.post;
-    private final QUser qUser = QUser.user;
     private final QPostLiked qPostLiked = QPostLiked.postLiked;
     @Override
     public PostLiked FindPostLikedIdBy(Long userId, Long postId) {
         return new JPAQuery<>(em)
                 .select(qPostLiked)
                 .from(qPostLiked)
-                .join(qPostLiked.user, qUser)
-                .join(qPostLiked.post, qPost)
-                .where(qUser.userId.eq(userId))
-                .where(qPost.postId.eq(postId))
+                .where(qPostLiked.user.userId.eq(userId))
+                .where(qPostLiked.post.postId.eq(postId))
                 .fetchOne();
     }
 }

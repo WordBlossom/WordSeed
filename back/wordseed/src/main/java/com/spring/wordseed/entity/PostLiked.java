@@ -11,7 +11,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "post_likeds")
+@Table(name = "post_likeds",
+uniqueConstraints = {
+        @UniqueConstraint(
+                name="postLikedConstrain",
+                columnNames = {"user_id", "post_id"}
+        )
+})
 public class PostLiked {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
