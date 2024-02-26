@@ -4,6 +4,7 @@ import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.entity.Post;
 import com.spring.wordseed.enu.*;
+import com.spring.wordseed.service.PostLikedService;
 import com.spring.wordseed.service.CommentService;
 import com.spring.wordseed.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,13 +20,16 @@ import java.util.ArrayList;
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final PostLikedService postLikedService;
     private final CommentService commentService;
-
+  
     @Autowired
-    PostController(PostService postService, CommentService commentService){
+    PostController(PostService postService, PostLikedService postLikedService, CommentService commentService){
         this.postService = postService;
+        this.postLikedService = postLikedService;
         this.commentService = commentService;
     }
+  
     // 작품 업로드
     @PostMapping("")
     public ResponseEntity<CreatePostOutDTO> createPost(@RequestBody CreatePostInDTO createPostInDTO) throws Exception {
@@ -109,14 +113,9 @@ public class PostController {
     }
     // 좋아요 등록
     @PostMapping("/like")
-    public ResponseEntity<CreateLikeOutDTO> createLike(@RequestBody CreateLikeInDTO createLikeInDTO) throws Exception{
-        CreateLikeOutDTO createLikeOutDTO = CreateLikeOutDTO.builder()
-                .postLikedId(1L)
-                .userId(1L)
-                .postId(1L)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+    public ResponseEntity<CreateLikeOutDTO> createLike(@RequestBody CreateLikeInDTO createLikeInDTO, HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        CreateLikeOutDTO createLikeOutDTO = postLikedService.createLike(createLikeInDTO, userId);
 
         return ResponseEntity.status(HttpStatus.OK).body(createLikeOutDTO);
     }
