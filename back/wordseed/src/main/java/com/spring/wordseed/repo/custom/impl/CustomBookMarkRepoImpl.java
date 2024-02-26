@@ -9,18 +9,14 @@ import jakarta.persistence.PersistenceContext;
 public class CustomBookMarkRepoImpl implements CustomBookMarkRepo {
     @PersistenceContext
     EntityManager em;
-    private final QPost qPost = QPost.post;
-    private final QUser qUser = QUser.user;
     private final QBookMark qBookMark = QBookMark.bookMark;
     @Override
     public BookMark findBookMarkBy(Long postId, Long userId) {
         return new JPAQuery<>(em)
                 .select(qBookMark)
                 .from(qBookMark)
-                .join(qBookMark.post, qPost)
-                .join(qBookMark.user, qUser)
-                .where(qPost.postId.eq(postId))
-                .where(qUser.userId.eq(userId))
+                .where(qBookMark.post.postId.eq(postId))
+                .where(qBookMark.user.userId.eq(userId))
                 .fetchOne();
     }
 }

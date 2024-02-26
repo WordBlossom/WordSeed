@@ -6,6 +6,5 @@ import com.spring.wordseed.dto.out.CreateBookMarkOutDTO;
 
 public interface BookMarkService {
     CreateBookMarkOutDTO createBookMark(CreateBookMarkInDTO createBookMarkInDTO, Long userId) throws Exception;
-
     void deleteBookMark(DeleteBookMarkInDTO deleteBookMarkInDTO, long userId);
 }
