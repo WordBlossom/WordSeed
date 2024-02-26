@@ -3,7 +3,9 @@ package com.spring.wordseed.controller;
 import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.enu.*;
+import com.spring.wordseed.service.CommentService;
 import com.spring.wordseed.service.PostService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,15 +13,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final CommentService commentService;
     @Autowired
-    PostController(PostService postService){
+    PostController(PostService postService, CommentService commentService){
         this.postService = postService;
+        this.commentService = commentService;
     }
     // 작품 업로드
     @PostMapping("")
@@ -103,22 +106,15 @@ public class PostController {
     }
     // 댓글 작성
     @PostMapping("/comment")
-    public ResponseEntity<CreateCommentOutDTO> createPost(@RequestBody CreateCommentInDTO createCommentInDTO) throws Exception {
-        // add request for userId
-        CreateCommentOutDTO createCommentOutDTO = CreateCommentOutDTO.builder()
-                .commentId(1L)
-                .userId(1L)
-                .postId(createCommentInDTO.getPostId())
-                .content(createCommentInDTO.getContent())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+    public ResponseEntity<CreateCommentOutDTO> createComment(@RequestBody CreateCommentInDTO createCommentInDTO, HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        CreateCommentOutDTO createCommentOutDTO = commentService.createComment(createCommentInDTO, userId);
 
         return ResponseEntity.status(HttpStatus.OK).body(createCommentOutDTO);
     }
     // 댓글 수정
     @PutMapping("/comment")
-    public ResponseEntity<UpdateCommentOutDTO> UpdatePost(@RequestBody UpdateCommentInDTO updateCommentInDTO) throws Exception {
+    public ResponseEntity<UpdateCommentOutDTO> UpdateComment(@RequestBody UpdateCommentInDTO updateCommentInDTO) throws Exception {
         // add request for userId
         UpdateCommentOutDTO updateCommentOutDTO = UpdateCommentOutDTO.builder()
                 .commentId(updateCommentInDTO.getCommentId())
