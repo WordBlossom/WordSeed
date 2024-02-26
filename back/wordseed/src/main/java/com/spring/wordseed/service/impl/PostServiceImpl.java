@@ -129,9 +129,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(DeletePostInDTO deletePostInDTO) throws Exception {
-        Optional<Post> post = postRepo.findById(deletePostInDTO.getPostId());
-        postRepo.delete(post.orElseThrow(Exception::new));
+    public void deletePost(DeletePostInDTO deletePostInDTO, Long userId) throws Exception {
+        //Optional<Post> post = postRepo.findById(deletePostInDTO.getPostId());
+        //postRepo.delete(post.orElseThrow(Exception::new));
+        Post post = postRepo.findPostBy(deletePostInDTO.getPostId(), userId).orElseThrow(Exception::new);
+        postRepo.delete(post);
     }
 
     @Override
