@@ -32,11 +32,7 @@ public class WordController {
     }
     @GetMapping
     public ResponseEntity<ReadWordByDateOutDTO> readWordByDate(@RequestParam("date") @DateTimeFormat(pattern="yyyy-mm-dd") LocalDate date) throws Exception {
-        ReadWordByDateOutDTO readWordByDateOutDTO = ReadWordByDateOutDTO.builder()
-                .wordId(1)
-                .date(date)
-                .word("하늘")
-                .build();
+        ReadWordByDateOutDTO readWordByDateOutDTO = wordService.readWordByDate(date);
         return ResponseEntity.status(HttpStatus.OK).body(readWordByDateOutDTO);
     }
 
