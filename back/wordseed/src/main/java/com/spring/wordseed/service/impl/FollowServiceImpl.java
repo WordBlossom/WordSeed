@@ -1,6 +1,7 @@
 package com.spring.wordseed.service.impl;
 
 import com.spring.wordseed.dto.in.CreateFollowInDTO;
+import com.spring.wordseed.dto.in.DeleteFollowInDTO;
 import com.spring.wordseed.entity.Follow;
 import com.spring.wordseed.entity.User;
 import com.spring.wordseed.repo.FollowRepo;
@@ -22,16 +23,27 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public void createFollow(CreateFollowInDTO createFollowInDTO) throws Exception {
-        if(createFollowInDTO.getSrcUserId() == createFollowInDTO.getDstUserId())
+        long srcUserId = createFollowInDTO.getSrcUserId();
+        long dstUserId = createFollowInDTO.getDstUserId();
+        if(srcUserId == dstUserId)
             throw new IllegalArgumentException();
-        User srcUser = userRepo.findById(createFollowInDTO.getSrcUserId())
+        User srcUser = userRepo.findById(srcUserId)
                 .orElseThrow(IllegalArgumentException::new);
-        User dstUser = userRepo.findById(createFollowInDTO.getDstUserId())
+        User dstUser = userRepo.findById(dstUserId)
                 .orElseThrow(IllegalArgumentException::new);
         Follow follow = Follow.builder()
                 .srcUser(srcUser)
                 .dstUser(dstUser)
                 .build();
         followRepo.save(follow);
+    }
+
+    @Override
+    public void deleteFollow(DeleteFollowInDTO deleteFollowInDTO) throws Exception {
+        long srcUserId = deleteFollowInDTO.getSrcUserId();
+        long dstUserId = deleteFollowInDTO.getDstUserId();
+        if(srcUserId == dstUserId)
+            throw new IllegalArgumentException();
+        followRepo.deleteFollowByIds(srcUserId, dstUserId);
     }
 }

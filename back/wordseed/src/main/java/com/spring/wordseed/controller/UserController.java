@@ -120,7 +120,11 @@ public class UserController {
     }
 
     @DeleteMapping("follow")
-    public ResponseEntity<String> readUser(@RequestBody DeleteFollowInDTO deleteFollowInDTO) throws Exception {
+    public ResponseEntity<String> deleteFollow(@RequestBody DeleteFollowInDTO deleteFollowInDTO,
+                                               HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        deleteFollowInDTO.setSrcUserId(userId);
+        followService.deleteFollow(deleteFollowInDTO);
         return ResponseEntity.status(HttpStatus.OK).body("SUCCESS");
     }
 }
