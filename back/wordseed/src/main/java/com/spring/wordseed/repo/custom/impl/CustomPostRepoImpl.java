@@ -9,6 +9,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.spring.wordseed.dto.out.ReadPostByPostIdOutDTO;
 import com.spring.wordseed.dto.out.ReadPostOutDTO;
+import com.spring.wordseed.dto.out.ReadPostOutDTOs;
 import com.spring.wordseed.entity.*;
 import com.spring.wordseed.enu.PostSort;
 import com.spring.wordseed.enu.PostType;
@@ -91,7 +92,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .fetchOne();
 
         return readPostByPostIdOutDTO;
-    }    
+    }
 
     @Override
     public List<ReadPostOutDTO> FindPostAllBy(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size) {
@@ -132,7 +133,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 "EXISTS(SELECT * FROM POST_LIKEDS PL JOIN POSTS P ON PL.POST_ID = P.POST_ID WHERE PL.USER_ID = :bind2 AND P.POST_ID = PID), " +
                 "EXISTS(SELECT * FROM FOLLOWS F WHERE F.SRC_ID = :bind3 AND F.DST_ID = P.USER_ID), " +
                 "DATE_FORMAT(P.CREATED_AT, '%Y-%m-%d %H:%i:%s') AS CREATED_AT," +
-                 "DATE_FORMAT(P.UPDATED_AT, '%Y-%m-%d %H:%i:%s') AS UPDATED_AT " +
+                "DATE_FORMAT(P.UPDATED_AT, '%Y-%m-%d %H:%i:%s') AS UPDATED_AT " +
                 "FROM POSTS P " +
                 "JOIN USERS U ON P.USER_ID = U.USER_ID " +
                 "JOIN WORDS W ON P.WORD_ID = W.WORD_ID " +
@@ -154,7 +155,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
         List<ReadPostOutDTO> readPostOutDTOs = new ArrayList<>();
 
         // initialize data
-        for (Object[] row : resultList){
+        for (Object[] row : resultList) {
             Long rPostId = (Long) row[0];
             Long rUserId = (Long) row[1];
             String rUserName = (String) row[2];
@@ -205,4 +206,45 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
         return readPostOutDTOs;
     }
+
+    @Override
+    public List<ReadPostOutDTO> FindPostAllUserDSLBy(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+        List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
+                .map(PostType::valueOf)
+                .toList();
+
+        /*
+        postType=text,img,sound,video
+        &sort=DATE_ASC
+        &query=하늘
+        &page=4
+        &size=10
+        &userId=123
+        &mark=true
+        */
+        List<ReadPostOutDTO> readPostOutDTOList = new JPAQuery<>(em)
+                .select(Projections.constructor(ReadPostOutDTO.class,
+                        qPost.postId,// postId()
+                        qPost.user.userId,// userId()
+                        qPost.user.userName,// userName()
+                        qPost.postType,// postType()
+                        qPost.content,// content()
+                        qPost.url,// url()
+                        qPost.likedCnt,// likedCnt()
+                        qPost.bookMarkCnt,// bookMarkCnt()
+                        qPost.commentCnt,// commentCnt()
+                        Expressions.TRUE,// liked()
+                        Expressions.TRUE,// bookMarked()
+                        Expressions.TRUE,// subscribed()
+                        qPost.createdAt,// createdAt()
+                        qPost.updatedAt))
+                .from(qPost)
+                .where(qPost.postType.in(postTypeList))
+
+                .orderBy()
+                .fetch();
+        return null;
+    }
+
+
 }

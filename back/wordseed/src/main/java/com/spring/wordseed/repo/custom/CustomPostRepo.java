@@ -11,4 +11,5 @@ import java.util.List;
 public interface CustomPostRepo {
     ReadPostByPostIdOutDTO findPostByPostId(Long postId);
     List<ReadPostOutDTO> FindPostAllBy(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size);
+    List<ReadPostOutDTO> FindPostAllUserDSLBy(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId);
 }

@@ -22,14 +22,14 @@ public class PostController {
     private final PostService postService;
     private final PostLikedService postLikedService;
     private final CommentService commentService;
-  
+
     @Autowired
-    PostController(PostService postService, PostLikedService postLikedService, CommentService commentService){
+    PostController(PostService postService, PostLikedService postLikedService, CommentService commentService) {
         this.postService = postService;
         this.postLikedService = postLikedService;
         this.commentService = commentService;
     }
-  
+
     // 작품 업로드
     @PostMapping("")
     public ResponseEntity<CreatePostOutDTO> createPost(@RequestBody CreatePostInDTO createPostInDTO) throws Exception {
@@ -37,41 +37,48 @@ public class PostController {
 
         return ResponseEntity.status(HttpStatus.OK).body(createPostOutDTO);
     }
+
     // 작품 목록 조회
     @GetMapping("/list")
     public ResponseEntity<ReadPostOutDTOs> readPosts(@RequestParam("postType") String postType,
-                                                          @RequestParam("mark") String mark,
-                                                          @RequestParam("userId") Long userId,
-                                                          @RequestParam("sort") PostSort sort,
-                                                          @RequestParam("query") String query,
-                                                          @RequestParam("page") Long page,
-                                                          @RequestParam("size") Long size) throws Exception {
-        ReadPostOutDTOs readPostOutDTOs = postService.readPosts(postType, mark, userId, sort, query, page, size);
+                                                     @RequestParam("mark") String mark,
+                                                     @RequestParam("userId") Long userId,
+                                                     @RequestParam("sort") PostSort sort,
+                                                     @RequestParam("query") String query,
+                                                     @RequestParam("page") Long page,
+                                                     @RequestParam("size") Long size,
+                                                     HttpServletRequest request) throws Exception {
+        long srcUserId = (long) request.getAttribute("userId");
+        ReadPostOutDTOs readPostOutDTOs = postService.readPosts(postType, mark, userId, sort, query, page, size, srcUserId);
 
         return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
     }
+
     // 작품 상세 조회
     @GetMapping("/detail")
     public ResponseEntity<ReadPostByPostIdOutDTO> readPostByPostId(@RequestParam("postId") Long postId) throws Exception {
         ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postService.readPostByPostId(postId);
         return ResponseEntity.status(HttpStatus.OK).body(readPostByPostIdOutDTO);
     }
+
     // 작품 수정
     @PutMapping("")
     public ResponseEntity<UpdatePostOutDTO> updatePost(@RequestBody UpdatePostInDTO updatePostInDTO) throws Exception {
         UpdatePostOutDTO updatePostOutDTO = postService.updatePost(updatePostInDTO);
         return ResponseEntity.status(HttpStatus.OK).body(updatePostOutDTO);
     }
+
     // 작품 삭제
     @DeleteMapping("")
     public ResponseEntity<HttpStatus> deletePost(@RequestBody DeletePostInDTO deletePostInDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
     // 댓글 조회
     @GetMapping("/comment")
     public ResponseEntity<ReadCommentOutDTOs> readComments(@RequestParam("postId") Long postId,
-                                                                @RequestParam("page") Long page,
-                                                                @RequestParam("size") Long size) {
+                                                           @RequestParam("page") Long page,
+                                                           @RequestParam("size") Long size) {
         ReadCommentOutDTOs readCommentOutDTOs = ReadCommentOutDTOs.builder()
                 .comments(new ArrayList<>()).build();
 
@@ -89,6 +96,7 @@ public class PostController {
 
         return ResponseEntity.status(HttpStatus.OK).body(readCommentOutDTOs);
     }
+
     // 댓글 작성
     @PostMapping("/comment")
     public ResponseEntity<CreateCommentOutDTO> createComment(@RequestBody CreateCommentInDTO createCommentInDTO, HttpServletRequest request) throws Exception {
@@ -97,6 +105,7 @@ public class PostController {
 
         return ResponseEntity.status(HttpStatus.OK).body(createCommentOutDTO);
     }
+
     // 댓글 수정
     @PutMapping("/comment")
     public ResponseEntity<UpdateCommentOutDTO> UpdateComment(@RequestBody UpdateCommentInDTO updateCommentInDTO) throws Exception {
@@ -105,12 +114,14 @@ public class PostController {
 
         return ResponseEntity.status(HttpStatus.OK).body(updateCommentOutDTO);
     }
+
     // 댓글 삭제
     @DeleteMapping("/comment")
     public ResponseEntity<HttpStatus> deleteComment(@RequestBody DeleteCommentInDTO deleteCommentInDTO) throws Exception {
         commentService.deleteComment(deleteCommentInDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
     // 좋아요 등록
     @PostMapping("/like")
     public ResponseEntity<CreateLikeOutDTO> createLike(@RequestBody CreateLikeInDTO createLikeInDTO, HttpServletRequest request) throws Exception {
@@ -119,14 +130,16 @@ public class PostController {
 
         return ResponseEntity.status(HttpStatus.OK).body(createLikeOutDTO);
     }
+
     // 좋아요 취소
     @DeleteMapping("/like")
     public ResponseEntity<HttpStatus> deleteLike(@RequestBody DeleteLikeInDTO deleteLikeInDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
     // 북마크 등록
     @PostMapping("/mark")
-    public ResponseEntity<CreateBookMarkOutDTO> createBookMark(@RequestBody CreateBookMarkInDTO createBookMarkInDTO) throws Exception{
+    public ResponseEntity<CreateBookMarkOutDTO> createBookMark(@RequestBody CreateBookMarkInDTO createBookMarkInDTO) throws Exception {
         CreateBookMarkOutDTO createBookMarkOutDTO = CreateBookMarkOutDTO.builder()
                 .bookMarkId(1L)
                 .userId(1L)
@@ -137,7 +150,7 @@ public class PostController {
 
         return ResponseEntity.status(HttpStatus.OK).body(createBookMarkOutDTO);
     }
-    
+
     // 북마크 취소
     @DeleteMapping("/mark")
     public ResponseEntity<HttpStatus> deleteBookMark(@RequestBody DeleteBookMarkInDTO deleteBookMarkInDTO) throws Exception {
