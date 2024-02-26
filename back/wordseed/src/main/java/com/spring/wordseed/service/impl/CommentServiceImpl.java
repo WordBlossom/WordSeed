@@ -25,10 +25,10 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public CreateCommentOutDTO createComment(CreateCommentInDTO createCommentInDTO) throws Exception {
+    public CreateCommentOutDTO createComment(CreateCommentInDTO createCommentInDTO, Long userId) throws Exception {
         Comment comment = Comment.builder()
                 .content(createCommentInDTO.getContent())
-                .user(userRepo.findById(100L).orElseThrow(Exception::new)) // error
+                .user(userRepo.findById(userId).orElseThrow(Exception::new))
                 .post(postRepo.findById(createCommentInDTO.getPostId()).orElseThrow(Exception::new))
                 .build();
 

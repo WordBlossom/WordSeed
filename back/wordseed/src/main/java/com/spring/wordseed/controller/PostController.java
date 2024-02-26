@@ -5,6 +5,7 @@ import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.enu.*;
 import com.spring.wordseed.service.CommentService;
 import com.spring.wordseed.service.PostService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -105,9 +106,9 @@ public class PostController {
     }
     // 댓글 작성
     @PostMapping("/comment")
-    public ResponseEntity<CreateCommentOutDTO> createComment(@RequestBody CreateCommentInDTO createCommentInDTO) throws Exception {
-        // add request for userId
-        CreateCommentOutDTO createCommentOutDTO = commentService.createComment(createCommentInDTO);
+    public ResponseEntity<CreateCommentOutDTO> createComment(@RequestBody CreateCommentInDTO createCommentInDTO, HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        CreateCommentOutDTO createCommentOutDTO = commentService.createComment(createCommentInDTO, userId);
 
         return ResponseEntity.status(HttpStatus.OK).body(createCommentOutDTO);
     }
