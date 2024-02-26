@@ -8,6 +8,7 @@ import com.spring.wordseed.dto.tool.UserDTO;
 import com.spring.wordseed.enu.FollowType;
 import com.spring.wordseed.enu.Informable;
 import com.spring.wordseed.enu.UserType;
+import com.spring.wordseed.service.FollowService;
 import com.spring.wordseed.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,12 @@ import java.util.List;
 @RequestMapping(value = "/user", produces = "application/json; charset=utf-8")
 public class UserController {
     private final UserService userService;
+    private final FollowService followService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, FollowService followService) {
         this.userService = userService;
+        this.followService = followService;
     }
     @GetMapping
     public ResponseEntity<ReadUserOutDTO> readUser(HttpServletRequest request) throws Exception {
@@ -108,7 +111,11 @@ public class UserController {
     }
 
     @PostMapping("follow")
-    public ResponseEntity<String> readUser(@RequestBody CreateFollowInDTO createFollowInDTO) throws Exception {
+    public ResponseEntity<String> createFollow(@RequestBody CreateFollowInDTO createFollowInDTO,
+                                               HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        createFollowInDTO.setSrcUserId(userId);
+        followService.createFollow(createFollowInDTO);
         return ResponseEntity.status(HttpStatus.OK).body("SUCCESS");
     }
 
