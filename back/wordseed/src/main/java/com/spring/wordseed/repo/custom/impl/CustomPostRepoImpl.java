@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
+import com.spring.wordseed.dto.out.ReadCommentOutDTO;
 import com.spring.wordseed.dto.out.ReadPostByPostIdOutDTO;
 import com.spring.wordseed.dto.out.ReadPostOutDTO;
 import com.spring.wordseed.entity.*;
@@ -35,6 +36,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
     private final QPostLiked qPostLiked = QPostLiked.postLiked;
     private final QWord qWord = QWord.word1;
     private final QFollow qFollow = QFollow.follow;
+    private final QComment qComment = QComment.comment;
 
     @Override
     public ReadPostByPostIdOutDTO findPostByPostId(Long postId) {
@@ -207,6 +209,25 @@ public class CustomPostRepoImpl implements CustomPostRepo {
         return readPostOutDTOs;
     }
 
+    @Override
+    public List<ReadCommentOutDTO> findCommentAllBy(Long postId, Long page, Long size) {
+        List<ReadCommentOutDTO> ReadCommentOutDTOList = new JPAQuery<>(em)
+                .select(Projections.constructor(ReadCommentOutDTO.class,
+                        qComment.commentId,
+                        qComment.user.userId,
+                        qComment.post.postId,
+                        qComment.content,
+                        qComment.createdAt))
+                .from(qComment)
+                .where(qComment.post.postId.eq(postId))
+                .orderBy(qComment.createdAt.desc())
+                .offset((page - 1) * size)
+                .limit(size)
+                .fetch();
+
+        return ReadCommentOutDTOList;
+    }
+  
     @Override
     public Optional<Post> findPostBy(Long postId, Long userId) {
         Post post = new JPAQuery<>(em)

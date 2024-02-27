@@ -74,21 +74,8 @@ public class PostController {
     public ResponseEntity<ReadCommentOutDTOs> readComments(@RequestParam("postId") Long postId,
                                                                 @RequestParam("page") Long page,
                                                                 @RequestParam("size") Long size) {
-        ReadCommentOutDTOs readCommentOutDTOs = ReadCommentOutDTOs.builder()
-                .comments(new ArrayList<>()).build();
 
-        for (int i = 0; i < 5; i++) {
-            ReadCommentOutDTO readCommentOutDTO = ReadCommentOutDTO.builder()
-                    .commentId(1L)
-                    .userId(1L)
-                    .postId(postId)
-                    .content("content")
-                    .createdAt(LocalDateTime.now())
-                    .build();
-
-            readCommentOutDTOs.getComments().add(readCommentOutDTO);
-        }
-
+        ReadCommentOutDTOs readCommentOutDTOs = postService.readComment(postId, page, size);
         return ResponseEntity.status(HttpStatus.OK).body(readCommentOutDTOs);
     }
     // 댓글 작성

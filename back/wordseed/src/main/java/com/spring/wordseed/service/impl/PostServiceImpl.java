@@ -125,6 +125,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public ReadCommentOutDTOs readComment(Long postId, Long page, Long size) {
+        ReadCommentOutDTOs comments = ReadCommentOutDTOs.builder()
+                .comments(new ArrayList<>())
+                .build();
+
+        List<ReadCommentOutDTO> readCommentOutDTOList = postRepo.findCommentAllBy(postId, page, size);
+
+        for(ReadCommentOutDTO readCommentOutDTO : readCommentOutDTOList)
+            comments.getComments().add(readCommentOutDTO);
+
+        return comments;
+    }
+
+    @Override
     public void deletePost(DeletePostInDTO deletePostInDTO, Long userId) throws Exception {
         Post post = postRepo.findPostBy(deletePostInDTO.getPostId(), userId).orElseThrow(Exception::new);
         postRepo.delete(post);
