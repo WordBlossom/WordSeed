@@ -1,8 +1,6 @@
+import { todaysDate } from "@/utils/getDateUtils";
+import WordseedMain from "@/components/wordseed-main/wordseed-main";
+
 export default function Home() {
-  return (
-    <>
-      <h1>Wordseed</h1>
-      <h2>Wordseed : Today&apos;s Wordseed</h2>
-    </>
-  );
+  return <WordseedMain date={todaysDate} />;
 }
