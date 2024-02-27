@@ -15,7 +15,7 @@ export default function WordseedNavbar() {
 
   return (
     <IncludeMenu>
-      <p className={styles.date}>{`20${year}년 ${month}월 ${day}일`}</p>
+      <p className={styles.date}>{`${year}년 ${month}월 ${day}일`}</p>
     </IncludeMenu>
   );
 }
