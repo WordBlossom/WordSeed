@@ -11,8 +11,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "post_likeds")
-public class PostLiked {
+@Table(name = "post_likeds",
+uniqueConstraints = {
+        @UniqueConstraint(
+                name="postLikedConstrain",
+                columnNames = {"user_id", "post_id"}
+        )
+})
+public class PostLiked extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postLikedId;

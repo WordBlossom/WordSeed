@@ -1,0 +1,27 @@
+version: "3"
+services:
+  database_mysql:
+    container_name: database_mysql
+    build: ./database/mysql
+    env_file:
+      - ./database/env/mysql.env
+    environment:
+      - TZ=Asia/Seoul
+      - LANG=C.UTF-8
+      - LC_ALL=C.UTF-8
+    ports:
+      - "3306:3306"
+      - "33060:33060"
+    volumes:
+      - ./database/mysql/res/data:/var/lib/mysql
+    command: "mysqld"
+
+  backend_spring:
+    container_name: backend_spring
+    environment:
+      - TZ=Asia/Seoul
+    build: ./back/wordseed
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database_mysql
