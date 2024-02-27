@@ -1,5 +1,7 @@
 package com.spring.wordseed.service.impl;
 
+import com.querydsl.jpa.impl.JPAQuery;
+import com.spring.wordseed.dto.in.DeleteLikeInDTO;
 import com.spring.wordseed.dto.in.CreateLikeInDTO;
 import com.spring.wordseed.dto.out.CreateLikeOutDTO;
 import com.spring.wordseed.entity.PostLiked;
@@ -39,5 +41,11 @@ public class PostLikedServiceImpl implements PostLikedService {
                 .createdAt(postLiked.getCreatedAt())
                 .updatedAt(postLiked.getUpdatedAt())
                 .build();
+    }
+  
+    @Override
+    public void deleteLike(DeleteLikeInDTO deleteLikeInDTO, Long userId) {
+        PostLiked postLiked = postLikedRepo.FindPostLikedIdBy(userId, deleteLikeInDTO.getPostId());
+        postLikedRepo.delete(postLiked);
     }
 }

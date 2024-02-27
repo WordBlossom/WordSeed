@@ -110,7 +110,9 @@ public class PostController {
     }
     // 좋아요 취소
     @DeleteMapping("/like")
-    public ResponseEntity<HttpStatus> deleteLike(@RequestBody DeleteLikeInDTO deleteLikeInDTO) throws Exception {
+    public ResponseEntity<HttpStatus> deleteLike(@RequestBody DeleteLikeInDTO deleteLikeInDTO, HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        postLikedService.deleteLike(deleteLikeInDTO, userId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     // 북마크 등록
