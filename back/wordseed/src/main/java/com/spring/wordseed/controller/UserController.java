@@ -56,7 +56,8 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<ReadUserOutDTOs> readUsers(@ModelAttribute ReadUserInDTOs readUserInDTOs, HttpServletRequest request) throws Exception {
+    public ResponseEntity<ReadUserOutDTOs> readUsers(@ModelAttribute ReadUserInDTOs readUserInDTOs,
+                                                     HttpServletRequest request) throws Exception {
         long userId = (long) request.getAttribute("userId");
         readUserInDTOs.setUserId(userId);
         ReadUserOutDTOs readUserOutDTOs = userService.readUsers(readUserInDTOs);
@@ -64,15 +65,10 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<ReadUserInfoByIdOutDTO> readUserInfoById(@RequestParam("userId") long userId) throws Exception {
-        ReadUserInfoByIdOutDTO readUserInfoByIdOutDTO = ReadUserInfoByIdOutDTO.builder()
-                .userId(userId)
-                .userName("딸기 신부")
-                .userDecp("형편없는 내 글을 견디면서 글을 쭉 써보자")
-                .postCnt(15)
-                .recvCnt(50)
-                .sendCnt(10)
-                .build();
+    public ResponseEntity<ReadUserInfoByIdOutDTO> readUserInfoById(@RequestParam("userId") long dstUserId,
+                                                                   HttpServletRequest request) throws Exception {
+        long srcUserId = (long) request.getAttribute("userId");
+        ReadUserInfoByIdOutDTO readUserInfoByIdOutDTO = userService.readUserInfo(srcUserId, dstUserId);
         return ResponseEntity.status(HttpStatus.OK).body(readUserInfoByIdOutDTO);
     }
     @GetMapping("/follow") // out dto에 구독자인지 관심작가인지 enum 만들어서 보내주는 것도 좋을듯?

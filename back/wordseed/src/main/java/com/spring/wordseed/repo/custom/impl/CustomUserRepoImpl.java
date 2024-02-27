@@ -4,6 +4,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
+import com.spring.wordseed.dto.out.ReadUserInfoByIdOutDTO;
 import com.spring.wordseed.dto.tool.UserDTO;
 import com.spring.wordseed.entity.QFollow;
 import com.spring.wordseed.entity.QUser;
@@ -55,12 +56,40 @@ public class CustomUserRepoImpl implements CustomUserRepo {
         return Optional.ofNullable(users);
     }
 
+    @Override
+    public Optional<ReadUserInfoByIdOutDTO> findUserInfoBy(long srcUserId, long dstUserId) {
+        ReadUserInfoByIdOutDTO userInfo =  new JPAQuery<>(em)
+                .select(Projections.constructor(ReadUserInfoByIdOutDTO.class,
+                        qUser.userId,
+                        qUser.userName,
+                        qUserInfo.userDecp,
+                        qUserInfo.postCnt,
+                        qUserInfo.followSrcCnt,
+                        qUserInfo.followDstCnt,
+                        isSubscribedBy(srcUserId, dstUserId)
+                        ))
+                .from(qUser)
+                .innerJoin(qUser.userInfo, qUserInfo)
+                .where(qUser.userId.eq(dstUserId))
+                .fetchOne();
+        return Optional.ofNullable(userInfo);
+    }
+
     private BooleanExpression isSubscribedBy(long srcUserId) {
         return JPAExpressions
                 .selectOne()
                 .from(qFollow)
                 .where(qFollow.srcUser.userId.eq(srcUserId))
                 .where(qFollow.dstUser.userId.eq(qUser.userId))
+                .exists();
+    }
+
+    private BooleanExpression isSubscribedBy(long srcUserId, long dstUserId) {
+        return JPAExpressions
+                .selectOne()
+                .from(qFollow)
+                .where(qFollow.srcUser.userId.eq(srcUserId))
+                .where(qFollow.dstUser.userId.eq(dstUserId))
                 .exists();
     }
 
