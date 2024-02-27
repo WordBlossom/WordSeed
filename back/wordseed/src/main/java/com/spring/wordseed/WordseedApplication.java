@@ -10,6 +10,6 @@ public class WordseedApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(WordseedApplication.class, args);
-    }
+    } 
 
 }
