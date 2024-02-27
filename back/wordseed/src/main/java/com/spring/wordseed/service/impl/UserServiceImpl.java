@@ -94,6 +94,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ReadUserOutDTOs readUsers(ReadUserInDTOs readUserInDTOs) throws Exception {
+        if(readUserInDTOs.getPage() < 1) readUserInDTOs.setPage(1);
         List<UserDTO> users = userRepo.findUserBy(readUserInDTOs.getUserId(), readUserInDTOs.getQuery(),
                 readUserInDTOs.getPage(), readUserInDTOs.getSize()).orElse(new ArrayList<>());
         return ReadUserOutDTOs.builder()
