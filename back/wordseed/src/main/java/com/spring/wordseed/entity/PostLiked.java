@@ -18,7 +18,7 @@ uniqueConstraints = {
                 columnNames = {"user_id", "post_id"}
         )
 })
-public class PostLiked {
+public class PostLiked extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postLikedId;
