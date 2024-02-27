@@ -144,35 +144,4 @@ public class PostServiceImpl implements PostService {
         postRepo.delete(post);
     }
 
-
-
-    @Override
-    public UpdateCommentOutDTO UpdateComment(UpdateCommentInDTO updateCommentInDTO) {
-        return null;
-    }
-
-    @Override
-    public void deleteComment(DeleteCommentInDTO deleteCommentInDTO) {
-
-    }
-
-    @Override
-    public CreateLikeOutDTO createLike(CreateLikeInDTO createLikeInDTO) {
-        return null;
-    }
-
-    @Override
-    public void deleteLike(DeleteLikeInDTO deleteLikeInDTO) {
-
-    }
-
-    @Override
-    public CreateBookMarkOutDTO createBookMark(CreateBookMarkInDTO createBookMarkInDTO) {
-        return null;
-    }
-
-    @Override
-    public void deleteBookMark(DeleteBookMarkInDTO deleteBookMarkInDTO) {
-
-    }
 }
