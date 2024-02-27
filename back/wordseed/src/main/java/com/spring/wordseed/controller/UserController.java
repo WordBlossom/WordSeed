@@ -43,15 +43,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(updateUserOutDTO);
     }
     @DeleteMapping
-    public ResponseEntity<DeleteUserOutDTO> deleteUser() throws Exception {
-        DeleteUserOutDTO deleteUserOutDTO = DeleteUserOutDTO.builder()
-                .userId(1)
-                .userName("초아누리")
-                .userType(UserType.QUIT)
-                .email("cho0123@wordseed.com")
-                .userDecp("모든 순간을 사랑하며 살고 싶은 사람")
-                .informable(Informable.FALSE)
-                .build();
+    public ResponseEntity<DeleteUserOutDTO> deleteUser(HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        DeleteUserOutDTO deleteUserOutDTO = userService.deleteUser(userId);
         return ResponseEntity.status(HttpStatus.OK).body(deleteUserOutDTO);
     }
 

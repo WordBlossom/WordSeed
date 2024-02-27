@@ -3,6 +3,7 @@ package com.spring.wordseed.service.impl;
 import com.spring.wordseed.dto.in.CreateUserInDTO;
 import com.spring.wordseed.dto.in.ReadUserInDTOs;
 import com.spring.wordseed.dto.in.UpdateUserInDTO;
+import com.spring.wordseed.dto.out.DeleteUserOutDTO;
 import com.spring.wordseed.dto.out.ReadUserInfoByIdOutDTO;
 import com.spring.wordseed.dto.out.ReadUserOutDTO;
 import com.spring.wordseed.dto.out.ReadUserOutDTOs;
@@ -92,6 +93,19 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
+    @Override
+    public DeleteUserOutDTO deleteUser(long userId) throws Exception {
+        User user = userRepo.findById(userId)
+                .orElseThrow(IllegalArgumentException::new);
+        user.setUserType(UserType.QUIT);
+        return DeleteUserOutDTO.builder()
+                .userId(userId)
+                .userName(user.getUserName())
+                .userType(user.getUserType())
+                .email(user.getEmail())
+                .build();
+    }
+  
     @Override
     public ReadUserOutDTOs readUsers(ReadUserInDTOs readUserInDTOs) throws Exception {
         if(readUserInDTOs.getPage() < 1) readUserInDTOs.setPage(1);
