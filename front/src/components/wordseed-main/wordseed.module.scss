@@ -1,0 +1,28 @@
+.wordseed-container {
+  @include flex;
+  flex-direction: column;
+  height: calc(100dvh - 5rem);
+
+  .wordseed-content {
+    @include flex;
+    flex-direction: column;
+    flex-grow: 2;
+    width: 100%;
+
+    .wordseed-guide {
+      @include font($fs: $h4, $fw: $regular, $fc: $black, $ff: $noto-sans);
+    }
+
+    .wordseed {
+      @include font($fs: $h1, $fw: $bold, $fc: $black, $ff: $noto-serif);
+    }
+  }
+
+  .wordseed-buttons {
+    @include flex;
+    flex-grow: 1;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    width: 100%;
+  }
+}

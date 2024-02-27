@@ -6,6 +6,10 @@ import { FeedInterface, Comment } from "@/components";
 import useCommentToggleStateStore from "@/stores/comment-toggle";
 import style from "./feedlist.module.scss";
 
+type FeedlistProps = {
+  params: { wordseed: string };
+};
+
 type ListenerProps = {
   activeContent: HTMLDivElement;
   activeInterface: HTMLDivElement;
@@ -39,7 +43,10 @@ const removeListener = ({
   activeInterface.removeEventListener("touchend", touchInterface);
 };
 
-export default function Feedlist() {
+export default function Feedlist({ params }: FeedlistProps) {
+  // 해당 말씨로 작품 조회
+  const wordseed = params.wordseed;
+
   const swiperRef = useRef<any>(null);
   const touchStartY = useRef<number | null>(null);
   const hasListenerFirstSlide = useRef<boolean>(false);
