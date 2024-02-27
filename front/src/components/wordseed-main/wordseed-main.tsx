@@ -7,10 +7,12 @@ type WordseedProps = {
 };
 
 export default function WordseedMain({ date }: WordseedProps) {
+  // date로 word 호출
+  const word = "무지개";
   return (
     <WordseedContainer>
-      <WordseedContent date={date} />
-      <WordseedButtons date={date} />
+      <WordseedContent date={date} wordseed={word} />
+      <WordseedButtons date={date} wordseed={word} />
     </WordseedContainer>
   );
 }
