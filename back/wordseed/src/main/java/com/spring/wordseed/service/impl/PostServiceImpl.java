@@ -102,8 +102,6 @@ public class PostServiceImpl implements PostService {
         post.setPostAlign(updatePostInDTO.getPostAlign());
         post.setPostVisibility(updatePostInDTO.getPostVisibility());
 
-        postRepo.save(post);
-
         ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postRepo.findPostByPostId(post.getPostId());
 
         return UpdatePostOutDTO.builder()
@@ -127,8 +125,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(DeletePostInDTO deletePostInDTO) {
-
+    public void deletePost(DeletePostInDTO deletePostInDTO, Long userId) throws Exception {
+        Post post = postRepo.findPostBy(deletePostInDTO.getPostId(), userId).orElseThrow(Exception::new);
+        postRepo.delete(post);
     }
 
 

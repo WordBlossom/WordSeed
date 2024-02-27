@@ -64,7 +64,9 @@ public class PostController {
     }
     // 작품 삭제
     @DeleteMapping("")
-    public ResponseEntity<HttpStatus> deletePost(@RequestBody DeletePostInDTO deletePostInDTO) throws Exception {
+    public ResponseEntity<HttpStatus> deletePost(@RequestBody DeletePostInDTO deletePostInDTO, HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        postService.deletePost(deletePostInDTO, userId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     // 댓글 조회
