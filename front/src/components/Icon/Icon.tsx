@@ -27,7 +27,9 @@ type IconType =
   | "comment"
   | "profileEdit"
   | "audioPlay"
-  | "audioStop";
+  | "audioStop"
+  | "sun"
+  | "water";
 
 interface Props {
   iconName: IconType;
