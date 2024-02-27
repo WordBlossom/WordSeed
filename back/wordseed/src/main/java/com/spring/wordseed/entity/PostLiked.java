@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "post_likeds")
-public class PostLiked {
+public class PostLiked extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postLikedId;
