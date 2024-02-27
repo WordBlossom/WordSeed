@@ -224,19 +224,19 @@ public class CustomPostRepoImpl implements CustomPostRepo {
         */
         List<ReadPostOutDTO> readPostOutDTOList = new JPAQuery<>(em)
                 .select(Projections.constructor(ReadPostOutDTO.class,
-                        qPost.postId,// postId()
-                        qPost.user.userId,// userId()
-                        qPost.user.userName,// userName()
-                        qPost.postType,// postType()
-                        qPost.content,// content()
-                        qPost.url,// url()
-                        qPost.likedCnt,// likedCnt()
-                        qPost.bookMarkCnt,// bookMarkCnt()
-                        qPost.commentCnt,// commentCnt()
-                        Expressions.TRUE,// liked()
-                        Expressions.TRUE,// bookMarked()
-                        Expressions.TRUE,// subscribed()
-                        qPost.createdAt,// createdAt()
+                        qPost.postId,
+                        qPost.user.userId,
+                        qPost.user.userName,
+                        qPost.postType,
+                        qPost.content,
+                        qPost.url,
+                        qPost.likedCnt,
+                        qPost.bookMarkCnt,
+                        qPost.commentCnt,
+                        Expressions.TRUE,
+                        Expressions.TRUE,
+                        Expressions.TRUE,
+                        qPost.createdAt,
                         qPost.updatedAt))
                 .from(qPost)
                 .where(qPost.postType.in(postTypeList))
