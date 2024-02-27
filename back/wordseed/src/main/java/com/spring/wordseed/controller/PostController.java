@@ -4,11 +4,13 @@ import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.entity.Post;
 import com.spring.wordseed.enu.*;
+import com.spring.wordseed.service.BookMarkService;
 import com.spring.wordseed.service.PostLikedService;
 import com.spring.wordseed.service.CommentService;
 import com.spring.wordseed.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +22,16 @@ import java.util.ArrayList;
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final BookMarkService bookMarkService;
     private final PostLikedService postLikedService;
     private final CommentService commentService;
   
     @Autowired
-    PostController(PostService postService, PostLikedService postLikedService, CommentService commentService){
+    PostController(PostService postService, PostLikedService postLikedService, CommentService commentService, BookMarkService bookMarkService){
         this.postService = postService;
         this.postLikedService = postLikedService;
         this.commentService = commentService;
+        this.bookMarkService = bookMarkService;
     }
   
     // 작품 업로드
@@ -117,21 +121,18 @@ public class PostController {
     }
     // 북마크 등록
     @PostMapping("/mark")
-    public ResponseEntity<CreateBookMarkOutDTO> createBookMark(@RequestBody CreateBookMarkInDTO createBookMarkInDTO) throws Exception{
-        CreateBookMarkOutDTO createBookMarkOutDTO = CreateBookMarkOutDTO.builder()
-                .bookMarkId(1L)
-                .userId(1L)
-                .postId(1L)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+    public ResponseEntity<CreateBookMarkOutDTO> createBookMark(@RequestBody CreateBookMarkInDTO createBookMarkInDTO, HttpServletRequest request) throws Exception{
+        long userId = (long) request.getAttribute("userId");
+        CreateBookMarkOutDTO createBookMarkOutDTO = bookMarkService.createBookMark(createBookMarkInDTO, userId);
 
         return ResponseEntity.status(HttpStatus.OK).body(createBookMarkOutDTO);
     }
     
     // 북마크 취소
     @DeleteMapping("/mark")
-    public ResponseEntity<HttpStatus> deleteBookMark(@RequestBody DeleteBookMarkInDTO deleteBookMarkInDTO) throws Exception {
+    public ResponseEntity<HttpStatus> deleteBookMark(@RequestBody DeleteBookMarkInDTO deleteBookMarkInDTO, HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        bookMarkService.deleteBookMark(deleteBookMarkInDTO, userId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
