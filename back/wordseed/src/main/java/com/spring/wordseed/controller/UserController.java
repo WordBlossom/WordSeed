@@ -2,6 +2,7 @@ package com.spring.wordseed.controller;
 
 import com.spring.wordseed.dto.in.CreateFollowInDTO;
 import com.spring.wordseed.dto.in.DeleteFollowInDTO;
+import com.spring.wordseed.dto.in.ReadUserInDTOs;
 import com.spring.wordseed.dto.in.UpdateUserInDTO;
 import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.dto.tool.UserDTO;
@@ -55,22 +56,10 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<ReadUserOutDTOs> readUsers(@RequestParam("query") String query,
-                                                     @RequestParam("page") long page,
-                                                     @RequestParam("size") long size) throws Exception {
-        List<UserDTO> users = new ArrayList<>();
-        for(int i=1;i<=size;i++) {
-            UserDTO user = UserDTO.builder()
-                    .userId(i)
-                    .userName("" + query + page + i)
-                    .sendCnt(i* 10L)
-                    .recvCnt(i* 100L)
-                    .userDecp("언젠가 어디선가 이글을 읽는 당신에게 작은 힘이 되기를 바라본다")
-                    .subscribed((i % 2 == 0))
-                    .build();
-            users.add(user);
-        }
-        ReadUserOutDTOs readUserOutDTOs = new ReadUserOutDTOs(users);
+    public ResponseEntity<ReadUserOutDTOs> readUsers(@ModelAttribute ReadUserInDTOs readUserInDTOs, HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        readUserInDTOs.setUserId(userId);
+        ReadUserOutDTOs readUserOutDTOs = userService.readUsers(readUserInDTOs);
         return ResponseEntity.status(HttpStatus.OK).body(readUserOutDTOs);
     }
 

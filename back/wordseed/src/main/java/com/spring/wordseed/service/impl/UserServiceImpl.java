@@ -1,9 +1,12 @@
 package com.spring.wordseed.service.impl;
 
 import com.spring.wordseed.dto.in.CreateUserInDTO;
+import com.spring.wordseed.dto.in.ReadUserInDTOs;
 import com.spring.wordseed.dto.in.UpdateUserInDTO;
 import com.spring.wordseed.dto.out.ReadUserOutDTO;
+import com.spring.wordseed.dto.out.ReadUserOutDTOs;
 import com.spring.wordseed.dto.out.UpdateUserOutDTO;
+import com.spring.wordseed.dto.tool.UserDTO;
 import com.spring.wordseed.entity.User;
 import com.spring.wordseed.entity.UserInfo;
 import com.spring.wordseed.enu.Informable;
@@ -12,8 +15,13 @@ import com.spring.wordseed.repo.UserInfoRepo;
 import com.spring.wordseed.repo.UserRepo;
 import com.spring.wordseed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -80,6 +88,15 @@ public class UserServiceImpl implements UserService {
                 .informable(user.getUserInfo().getInformable())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
+                .build();
+    }
+
+    @Override
+    public ReadUserOutDTOs readUsers(ReadUserInDTOs readUserInDTOs) throws Exception {
+        List<UserDTO> users = userRepo.findUserBy(readUserInDTOs.getUserId(), readUserInDTOs.getQuery(),
+                readUserInDTOs.getPage(), readUserInDTOs.getSize()).orElse(new ArrayList<>());
+        return ReadUserOutDTOs.builder()
+                .users(users)
                 .build();
     }
 }
