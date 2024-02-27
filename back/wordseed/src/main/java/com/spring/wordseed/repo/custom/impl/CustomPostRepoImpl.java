@@ -24,6 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class CustomPostRepoImpl implements CustomPostRepo {
     @PersistenceContext
@@ -93,7 +94,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .fetchOne();
 
         return readPostByPostIdOutDTO;
-    }    
+    }
 
     @Override
     public List<ReadPostOutDTO> FindPostAllBy(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size) {
@@ -134,7 +135,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 "EXISTS(SELECT * FROM POST_LIKEDS PL JOIN POSTS P ON PL.POST_ID = P.POST_ID WHERE PL.USER_ID = :bind2 AND P.POST_ID = PID), " +
                 "EXISTS(SELECT * FROM FOLLOWS F WHERE F.SRC_ID = :bind3 AND F.DST_ID = P.USER_ID), " +
                 "DATE_FORMAT(P.CREATED_AT, '%Y-%m-%d %H:%i:%s') AS CREATED_AT," +
-                 "DATE_FORMAT(P.UPDATED_AT, '%Y-%m-%d %H:%i:%s') AS UPDATED_AT " +
+                "DATE_FORMAT(P.UPDATED_AT, '%Y-%m-%d %H:%i:%s') AS UPDATED_AT " +
                 "FROM POSTS P " +
                 "JOIN USERS U ON P.USER_ID = U.USER_ID " +
                 "JOIN WORDS W ON P.WORD_ID = W.WORD_ID " +
@@ -156,7 +157,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
         List<ReadPostOutDTO> readPostOutDTOs = new ArrayList<>();
 
         // initialize data
-        for (Object[] row : resultList){
+        for (Object[] row : resultList) {
             Long rPostId = (Long) row[0];
             Long rUserId = (Long) row[1];
             String rUserName = (String) row[2];
@@ -225,5 +226,17 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .fetch();
 
         return ReadCommentOutDTOList;
+    }
+  
+    @Override
+    public Optional<Post> findPostBy(Long postId, Long userId) {
+        Post post = new JPAQuery<>(em)
+                .select(qPost)
+                .from(qPost)
+                .where(qPost.postId.eq(postId))
+                .where(qPost.user.userId.eq(userId))
+                .fetchOne();
+
+        return Optional.ofNullable(post);
     }
 }

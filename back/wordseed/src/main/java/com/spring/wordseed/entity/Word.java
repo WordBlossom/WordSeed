@@ -22,7 +22,7 @@ public class Word extends BaseTimeEntity{
     private Long wordId;
     @Column(nullable = false)
     private String word;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private LocalDate date;
     @Builder.Default
     @OneToMany(mappedBy = "word", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

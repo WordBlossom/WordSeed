@@ -3,25 +3,19 @@ package com.spring.wordseed.service.impl;
 import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
 import com.spring.wordseed.entity.*;
-import com.spring.wordseed.enu.PostAlign;
 import com.spring.wordseed.enu.PostSort;
-import com.spring.wordseed.enu.PostType;
-import com.spring.wordseed.enu.PostVisibility;
+import com.spring.wordseed.repo.CommentRepo;
 import com.spring.wordseed.repo.PostRepo;
 import com.spring.wordseed.repo.UserRepo;
 import com.spring.wordseed.repo.WordRepo;
-import com.spring.wordseed.repo.custom.CustomPostRepo;
 import com.spring.wordseed.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
 
 @Service
 @Transactional
@@ -30,16 +24,18 @@ public class PostServiceImpl implements PostService {
     private final PostRepo postRepo;
     private final UserRepo userRepo;
     private final WordRepo wordRepo;
+    private final CommentRepo commentRepo;
 
     @Autowired
-    public PostServiceImpl(PostRepo postRepo, UserRepo userRepo, WordRepo wordRepo) {
+    public PostServiceImpl(PostRepo postRepo, UserRepo userRepo, WordRepo wordRepo, CommentRepo commentRepo) {
         this.postRepo = postRepo;
         this.userRepo = userRepo;
         this.wordRepo = wordRepo;
+        this.commentRepo = commentRepo;
     }
 
     @Override
-    public CreatePostOutDTO createPost(CreatePostInDTO createPostInDTO) throws Exception{
+    public CreatePostOutDTO createPost(CreatePostInDTO createPostInDTO) throws Exception {
 
         Post post = Post.builder()
                 .content(createPostInDTO.getContent())
@@ -58,21 +54,21 @@ public class PostServiceImpl implements PostService {
 
         CreatePostOutDTO createPostOutDTO =
                 CreatePostOutDTO.builder()
-                .content(result.getContent())
-                .postId(result.getPostId())
-                .url(result.getUrl())
-                .postType(result.getPostType())
-                .postAlign(result.getPostAlign())
-                .postVisibility(result.getPostVisibility())
-                .likedCnt(result.getLikedCnt())
-                .bookMarkCnt(result.getBookMarkCnt())
-                .commentCnt(result.getCommentCnt())
-                .userId(result.getUser().getUserId())
-                .wordId(result.getWord().getWordId())
-                .createdAt(result.getCreatedAt())
-                .updatedAt(result.getUpdatedAt())
-                .word("use join")
-                .build();
+                        .content(result.getContent())
+                        .postId(result.getPostId())
+                        .url(result.getUrl())
+                        .postType(result.getPostType())
+                        .postAlign(result.getPostAlign())
+                        .postVisibility(result.getPostVisibility())
+                        .likedCnt(result.getLikedCnt())
+                        .bookMarkCnt(result.getBookMarkCnt())
+                        .commentCnt(result.getCommentCnt())
+                        .userId(result.getUser().getUserId())
+                        .wordId(result.getWord().getWordId())
+                        .createdAt(result.getCreatedAt())
+                        .updatedAt(result.getUpdatedAt())
+                        .word("use join")
+                        .build();
 
         return createPostOutDTO;
     }
@@ -105,8 +101,6 @@ public class PostServiceImpl implements PostService {
         post.setPostType(updatePostInDTO.getPostType());
         post.setPostAlign(updatePostInDTO.getPostAlign());
         post.setPostVisibility(updatePostInDTO.getPostVisibility());
-
-        postRepo.save(post);
 
         ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postRepo.findPostByPostId(post.getPostId());
 
@@ -145,17 +139,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(DeletePostInDTO deletePostInDTO) {
-
+    public void deletePost(DeletePostInDTO deletePostInDTO, Long userId) throws Exception {
+        Post post = postRepo.findPostBy(deletePostInDTO.getPostId(), userId).orElseThrow(Exception::new);
+        postRepo.delete(post);
     }
 
-    @Override
-    public CreateCommentOutDTO createPost(CreateCommentInDTO createCommentInDTO) {
-        return null;
-    }
+
 
     @Override
-    public UpdateCommentOutDTO UpdatePost(UpdateCommentInDTO updateCommentInDTO) {
+    public UpdateCommentOutDTO UpdateComment(UpdateCommentInDTO updateCommentInDTO) {
         return null;
     }
 

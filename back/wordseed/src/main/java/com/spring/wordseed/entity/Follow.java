@@ -11,7 +11,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "follows")
+@Table(name = "follows",
+        uniqueConstraints = {
+            @UniqueConstraint(
+                    name = "src_dst_unique",
+                    columnNames = {"src_id", "dst_id"}
+            )
+        }
+)
 public class Follow extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
