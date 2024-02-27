@@ -55,7 +55,9 @@ public class WordServiceImpl implements WordService {
         Sort sort = Sort.by(Sort.Direction.DESC, "date");
         if(readWordInDTOs.getQuery().length() > 0)
             sort = Sort.by(Sort.Direction.ASC, "word");
-        PageRequest pageRequest = PageRequest.of((int) readWordInDTOs.getPage(), (int) readWordInDTOs.getSize(), sort);
+        long page = (readWordInDTOs.getPage() - 1);
+        if(page < 0) page = 0;
+        PageRequest pageRequest = PageRequest.of((int) page, (int) readWordInDTOs.getSize(), sort);
         List<Word> words = wordRepo.findByWordStartsWith(readWordInDTOs.getQuery(), pageRequest)
                 .orElse(new ArrayList<>());
         List<WordDTO> wordDTOs = new ArrayList<>();
