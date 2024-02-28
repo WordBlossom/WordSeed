@@ -1,16 +1,16 @@
 "use client";
 
+import useSearchPageStateStore from "@/stores/search-page";
 import Icon from "@/components/Icon/Icon";
 import styles from "./search-input.module.scss";
-import { useState } from "react";
 
 export default function SearchInput() {
-  const [searchWord, setSearchWord] = useState("");
+  const { searchKeyword, setSearchKeyword } = useSearchPageStateStore();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchWord(e.target.value);
+    const keyword = e.target.value;
+    setSearchKeyword(keyword);
     // 데이터 요청
   };
-  console.log(searchWord);
   return (
     <div className={styles["input-wrapper"]}>
       <Icon iconName="search" size={16} />
@@ -18,7 +18,7 @@ export default function SearchInput() {
         type="text"
         autoFocus={true}
         placeholder={"검색"}
-        value={searchWord}
+        value={searchKeyword}
         onChange={handleChange}
       ></input>
     </div>
