@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +75,8 @@ public class PostServiceImpl implements PostService {
     @Override
     public ReadPostOutDTOs readPosts(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         //List<ReadPostOutDTO> readPostOutDTOs = postRepo.FindPostAllBy(postTypes, mark, userId, sort, query, page, size);
-        List<ReadPostOutDTO> readPostOutDTOs = postRepo.FindPostAllUserDSLBy(postTypes, mark, userId, sort, query, page, size, srcUserId);
+        List<ReadPostOutDTO> readPostOutDTOs = postRepo.findPostBy(postTypes, mark, userId, sort, query, page, size, srcUserId);
+        // findPostAllBy, findMyPostBy, findPostBy
 
         ReadPostOutDTOs posts = ReadPostOutDTOs.builder().posts(new ArrayList<>()).build();
 
