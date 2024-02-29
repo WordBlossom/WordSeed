@@ -42,9 +42,9 @@ public class PostController {
     @GetMapping("/list")
     public ResponseEntity<ReadPostOutDTOs> readPosts(@RequestParam("postType") String postType,
                                                      @RequestParam("mark") String mark,
-                                                     @RequestParam("userId") Long userId,
+                                                     @RequestParam(value = "userId", required = false, defaultValue = "0") Long userId,
                                                      @RequestParam("sort") PostSort sort,
-                                                     @RequestParam("query") String query,
+                                                     @RequestParam(value = "query", required = false, defaultValue = "") String query,
                                                      @RequestParam("page") Long page,
                                                      @RequestParam("size") Long size,
                                                      HttpServletRequest request) throws Exception {

@@ -75,7 +75,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public ReadPostOutDTOs readPosts(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
-        List<ReadPostOutDTO> readPostOutDTOs = postRepo.FindPostAllBy(postTypes, mark, userId, sort, query, page, size);
+        //List<ReadPostOutDTO> readPostOutDTOs = postRepo.FindPostAllBy(postTypes, mark, userId, sort, query, page, size);
+        List<ReadPostOutDTO> readPostOutDTOs = postRepo.FindPostAllUserDSLBy(postTypes, mark, userId, sort, query, page, size, srcUserId);
 
         ReadPostOutDTOs posts = ReadPostOutDTOs.builder().posts(new ArrayList<>()).build();
 

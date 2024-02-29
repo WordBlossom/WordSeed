@@ -1,7 +1,9 @@
 package com.spring.wordseed.repo.custom.impl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -239,11 +241,59 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                         qPost.createdAt,
                         qPost.updatedAt))
                 .from(qPost)
+                .where(userId == 0 ? Expressions.TRUE : qPost.user.userId.eq(userId))
                 .where(qPost.postType.in(postTypeList))
-
-                .orderBy()
+                .where((query == null || query.trim().length() == 0) ? Expressions.TRUE : qPost.word.word.eq(query))
+                .offset((page - 1) * size)
+                .limit(size)
+                .orderBy(switch(sort){
+                    case DATE_ASC -> qPost.createdAt.asc();
+                    case DATE_DSC -> qPost.createdAt.desc();
+                    case LIKE_ASC -> qPost.likedCnt.asc();
+                    case LIKE_DSC -> qPost.likedCnt.desc();
+                })
                 .fetch();
-        return null;
+
+        for (ReadPostOutDTO readPostOutDTO : readPostOutDTOList){
+            Post likedExpression = new JPAQuery<>(em)
+                    .select(qPost)
+                    .from(qPost)
+                    .join(qPost.postLikeds, qPostLiked)
+                    .where(qPostLiked.user.userId.eq(srcUserId))
+                    .where(qPost.postId.eq(readPostOutDTO.getPostId()))
+                    .fetchOne();
+
+            Post bookMarkedExpression = new JPAQuery<>(em)
+                    .select(qPost)
+                    .from(qPost)
+                    .join(qPost.bookMarks, qBookMark)
+                    .where(qBookMark.user.userId.eq(srcUserId))
+                    .where(qPost.postId.eq(readPostOutDTO.getPostId()))
+                    .fetchOne();
+
+            Follow subscribedExpression = new JPAQuery<>(em)
+                    .select(qFollow)
+                    .from(qFollow)
+                    .join(qFollow.srcUser, qUser)
+                    .join(qFollow.dstUser, qUser2)
+                    .join(qUser2.posts, qPost)
+                    .where(qUser.userId.eq(srcUserId))
+                    .where(qPost.postId.eq(readPostOutDTO.getPostId()))
+                    .fetchOne();
+
+            readPostOutDTO.setLiked(likedExpression != null);
+            readPostOutDTO.setBookMarked(bookMarkedExpression != null);
+            readPostOutDTO.setSubscribed(subscribedExpression != null);
+        }
+
+        System.out.println("BEFORE : " + readPostOutDTOList.size());
+
+        if (mark.equals("true"))
+            readPostOutDTOList.removeIf(el -> !el.getBookMarked());
+
+        System.out.println("AFTER : " + readPostOutDTOList.size());
+
+        return readPostOutDTOList;
     }
 
 
