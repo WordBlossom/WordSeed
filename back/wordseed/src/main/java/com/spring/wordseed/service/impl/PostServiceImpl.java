@@ -73,10 +73,56 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ReadPostOutDTOs readPosts(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
-        //List<ReadPostOutDTO> readPostOutDTOs = postRepo.FindPostAllBy(postTypes, mark, userId, sort, query, page, size);
-        List<ReadPostOutDTO> readPostOutDTOs = postRepo.findPostBy(postTypes, mark, userId, sort, query, page, size, srcUserId);
-        // findPostAllBy, findMyPostBy, findPostBy
+    public ReadPostOutDTOs readPostsWithWord(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId, Long wordId) {
+        List<ReadPostOutDTO> readPostOutDTOs = postRepo.findPostsWithWord(postTypes, mark, sort, query, page, size, srcUserId, wordId);
+
+        ReadPostOutDTOs posts = ReadPostOutDTOs.builder().posts(new ArrayList<>()).build();
+
+        for (ReadPostOutDTO readPostOutDTO : readPostOutDTOs)
+            posts.getPosts().add(readPostOutDTO);
+
+        return posts;
+    }
+
+    @Override
+    public ReadPostOutDTOs readPostsWithSubs(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+        List<ReadPostOutDTO> readPostOutDTOs = postRepo.findPostsWithSubs(postTypes, mark, sort, query, page, size, srcUserId);
+
+        ReadPostOutDTOs posts = ReadPostOutDTOs.builder().posts(new ArrayList<>()).build();
+
+        for (ReadPostOutDTO readPostOutDTO : readPostOutDTOs)
+            posts.getPosts().add(readPostOutDTO);
+
+        return posts;
+    }
+
+    @Override
+    public ReadPostOutDTOs readMyPosts(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+        List<ReadPostOutDTO> readPostOutDTOs = postRepo.findMyPosts(postTypes, mark, sort, query, page, size, srcUserId);
+
+        ReadPostOutDTOs posts = ReadPostOutDTOs.builder().posts(new ArrayList<>()).build();
+
+        for (ReadPostOutDTO readPostOutDTO : readPostOutDTOs)
+            posts.getPosts().add(readPostOutDTO);
+
+        return posts;
+    }
+
+    @Override
+    public ReadPostOutDTOs readMyPostsWithBookMark(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+        List<ReadPostOutDTO> readPostOutDTOs = postRepo.findMyPostsWithBookMark(postTypes, mark, sort, query, page, size, srcUserId);
+
+        ReadPostOutDTOs posts = ReadPostOutDTOs.builder().posts(new ArrayList<>()).build();
+
+        for (ReadPostOutDTO readPostOutDTO : readPostOutDTOs)
+            posts.getPosts().add(readPostOutDTO);
+
+        return posts;
+    }
+
+    @Override
+    public ReadPostOutDTOs readPostsWithUser(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+        List<ReadPostOutDTO> readPostOutDTOs = postRepo.findPostsWithUser(postTypes, mark, userId, sort, query, page, size, srcUserId);
 
         ReadPostOutDTOs posts = ReadPostOutDTOs.builder().posts(new ArrayList<>()).build();
 

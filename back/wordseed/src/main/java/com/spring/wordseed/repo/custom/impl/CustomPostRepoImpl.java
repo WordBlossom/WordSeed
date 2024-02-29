@@ -98,7 +98,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
     @Override
     // 특정 말씨에 해당하는 모든 작품 목록
-    public List<ReadPostOutDTO> findPostAllFromWordIdBy(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId, Long wordId) {
+    public List<ReadPostOutDTO> findPostsWithWord(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId, Long wordId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
@@ -170,7 +170,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
     @Override
     // 관심 작가 등록한 사람들의 작품 목록
-    public List<ReadPostOutDTO> findPostAllFromUserIdBy(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+    public List<ReadPostOutDTO> findPostsWithSubs(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
@@ -238,7 +238,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
     @Override
     // 내 작품 목록
-    public List<ReadPostOutDTO> findMyPostBy(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+    public List<ReadPostOutDTO> findMyPosts(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
@@ -302,7 +302,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
     @Override
     // 내가 북마크한 작품 목록
-    public List<ReadPostOutDTO> findPostsFromBookMarkBy(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+    public List<ReadPostOutDTO> findMyPostsWithBookMark(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
@@ -352,7 +352,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                     .select(qFollow)
                     .from(qFollow)
                     .where(qFollow.srcUser.userId.eq(srcUserId))
-                    .where(qFollow.dstUser.userId.eq(userId))
+                    .where(qFollow.dstUser.userId.eq(readPostOutDTO.getUserId()))
                     .fetchOne();
 
             readPostOutDTO.setLiked(likedExpression != null);
@@ -368,8 +368,8 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
 
     @Override
-    // 특정 대상에 대한 작품 목록
-    public List<ReadPostOutDTO> findPostBy(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+    // 특정 사용자에 대한 작품 목록
+    public List<ReadPostOutDTO> findPostsWithUser(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();

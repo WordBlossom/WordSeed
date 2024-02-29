@@ -38,19 +38,79 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(createPostOutDTO);
     }
 
-    // 작품 목록 조회
-    @GetMapping("/list")
-    public ResponseEntity<ReadPostOutDTOs> readPosts(@RequestParam("postType") String postType,
+    // 특정 말씨에 대한 작품 목록 조회
+    @GetMapping("/list/word")
+    public ResponseEntity<ReadPostOutDTOs> readPostsWithWord(@RequestParam("postType") String postType,
                                                      @RequestParam("mark") String mark,
-                                                     @RequestParam(value = "userId", required = false, defaultValue = "0") Long userId,
                                                      @RequestParam("sort") PostSort sort,
                                                      @RequestParam(value = "query", required = false, defaultValue = "") String query,
+                                                     @RequestParam(value = "wordId", required = false, defaultValue = "0") Long wordId,
                                                      @RequestParam("page") Long page,
                                                      @RequestParam("size") Long size,
                                                      HttpServletRequest request) throws Exception {
         long srcUserId = (long) request.getAttribute("userId");
-        ReadPostOutDTOs readPostOutDTOs = postService.readPosts(postType, mark, userId, sort, query, page, size, srcUserId);
-
+        ReadPostOutDTOs readPostOutDTOs = postService.readPostsWithWord(postType, mark, sort, query, page, size, srcUserId, wordId);
+        System.out.println("LENGTH : " + readPostOutDTOs.getPosts().size());
+        return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
+    }
+    
+    // 관심 작가로 등록한 사람들의 작품 목록 조회
+    @GetMapping("/list/subs")
+    public ResponseEntity<ReadPostOutDTOs> readPostsWithSubs(@RequestParam("postType") String postType,
+                                                             @RequestParam("mark") String mark,
+                                                             @RequestParam("sort") PostSort sort,
+                                                             @RequestParam(value = "query", required = false, defaultValue = "") String query,
+                                                             @RequestParam("page") Long page,
+                                                             @RequestParam("size") Long size,
+                                                             HttpServletRequest request) throws Exception {
+        long srcUserId = (long) request.getAttribute("userId");
+        ReadPostOutDTOs readPostOutDTOs = postService.readPostsWithSubs(postType, mark, sort, query, page, size, srcUserId);
+        System.out.println("LENGTH : " + readPostOutDTOs.getPosts().size());
+        return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
+    }
+    // 나의 작품 목록 조회
+    @GetMapping("/list/self")
+    public ResponseEntity<ReadPostOutDTOs> readMyPosts(@RequestParam("postType") String postType,
+                                                             @RequestParam("mark") String mark,
+                                                             @RequestParam("sort") PostSort sort,
+                                                             @RequestParam(value = "query", required = false, defaultValue = "") String query,
+                                                             @RequestParam("page") Long page,
+                                                             @RequestParam("size") Long size,
+                                                             HttpServletRequest request) throws Exception {
+        long srcUserId = (long) request.getAttribute("userId");
+        ReadPostOutDTOs readPostOutDTOs = postService.readMyPosts(postType, mark, sort, query, page, size, srcUserId);
+        System.out.println("LENGTH : " + readPostOutDTOs.getPosts().size());
+        return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
+    }
+    
+    // 내가 북마크한 작품 목록 조회
+    @GetMapping("/list/book-mark")
+    public ResponseEntity<ReadPostOutDTOs> readMyPostsWithBookMark(@RequestParam("postType") String postType,
+                                                       @RequestParam("mark") String mark,
+                                                       @RequestParam("sort") PostSort sort,
+                                                       @RequestParam(value = "query", required = false, defaultValue = "") String query,
+                                                       @RequestParam("page") Long page,
+                                                       @RequestParam("size") Long size,
+                                                       HttpServletRequest request) throws Exception {
+        long srcUserId = (long) request.getAttribute("userId");
+        ReadPostOutDTOs readPostOutDTOs = postService.readMyPostsWithBookMark(postType, mark, sort, query, page, size, srcUserId);
+        System.out.println("LENGTH : " + readPostOutDTOs.getPosts().size());
+        return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
+    }
+    
+    // 특정 사용자에 대한 작품 목록 조회
+    @GetMapping("/list/user")
+    public ResponseEntity<ReadPostOutDTOs> readPostsWithUser(@RequestParam("postType") String postType,
+                                                             @RequestParam("mark") String mark,
+                                                             @RequestParam(value = "userId", required = false, defaultValue = "0") Long userId,
+                                                             @RequestParam("sort") PostSort sort,
+                                                             @RequestParam(value = "query", required = false, defaultValue = "") String query,
+                                                             @RequestParam("page") Long page,
+                                                             @RequestParam("size") Long size,
+                                                             HttpServletRequest request) throws Exception {
+        long srcUserId = (long) request.getAttribute("userId");
+        ReadPostOutDTOs readPostOutDTOs = postService.readPostsWithUser(postType, mark, userId, sort, query, page, size, srcUserId);
+        System.out.println("LENGTH : " + readPostOutDTOs.getPosts().size());
         return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
     }
 

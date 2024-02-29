@@ -9,7 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface PostService {
     CreatePostOutDTO createPost(CreatePostInDTO createPostInDTO) throws Exception;
-    ReadPostOutDTOs readPosts(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId);
+    ReadPostOutDTOs readPostsWithWord(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId, Long wordId);
+    ReadPostOutDTOs readPostsWithSubs(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId);
+    ReadPostOutDTOs readMyPosts(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId);
+    ReadPostOutDTOs readMyPostsWithBookMark(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId);
+    ReadPostOutDTOs readPostsWithUser(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId);
     ReadPostByPostIdOutDTO readPostByPostId(Long postId);
     UpdatePostOutDTO updatePost(UpdatePostInDTO updatePostInDTO) throws Exception;
     void deletePost(DeletePostInDTO deletePostInDTO);
