@@ -38,7 +38,11 @@ export type MutationConfig<MutationFnType extends (...args: any) => any> =
   >;
 
 export type InfiniteQueryConfig<QueryFnType extends (...args: any) => any> =
-  Omit<
-    UseInfiniteQueryOptions<ExtractFnReturnType<QueryFnType>>,
-    "queryKey" | "queryFn"
+  UseInfiniteQueryOptions<
+    ExtractFnReturnType<QueryFnType>,
+    AxiosError,
+    ExtractFnReturnType<QueryFnType>,
+    ExtractFnReturnType<QueryFnType>,
+    Array<string | Parameters<QueryFnType>[0]>,
+    number
   >;

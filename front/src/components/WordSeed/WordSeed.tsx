@@ -3,15 +3,15 @@
 import Link from "next/link";
 import styles from "./WordSeed.module.scss";
 
-type WordSeedProps = {
+type WordseedProps = {
   date: string;
-  wordSeed: string;
+  wordseed: string;
 };
-export default function WordSeed({ date, wordSeed }: WordSeedProps) {
+export default function WordSeed({ date, wordseed }: WordseedProps) {
   return (
-    <Link href={`/wordseed/${wordSeed}`} className={styles.container}>
+    <Link href={`/wordseed/${wordseed}`} className={styles.container}>
       <p className={styles.date}>{date}</p>
-      <p className={styles.wordSeed}>{wordSeed}</p>
+      <p className={styles.wordseed}>{wordseed}</p>
     </Link>
   );
 }
