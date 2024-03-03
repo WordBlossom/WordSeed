@@ -4,6 +4,12 @@ import { useInView } from "react-intersection-observer";
 import useFilterButtonHiddenStateStore from "@/stores/profile-filter";
 import { ContentCardList } from "@/components";
 import { Header, ProfileCategory } from "../_component";
+import {
+  getUserInfo,
+  getUserInfo2,
+  useUserInfo,
+} from "@/api/user/get-user-info";
+import { useQuery } from "@tanstack/react-query";
 
 interface ContentCardProps {
   postId: number;
@@ -14,16 +20,6 @@ interface ContentCardProps {
   userName: string;
   url: string;
 }
-
-const userData = {
-  userId: 1,
-  userName: "초아누리",
-  userDecp:
-    "모든순간을 사랑하며 살고싶은 사람 모든순간을 사랑하며 살고싶은 사람",
-  recvCnt: 12000001,
-  sendCnt: 2100,
-  subscribed: false,
-};
 
 const datas: ContentCardProps[] = [
   {
@@ -74,9 +70,15 @@ export default function Profile({ params }: { params: { user_id: string } }) {
     initialInView: true,
   });
 
+  const { data } = useQuery({
+    queryKey: ["userinfo"],
+    queryFn: getUserInfo2,
+    // queryFn: getUserInfo2({ userId: 9 }),
+  });
+
   return (
     <>
-      <Header {...userData} />
+      {data && <Header {...data} />}
       <ProfileCategory categoryRef={ref} params={params} />
       <ContentCardList datas={datas} />
     </>
