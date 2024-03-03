@@ -14,7 +14,7 @@ type queryFnType = () => Promise<userInfo>;
 // export const getUserInfo2 = async ({ userId }: userDTO): queryFnType => {
 //   return await axios.get(`/user/info?userId=${userId}`);
 // };
-export const getUserInfo2 = async function () {
+export const getUserInfo2 = async (): Promise<userInfo> => {
   return await axios.get(`/user/info?userId=9`);
 };
 
