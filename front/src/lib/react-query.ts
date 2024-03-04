@@ -19,7 +19,21 @@ const queryConfig: DefaultOptions = {
   },
 };
 
-export const queryClient = new QueryClient({ defaultOptions: queryConfig });
+function makeQueryClient() {
+  return new QueryClient({ defaultOptions: queryConfig });
+}
+
+// server에서는 매번 새로운 query client 생성
+// browser에서는 한 번만 생성
+let browserQueryClient: QueryClient | undefined = undefined;
+export function getQueryClient() {
+  if (typeof window === "undefined") {
+    return makeQueryClient();
+  } else {
+    if (!browserQueryClient) browserQueryClient = makeQueryClient();
+    return browserQueryClient;
+  }
+}
 
 export type ExtractFnReturnType<FnType extends (...args: any) => any> = Awaited<
   ReturnType<FnType>
