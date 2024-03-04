@@ -1,17 +1,15 @@
 package com.spring.wordseed.dto.in;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class DeleteFollowInDTO {
-    long userId;
-    @Builder
-    public DeleteFollowInDTO(long userId) {
-        this.userId = userId;
-    }
+    long srcUserId;
+    @JsonProperty("userId")
+    long dstUserId;
 }

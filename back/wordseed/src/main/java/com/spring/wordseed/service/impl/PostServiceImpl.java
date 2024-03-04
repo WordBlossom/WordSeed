@@ -149,8 +149,6 @@ public class PostServiceImpl implements PostService {
         post.setPostAlign(updatePostInDTO.getPostAlign());
         post.setPostVisibility(updatePostInDTO.getPostVisibility());
 
-        postRepo.save(post);
-
         ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postRepo.findPostByPostId(post.getPostId());
 
         return UpdatePostOutDTO.builder()
@@ -174,39 +172,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(DeletePostInDTO deletePostInDTO) {
+    public ReadCommentOutDTOs readComment(Long postId, Long page, Long size) {
+        ReadCommentOutDTOs comments = ReadCommentOutDTOs.builder()
+                .comments(new ArrayList<>())
+                .build();
 
-    }
+        List<ReadCommentOutDTO> readCommentOutDTOList = postRepo.findCommentAllBy(postId, page, size);
 
+        for(ReadCommentOutDTO readCommentOutDTO : readCommentOutDTOList)
+            comments.getComments().add(readCommentOutDTO);
 
-
-    @Override
-    public UpdateCommentOutDTO UpdateComment(UpdateCommentInDTO updateCommentInDTO) {
-        return null;
-    }
-
-    @Override
-    public void deleteComment(DeleteCommentInDTO deleteCommentInDTO) {
-
+        return comments;
     }
 
     @Override
-    public CreateLikeOutDTO createLike(CreateLikeInDTO createLikeInDTO) {
-        return null;
+    public void deletePost(DeletePostInDTO deletePostInDTO, Long userId) throws Exception {
+        Post post = postRepo.findPostBy(deletePostInDTO.getPostId(), userId).orElseThrow(Exception::new);
+        postRepo.delete(post);
     }
 
-    @Override
-    public void deleteLike(DeleteLikeInDTO deleteLikeInDTO) {
-
-    }
-
-    @Override
-    public CreateBookMarkOutDTO createBookMark(CreateBookMarkInDTO createBookMarkInDTO) {
-        return null;
-    }
-
-    @Override
-    public void deleteBookMark(DeleteBookMarkInDTO deleteBookMarkInDTO) {
-
-    }
 }

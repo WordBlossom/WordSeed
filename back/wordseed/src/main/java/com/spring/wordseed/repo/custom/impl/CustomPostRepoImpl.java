@@ -9,6 +9,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
+import com.spring.wordseed.dto.out.ReadCommentOutDTO;
 import com.spring.wordseed.dto.out.ReadPostByPostIdOutDTO;
 import com.spring.wordseed.dto.out.ReadPostOutDTO;
 import com.spring.wordseed.dto.out.ReadPostOutDTOs;
@@ -26,6 +27,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class CustomPostRepoImpl implements CustomPostRepo {
     @PersistenceContext
@@ -37,6 +39,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
     private final QPostLiked qPostLiked = QPostLiked.postLiked;
     private final QWord qWord = QWord.word1;
     private final QFollow qFollow = QFollow.follow;
+    private final QComment qComment = QComment.comment;
 
     @Override
     public ReadPostByPostIdOutDTO findPostByPostId(Long postId) {
@@ -95,7 +98,6 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
         return readPostByPostIdOutDTO;
     }
-
     @Override
     // 특정 말씨에 해당하는 모든 작품 목록
     public List<ReadPostOutDTO> findPostsWithWord(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId, Long wordId) {
@@ -292,6 +294,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
             readPostOutDTO.setLiked(likedExpression != null);
             readPostOutDTO.setBookMarked(bookMarkedExpression != null);
+
         }
 
         if (mark.equals("true"))
@@ -439,5 +442,33 @@ public class CustomPostRepoImpl implements CustomPostRepo {
         return readPostOutDTOList;
     }
 
+    public List<ReadCommentOutDTO> findCommentAllBy(Long postId, Long page, Long size) {
+        List<ReadCommentOutDTO> ReadCommentOutDTOList = new JPAQuery<>(em)
+                .select(Projections.constructor(ReadCommentOutDTO.class,
+                        qComment.commentId,
+                        qComment.user.userId,
+                        qComment.post.postId,
+                        qComment.content,
+                        qComment.createdAt))
+                .from(qComment)
+                .where(qComment.post.postId.eq(postId))
+                .orderBy(qComment.createdAt.desc())
+                .offset((page - 1) * size)
+                .limit(size)
+                .fetch();
 
+        return ReadCommentOutDTOList;
+    }
+  
+    @Override
+    public Optional<Post> findPostBy(Long postId, Long userId) {
+        Post post = new JPAQuery<>(em)
+                .select(qPost)
+                .from(qPost)
+                .where(qPost.postId.eq(postId))
+                .where(qPost.user.userId.eq(userId))
+                .fetchOne();
+
+        return Optional.ofNullable(post);
+    }
 }
