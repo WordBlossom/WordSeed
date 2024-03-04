@@ -1,19 +1,28 @@
-import styles from "./feed-interface.module.scss";
 import FollowButton from "@/components/Button/follow-button";
 import BookmarkButton from "../Button/bookmark-button";
 import LikeButton from "../Button/like-button";
 import CommentButton from "../Button/comment-button";
+import styles from "./feed-interface.module.scss";
 
-export default function FeedInterfaceBottom() {
+type FeedInterfaceBottomProps = {
+  userName: string;
+  interfaceInfo: boolean[];
+};
+
+export default function FeedInterfaceBottom({
+  userName,
+  interfaceInfo,
+}: FeedInterfaceBottomProps) {
+  const [liked, bookMarked, subscribed] = interfaceInfo;
   return (
     <div className={styles["interface-bottom-container"]}>
       <div className={styles["artist-wrapper"]}>
-        <span className={styles["artist-name"]}>초아누리</span>
-        <FollowButton />
+        <span className={styles["artist-name"]}>{userName}</span>
+        <FollowButton isFollow={subscribed} />
       </div>
       <div className={styles["button-wrapper"]}>
-        <BookmarkButton />
-        <LikeButton />
+        <BookmarkButton isBookMarked={bookMarked} />
+        <LikeButton isLiked={liked} />
         <CommentButton />
       </div>
     </div>
