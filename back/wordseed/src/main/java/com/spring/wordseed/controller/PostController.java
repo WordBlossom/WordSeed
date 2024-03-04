@@ -50,7 +50,6 @@ public class PostController {
                                                      HttpServletRequest request) throws Exception {
         long srcUserId = (long) request.getAttribute("userId");
         ReadPostOutDTOs readPostOutDTOs = postService.readPostsWithWord(postType, mark, sort, query, page, size, srcUserId, wordId);
-        System.out.println("LENGTH : " + readPostOutDTOs.getPosts().size());
         return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
     }
     
@@ -65,7 +64,6 @@ public class PostController {
                                                              HttpServletRequest request) throws Exception {
         long srcUserId = (long) request.getAttribute("userId");
         ReadPostOutDTOs readPostOutDTOs = postService.readPostsWithSubs(postType, mark, sort, query, page, size, srcUserId);
-        System.out.println("LENGTH : " + readPostOutDTOs.getPosts().size());
         return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
     }
     // 나의 작품 목록 조회
@@ -79,7 +77,6 @@ public class PostController {
                                                              HttpServletRequest request) throws Exception {
         long srcUserId = (long) request.getAttribute("userId");
         ReadPostOutDTOs readPostOutDTOs = postService.readMyPosts(postType, mark, sort, query, page, size, srcUserId);
-        System.out.println("LENGTH : " + readPostOutDTOs.getPosts().size());
         return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
     }
     
@@ -94,7 +91,6 @@ public class PostController {
                                                        HttpServletRequest request) throws Exception {
         long srcUserId = (long) request.getAttribute("userId");
         ReadPostOutDTOs readPostOutDTOs = postService.readMyPostsWithBookMark(postType, mark, sort, query, page, size, srcUserId);
-        System.out.println("LENGTH : " + readPostOutDTOs.getPosts().size());
         return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
     }
     
@@ -110,7 +106,6 @@ public class PostController {
                                                              HttpServletRequest request) throws Exception {
         long srcUserId = (long) request.getAttribute("userId");
         ReadPostOutDTOs readPostOutDTOs = postService.readPostsWithUser(postType, mark, userId, sort, query, page, size, srcUserId);
-        System.out.println("LENGTH : " + readPostOutDTOs.getPosts().size());
         return ResponseEntity.status(HttpStatus.OK).body(readPostOutDTOs);
     }
 
