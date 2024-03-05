@@ -23,5 +23,7 @@ services:
     build: ./back/wordseed
     ports:
       - "8080:8080"
+    volumes:
+      - ./back/wordseed:/srv/docker-server
     depends_on:
       - database_mysql
