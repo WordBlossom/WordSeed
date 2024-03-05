@@ -16,6 +16,7 @@ import com.spring.wordseed.dto.out.ReadPostOutDTOs;
 import com.spring.wordseed.entity.*;
 import com.spring.wordseed.enu.PostSort;
 import com.spring.wordseed.enu.PostType;
+import com.spring.wordseed.enu.PostVisibility;
 import com.spring.wordseed.repo.custom.CustomPostRepo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -98,6 +99,8 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
         return readPostByPostIdOutDTO;
     }
+
+
     @Override
     // 특정 말씨에 해당하는 모든 작품 목록
     public List<ReadPostByPostIdOutDTO> findPostsWithWord(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId, Long wordId) {
@@ -128,6 +131,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .from(qPost)
                 .where(qPost.word.wordId.eq(wordId))
                 .where(qPost.postType.in(postTypeList))
+                .where(qPost.postVisibility.eq(PostVisibility.PUBLIC).or(qPost.user.userId.eq(srcUserId)))
                 .where((query == null || query.trim().length() == 0) ? Expressions.TRUE : qPost.word.word.eq(query))
                 .offset((page - 1) * size)
                 .limit(size)
@@ -174,6 +178,8 @@ public class CustomPostRepoImpl implements CustomPostRepo {
         return readPostByPostIdOutDTOList;
     }
 
+
+
     @Override
     // 관심 작가 등록한 사람들의 작품 목록
     public List<ReadPostByPostIdOutDTO> findPostsWithSubs(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
@@ -207,6 +213,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .on(qFollow.dstUser.userId.eq(qPost.user.userId))
                 .where(qUser.userId.eq(srcUserId))
                 .where(qPost.postType.in(postTypeList))
+                .where(qPost.postVisibility.eq(PostVisibility.PUBLIC))
                 .where((query == null || query.trim().length() == 0) ? Expressions.TRUE : qPost.word.word.eq(query))
                 .offset((page - 1) * size)
                 .limit(size)
@@ -347,6 +354,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .join(qBookMark.post, qPost)
                 .where(qUser.userId.eq(srcUserId))
                 .where(qPost.postType.in(postTypeList))
+                .where(qPost.postVisibility.eq(PostVisibility.PUBLIC).or(qPost.user.userId.eq(srcUserId)))
                 .where((query == null || query.trim().length() == 0) ? Expressions.TRUE : qPost.word.word.eq(query))
                 .offset((page - 1) * size)
                 .limit(size)
@@ -416,6 +424,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .from(qPost)
                 .where(qPost.user.userId.eq(userId))
                 .where(qPost.postType.in(postTypeList))
+                .where(qPost.postVisibility.eq(PostVisibility.PUBLIC).or(qPost.user.userId.eq(srcUserId)))
                 .where((query == null || query.trim().length() == 0) ? Expressions.TRUE : qPost.word.word.eq(query))
                 .offset((page - 1) * size)
                 .limit(size)
