@@ -37,8 +37,9 @@ public class PostController {
 
     // 작품 업로드
     @PostMapping("")
-    public ResponseEntity<CreatePostOutDTO> createPost(@RequestBody CreatePostInDTO createPostInDTO) throws Exception {
-        CreatePostOutDTO createPostOutDTO = postService.createPost(createPostInDTO);
+    public ResponseEntity<CreatePostOutDTO> createPost(@RequestBody CreatePostInDTO createPostInDTO, HttpServletRequest request) throws Exception {
+        long srcUserId = (long) request.getAttribute("userId");
+        CreatePostOutDTO createPostOutDTO = postService.createPost(createPostInDTO, srcUserId);
 
         return ResponseEntity.status(HttpStatus.OK).body(createPostOutDTO);
     }

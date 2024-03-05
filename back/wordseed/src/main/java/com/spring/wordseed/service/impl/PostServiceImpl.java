@@ -34,7 +34,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public CreatePostOutDTO createPost(CreatePostInDTO createPostInDTO) throws Exception {
+    public CreatePostOutDTO createPost(CreatePostInDTO createPostInDTO, Long srcUserId) throws Exception {
 
         Post post = Post.builder()
                 .content(createPostInDTO.getContent())
@@ -45,8 +45,8 @@ public class PostServiceImpl implements PostService {
                 .likedCnt(0L)
                 .bookMarkCnt(0L)
                 .commentCnt(0L)
-                .user(userRepo.findById(3L).orElseThrow(Exception::new)) // token 유입
-                .word(wordRepo.findById(1L).orElseThrow(Exception::new)) // word 유입
+                .user(userRepo.findById(srcUserId).orElseThrow(Exception::new)) // token 유입
+                .word(wordRepo.findById(createPostInDTO.getWordId()).orElseThrow(Exception::new)) // word 유입
                 .build();
 
         Post result = postRepo.save(post);
@@ -66,7 +66,7 @@ public class PostServiceImpl implements PostService {
                         .wordId(result.getWord().getWordId())
                         .createdAt(result.getCreatedAt())
                         .updatedAt(result.getUpdatedAt())
-                        .word("use join")
+                        .word(result.getWord().getWord())
                         .build();
 
         return createPostOutDTO;

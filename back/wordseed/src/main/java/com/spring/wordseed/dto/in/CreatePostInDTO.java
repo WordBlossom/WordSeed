@@ -17,4 +17,5 @@ public class CreatePostInDTO {
     private PostType postType;
     private PostAlign postAlign;
     private PostVisibility postVisibility;
+    private Long wordId;
 }
