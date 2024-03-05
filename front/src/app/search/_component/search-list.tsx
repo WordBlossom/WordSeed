@@ -1,6 +1,5 @@
 "use client";
 
-import { useInView } from "react-intersection-observer";
 import { useWordseedList } from "@/api/wordseed";
 import { useAuthorList } from "@/api/author";
 import useSearchPageStateStore from "@/stores/search-page";
@@ -21,6 +20,7 @@ export default function SearchList() {
     params: {
       query: searchKeyword,
     },
+    config: { enabled: isWordseed && !!searchKeyword },
   });
 
   const {
@@ -31,6 +31,7 @@ export default function SearchList() {
     params: {
       query: searchKeyword,
     },
+    config: { enabled: !isWordseed && !!searchKeyword },
   });
 
   return (
