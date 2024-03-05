@@ -1,21 +1,20 @@
 "use client";
+
 import { useInView } from "react-intersection-observer";
 import Wordseed from "@/components/WordSeed/WordSeed";
-import NoData from "./component/no-data";
-import useSearchPageStateStore from "@/stores/search-page";
-import { useWordseedList } from "@/api/wordseed";
+import { Wordseed as Wordseedtype } from "@/api/wordseed/types";
+import { WordseedListFetchNextPage } from "./types";
 import styles from "./WordSeedList.module.scss";
 
-// route 판별해서 말씨 목록 페이지이면 모든 데이터 조회하는 요청
-// search 페이지이면 아래와 같이 요청
+type WordSeedListProps = {
+  data: Wordseedtype[] | undefined;
+  fetchNextPage: WordseedListFetchNextPage;
+};
 
-export default function WordSeedList() {
-  const { searchKeyword } = useSearchPageStateStore();
-  const { status, data, fetchNextPage } = useWordseedList({
-    params: {
-      query: searchKeyword,
-    },
-  });
+export default function WordSeedList({
+  data,
+  fetchNextPage,
+}: WordSeedListProps) {
   const [ref] = useInView({
     onChange: (inView) => {
       if (inView) fetchNextPage();
@@ -24,26 +23,14 @@ export default function WordSeedList() {
 
   return (
     <div className={styles.container}>
-      {/* {status === "pending" && <p>Loading...</p>} */}
-      {status === "success" && data.pages.length === 0 && (
-        <NoData searchKeyword={searchKeyword} />
-      )}
-      {status === "success" && (
-        <>
-          {data.pages.map((wordseed, idx) => (
-            <div
-              key={idx}
-              ref={idx === data.pages.length - 5 ? ref : undefined}
-            >
-              <Wordseed
-                // 나중에는 key값을 날짜로 수정해야함
-                date={wordseed.createdAt}
-                wordseed={wordseed.word}
-              />
-            </div>
-          ))}
-        </>
-      )}
+      {data?.map((wordseed, idx) => (
+        <div
+          key={wordseed.createdAt}
+          ref={idx === data.length - 5 ? ref : undefined}
+        >
+          <Wordseed date={wordseed.createdAt} wordseed={wordseed.word} />
+        </div>
+      ))}
     </div>
   );
 }
