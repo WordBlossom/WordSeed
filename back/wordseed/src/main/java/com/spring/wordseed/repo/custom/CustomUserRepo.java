@@ -12,5 +12,5 @@ public interface CustomUserRepo {
     Optional<User> findWithUserInfoById(long userId) throws Exception;
     Optional<List<UserDTO>> findUserBy(long userId, String query, long page, long size);
     Optional<ReadUserInfoByIdOutDTO> findUserInfoBy(long srcUserId, long dstUserId);
-    Optional<List<UserDTO>> findUserBy(FollowType type, long authUserId, long targetUserId, long page, long size);
+    Optional<List<UserDTO>> findUserBy(FollowType type, long authUserId, long targetUserId, long page, long size) throws  Exception;
 }

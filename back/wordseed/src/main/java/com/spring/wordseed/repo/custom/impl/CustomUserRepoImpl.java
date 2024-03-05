@@ -79,8 +79,12 @@ public class CustomUserRepoImpl implements CustomUserRepo {
     }
 
     @Override
-    public Optional<List<UserDTO>> findUserBy(FollowType type, long authUserId, long targetUserId, long page, long size) {
-        QUser follower = (type == FollowType.SEND) ? qFollow.dstUser : qFollow.srcUser;
+    public Optional<List<UserDTO>> findUserBy(FollowType type, long authUserId, long targetUserId,
+                                              long page, long size) throws Exception{
+        QUser follower;
+        if(type == FollowType.SEND) follower = qFollow.dstUser;
+        else if(type == FollowType.RECV) follower = qFollow.srcUser;
+        else throw new IllegalArgumentException();
         List<UserDTO> users = new JPAQuery<>(em)
                 .select(Projections.constructor(UserDTO.class,
                         qUser.userId,
@@ -118,9 +122,9 @@ public class CustomUserRepoImpl implements CustomUserRepo {
                 .exists();
     }
 
-    private BooleanExpression followTypeEq(FollowType type, long userId) {
+    private BooleanExpression followTypeEq(FollowType type, long userId) throws Exception{
         if(type == FollowType.SEND) return qFollow.srcUser.userId.eq(userId);
-        return qFollow.dstUser.userId.eq(userId);
+        else if(type == FollowType.RECV) return qFollow.dstUser.userId.eq(userId);
+        else throw new IllegalArgumentException();
     }
-
 }
