@@ -37,12 +37,22 @@ export default function SearchList() {
   return (
     <div className={style["list-container"]}>
       {!searchKeyword && <SearchGuidance />}
+
+      {searchKeyword &&
+        ((wordseedListStatus === "success" &&
+          wordseedListData.pages.length === 0) ||
+          (authorListStatus === "success" &&
+            authorListData.pages.length === 0)) && (
+          <SearchGuidance searchKeyword={searchKeyword} />
+        )}
+
       {searchKeyword && isWordseed && (
         <WordSeedList
           data={wordseedListData?.pages}
           fetchNextPage={wordseedListFetchNextPage}
         />
       )}
+
       {searchKeyword && !isWordseed && (
         <ArtistCardList
           data={authorListData?.pages}
