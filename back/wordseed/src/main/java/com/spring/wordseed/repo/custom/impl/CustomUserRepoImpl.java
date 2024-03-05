@@ -1,7 +1,10 @@
 package com.spring.wordseed.repo.custom.impl;
 
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.spring.wordseed.dto.out.ReadUserInfoByIdOutDTO;
@@ -10,6 +13,7 @@ import com.spring.wordseed.entity.QFollow;
 import com.spring.wordseed.entity.QUser;
 import com.spring.wordseed.entity.QUserInfo;
 import com.spring.wordseed.entity.User;
+import com.spring.wordseed.enu.FollowType;
 import com.spring.wordseed.repo.custom.CustomUserRepo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -52,7 +56,6 @@ public class CustomUserRepoImpl implements CustomUserRepo {
                 .offset((page - 1) * size)
                 .limit(size)
                 .fetch();
-
         return Optional.ofNullable(users);
     }
 
@@ -75,6 +78,28 @@ public class CustomUserRepoImpl implements CustomUserRepo {
         return Optional.ofNullable(userInfo);
     }
 
+    @Override
+    public Optional<List<UserDTO>> findUserBy(FollowType type, long authUserId, long targetUserId, long page, long size) {
+        QUser follower = (type == FollowType.SEND) ? qFollow.dstUser : qFollow.srcUser;
+        List<UserDTO> users = new JPAQuery<>(em)
+                .select(Projections.constructor(UserDTO.class,
+                        qUser.userId,
+                        qUser.userName,
+                        qUserInfo.followSrcCnt,
+                        qUserInfo.followDstCnt,
+                        qUserInfo.userDecp,
+                        isSubscribedBy(authUserId)))
+                .from(qFollow)
+                .innerJoin(follower, qUser)
+                .innerJoin(qUser.userInfo, qUserInfo)
+                .where(followTypeEq(type, targetUserId))
+                .orderBy(qUser.userName.asc())
+                .offset((page - 1) * size)
+                .limit(size)
+                .fetch();
+        return Optional.ofNullable(users);
+    }
+
     private BooleanExpression isSubscribedBy(long srcUserId) {
         return JPAExpressions
                 .selectOne()
@@ -93,5 +118,9 @@ public class CustomUserRepoImpl implements CustomUserRepo {
                 .exists();
     }
 
+    private BooleanExpression followTypeEq(FollowType type, long userId) {
+        if(type == FollowType.SEND) return qFollow.srcUser.userId.eq(userId);
+        return qFollow.dstUser.userId.eq(userId);
+    }
 
 }

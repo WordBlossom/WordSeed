@@ -1,6 +1,7 @@
 package com.spring.wordseed.service;
 
 import com.spring.wordseed.dto.in.CreateUserInDTO;
+import com.spring.wordseed.dto.in.ReadFollowerInDTOs;
 import com.spring.wordseed.dto.in.ReadUserInDTOs;
 import com.spring.wordseed.dto.in.UpdateUserInDTO;
 import com.spring.wordseed.dto.out.DeleteUserOutDTO;
@@ -18,4 +19,5 @@ public interface UserService {
     DeleteUserOutDTO deleteUser(long userId) throws Exception;
     ReadUserOutDTOs readUsers(ReadUserInDTOs readUserInDTOs)throws Exception;
     ReadUserInfoByIdOutDTO readUserInfo(long srcUserId, long dstUserId) throws Exception;
+    ReadUserOutDTOs readFollowers(ReadFollowerInDTOs readFollowerInDTOs) throws Exception;
 }
