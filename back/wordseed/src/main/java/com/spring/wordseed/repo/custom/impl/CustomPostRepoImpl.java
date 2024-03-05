@@ -16,6 +16,7 @@ import com.spring.wordseed.dto.out.ReadPostOutDTOs;
 import com.spring.wordseed.entity.*;
 import com.spring.wordseed.enu.PostSort;
 import com.spring.wordseed.enu.PostType;
+import com.spring.wordseed.enu.PostVisibility;
 import com.spring.wordseed.repo.custom.CustomPostRepo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -42,12 +43,12 @@ public class CustomPostRepoImpl implements CustomPostRepo {
     private final QComment qComment = QComment.comment;
 
     @Override
-    public ReadPostByPostIdOutDTO findPostByPostId(Long postId) {
+    public ReadPostByPostIdOutDTO findPostByPostId(Long postId, Long srcUserId) {
         BooleanExpression likedExpression = JPAExpressions
                 .selectOne()
                 .from(qPost)
                 .join(qPost.postLikeds, qPostLiked)
-                .where(qPostLiked.user.userId.eq(7L))
+                .where(qPostLiked.user.userId.eq(srcUserId))
                 .where(qPost.postId.eq(postId))
                 .exists();
 
@@ -55,7 +56,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .selectOne()
                 .from(qPost)
                 .join(qPost.bookMarks, qBookMark)
-                .where(qBookMark.user.userId.eq(7L))
+                .where(qBookMark.user.userId.eq(srcUserId))
                 .where(qPost.postId.eq(postId))
                 .exists();
 
@@ -65,7 +66,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .join(qFollow.srcUser, qUser)
                 .join(qFollow.dstUser, qUser2)
                 .join(qUser2.posts, qPost)
-                .where(qUser.userId.eq(7L))
+                .where(qUser.userId.eq(srcUserId))
                 .where(qPost.postId.eq(postId))
                 .exists();
 
@@ -98,19 +99,23 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
         return readPostByPostIdOutDTO;
     }
+
+
     @Override
     // 특정 말씨에 해당하는 모든 작품 목록
-    public List<ReadPostOutDTO> findPostsWithWord(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId, Long wordId) {
+    public Optional<List<ReadPostByPostIdOutDTO>> findPostsWithWord(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId, Long wordId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
 
-        List<ReadPostOutDTO> readPostOutDTOList = new JPAQuery<>(em)
-                .select(Projections.constructor(ReadPostOutDTO.class,
+        List<ReadPostByPostIdOutDTO> readPostByPostIdOutDTOList = new JPAQuery<>(em)
+                .select(Projections.constructor(ReadPostByPostIdOutDTO.class,
                         qPost.postId,
                         qPost.user.userId,
                         qPost.user.userName,
                         qPost.postType,
+                        qPost.postAlign,
+                        qPost.postVisibility,
                         qPost.content,
                         qPost.url,
                         qPost.likedCnt,
@@ -119,11 +124,14 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                         Expressions.TRUE,
                         Expressions.TRUE,
                         Expressions.TRUE,
+                        qPost.word.wordId,
+                        qPost.word.word,
                         qPost.createdAt,
                         qPost.updatedAt))
                 .from(qPost)
                 .where(qPost.word.wordId.eq(wordId))
                 .where(qPost.postType.in(postTypeList))
+                .where(qPost.postVisibility.eq(PostVisibility.PUBLIC).or(qPost.user.userId.eq(srcUserId)))
                 .where((query == null || query.trim().length() == 0) ? Expressions.TRUE : qPost.word.word.eq(query))
                 .offset((page - 1) * size)
                 .limit(size)
@@ -135,13 +143,13 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 })
                 .fetch();
 
-        for (ReadPostOutDTO readPostOutDTO : readPostOutDTOList){
+        for (ReadPostByPostIdOutDTO readPostByPostIdOutDTO : readPostByPostIdOutDTOList){
             Post likedExpression = new JPAQuery<>(em)
                     .select(qPost)
                     .from(qPost)
                     .join(qPost.postLikeds, qPostLiked)
                     .where(qPostLiked.user.userId.eq(srcUserId))
-                    .where(qPost.postId.eq(readPostOutDTO.getPostId()))
+                    .where(qPost.postId.eq(readPostByPostIdOutDTO.getPostId()))
                     .fetchOne();
 
             Post bookMarkedExpression = new JPAQuery<>(em)
@@ -149,40 +157,44 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                     .from(qPost)
                     .join(qPost.bookMarks, qBookMark)
                     .where(qBookMark.user.userId.eq(srcUserId))
-                    .where(qPost.postId.eq(readPostOutDTO.getPostId()))
+                    .where(qPost.postId.eq(readPostByPostIdOutDTO.getPostId()))
                     .fetchOne();
 
             Follow subscribedExpression = new JPAQuery<>(em)
                     .select(qFollow)
                     .from(qFollow)
                     .where(qFollow.srcUser.userId.eq(srcUserId))
-                    .where(qFollow.dstUser.userId.eq(readPostOutDTO.getPostId()))
+                    .where(qFollow.dstUser.userId.eq(readPostByPostIdOutDTO.getPostId()))
                     .fetchOne();
 
-            readPostOutDTO.setLiked(likedExpression != null);
-            readPostOutDTO.setBookMarked(bookMarkedExpression != null);
-            readPostOutDTO.setSubscribed(subscribedExpression != null);
+            readPostByPostIdOutDTO.setLiked(likedExpression != null);
+            readPostByPostIdOutDTO.setBookMarked(bookMarkedExpression != null);
+            readPostByPostIdOutDTO.setSubscribed(subscribedExpression != null);
         }
 
         if (mark.equals("true"))
-            readPostOutDTOList.removeIf(el -> !el.getBookMarked());
+            readPostByPostIdOutDTOList.removeIf(el -> !el.getBookMarked());
 
-        return readPostOutDTOList;
+        return Optional.ofNullable(readPostByPostIdOutDTOList);
     }
+
+
 
     @Override
     // 관심 작가 등록한 사람들의 작품 목록
-    public List<ReadPostOutDTO> findPostsWithSubs(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+    public Optional<List<ReadPostByPostIdOutDTO>> findPostsWithSubs(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
 
-        List<ReadPostOutDTO> readPostOutDTOList = new JPAQuery<>(em)
-                .select(Projections.constructor(ReadPostOutDTO.class,
+        List<ReadPostByPostIdOutDTO> readPostByPostIdOutDTOList = new JPAQuery<>(em)
+                .select(Projections.constructor(ReadPostByPostIdOutDTO.class,
                         qPost.postId,
                         qPost.user.userId,
                         qPost.user.userName,
                         qPost.postType,
+                        qPost.postAlign,
+                        qPost.postVisibility,
                         qPost.content,
                         qPost.url,
                         qPost.likedCnt,
@@ -191,6 +203,8 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                         Expressions.TRUE,
                         Expressions.TRUE,
                         Expressions.TRUE,
+                        qPost.word.wordId,
+                        qPost.word.word,
                         qPost.createdAt,
                         qPost.updatedAt))
                 .from(qUser)
@@ -199,6 +213,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .on(qFollow.dstUser.userId.eq(qPost.user.userId))
                 .where(qUser.userId.eq(srcUserId))
                 .where(qPost.postType.in(postTypeList))
+                .where(qPost.postVisibility.eq(PostVisibility.PUBLIC))
                 .where((query == null || query.trim().length() == 0) ? Expressions.TRUE : qPost.word.word.eq(query))
                 .offset((page - 1) * size)
                 .limit(size)
@@ -210,13 +225,13 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 })
                 .fetch();
 
-        for (ReadPostOutDTO readPostOutDTO : readPostOutDTOList){
+        for (ReadPostByPostIdOutDTO readPostByPostIdOutDTO : readPostByPostIdOutDTOList){
             Post likedExpression = new JPAQuery<>(em)
                     .select(qPost)
                     .from(qPost)
                     .join(qPost.postLikeds, qPostLiked)
                     .where(qPostLiked.user.userId.eq(srcUserId))
-                    .where(qPost.postId.eq(readPostOutDTO.getPostId()))
+                    .where(qPost.postId.eq(readPostByPostIdOutDTO.getPostId()))
                     .fetchOne();
 
             Post bookMarkedExpression = new JPAQuery<>(em)
@@ -224,33 +239,35 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                     .from(qPost)
                     .join(qPost.bookMarks, qBookMark)
                     .where(qBookMark.user.userId.eq(srcUserId))
-                    .where(qPost.postId.eq(readPostOutDTO.getPostId()))
+                    .where(qPost.postId.eq(readPostByPostIdOutDTO.getPostId()))
                     .fetchOne();
 
-            readPostOutDTO.setLiked(likedExpression != null);
-            readPostOutDTO.setBookMarked(bookMarkedExpression != null);
-            readPostOutDTO.setSubscribed(true);
+            readPostByPostIdOutDTO.setLiked(likedExpression != null);
+            readPostByPostIdOutDTO.setBookMarked(bookMarkedExpression != null);
+            readPostByPostIdOutDTO.setSubscribed(true);
         }
 
         if (mark.equals("true"))
-            readPostOutDTOList.removeIf(el -> !el.getBookMarked());
+            readPostByPostIdOutDTOList.removeIf(el -> !el.getBookMarked());
 
-        return readPostOutDTOList;
+        return Optional.ofNullable(readPostByPostIdOutDTOList);
     }
 
     @Override
     // 내 작품 목록
-    public List<ReadPostOutDTO> findMyPosts(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+    public Optional<List<ReadPostByPostIdOutDTO>> findMyPosts(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
 
-        List<ReadPostOutDTO> readPostOutDTOList = new JPAQuery<>(em)
-                .select(Projections.constructor(ReadPostOutDTO.class,
+        List<ReadPostByPostIdOutDTO> readPostByPostIdOutDTOList = new JPAQuery<>(em)
+                .select(Projections.constructor(ReadPostByPostIdOutDTO.class,
                         qPost.postId,
                         qPost.user.userId,
                         qPost.user.userName,
                         qPost.postType,
+                        qPost.postAlign,
+                        qPost.postVisibility,
                         qPost.content,
                         qPost.url,
                         qPost.likedCnt,
@@ -258,7 +275,9 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                         qPost.commentCnt,
                         Expressions.TRUE,
                         Expressions.TRUE,
-                        Expressions.FALSE,
+                        Expressions.TRUE,
+                        qPost.word.wordId,
+                        qPost.word.word,
                         qPost.createdAt,
                         qPost.updatedAt))
                 .from(qPost)
@@ -275,13 +294,13 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 })
                 .fetch();
 
-        for (ReadPostOutDTO readPostOutDTO : readPostOutDTOList){
+        for (ReadPostByPostIdOutDTO readPostByPostIdOutDTO : readPostByPostIdOutDTOList){
             Post likedExpression = new JPAQuery<>(em)
                     .select(qPost)
                     .from(qPost)
                     .join(qPost.postLikeds, qPostLiked)
                     .where(qPostLiked.user.userId.eq(srcUserId))
-                    .where(qPost.postId.eq(readPostOutDTO.getPostId()))
+                    .where(qPost.postId.eq(readPostByPostIdOutDTO.getPostId()))
                     .fetchOne();
 
             Post bookMarkedExpression = new JPAQuery<>(em)
@@ -289,33 +308,35 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                     .from(qPost)
                     .join(qPost.bookMarks, qBookMark)
                     .where(qBookMark.user.userId.eq(srcUserId))
-                    .where(qPost.postId.eq(readPostOutDTO.getPostId()))
+                    .where(qPost.postId.eq(readPostByPostIdOutDTO.getPostId()))
                     .fetchOne();
 
-            readPostOutDTO.setLiked(likedExpression != null);
-            readPostOutDTO.setBookMarked(bookMarkedExpression != null);
+            readPostByPostIdOutDTO.setLiked(likedExpression != null);
+            readPostByPostIdOutDTO.setBookMarked(bookMarkedExpression != null);
 
         }
 
         if (mark.equals("true"))
-            readPostOutDTOList.removeIf(el -> !el.getBookMarked());
+            readPostByPostIdOutDTOList.removeIf(el -> !el.getBookMarked());
 
-        return readPostOutDTOList;
+        return Optional.ofNullable(readPostByPostIdOutDTOList);
     }
 
     @Override
     // 내가 북마크한 작품 목록
-    public List<ReadPostOutDTO> findMyPostsWithBookMark(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+    public Optional<List<ReadPostByPostIdOutDTO>> findMyPostsWithBookMark(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
 
-        List<ReadPostOutDTO> readPostOutDTOList = new JPAQuery<>(em)
-                .select(Projections.constructor(ReadPostOutDTO.class,
+        List<ReadPostByPostIdOutDTO> readPostByPostIdOutDTOList = new JPAQuery<>(em)
+                .select(Projections.constructor(ReadPostByPostIdOutDTO.class,
                         qPost.postId,
                         qPost.user.userId,
                         qPost.user.userName,
                         qPost.postType,
+                        qPost.postAlign,
+                        qPost.postVisibility,
                         qPost.content,
                         qPost.url,
                         qPost.likedCnt,
@@ -324,6 +345,8 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                         Expressions.TRUE,
                         Expressions.TRUE,
                         Expressions.TRUE,
+                        qPost.word.wordId,
+                        qPost.word.word,
                         qPost.createdAt,
                         qPost.updatedAt))
                 .from(qUser)
@@ -331,6 +354,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .join(qBookMark.post, qPost)
                 .where(qUser.userId.eq(srcUserId))
                 .where(qPost.postType.in(postTypeList))
+                .where(qPost.postVisibility.eq(PostVisibility.PUBLIC).or(qPost.user.userId.eq(srcUserId)))
                 .where((query == null || query.trim().length() == 0) ? Expressions.TRUE : qPost.word.word.eq(query))
                 .offset((page - 1) * size)
                 .limit(size)
@@ -342,47 +366,49 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 })
                 .fetch();
 
-        for (ReadPostOutDTO readPostOutDTO : readPostOutDTOList){
+        for (ReadPostByPostIdOutDTO readPostByPostIdOutDTO : readPostByPostIdOutDTOList){
             Post likedExpression = new JPAQuery<>(em)
                     .select(qPost)
                     .from(qPost)
                     .join(qPost.postLikeds, qPostLiked)
                     .where(qPostLiked.user.userId.eq(srcUserId))
-                    .where(qPost.postId.eq(readPostOutDTO.getPostId()))
+                    .where(qPost.postId.eq(readPostByPostIdOutDTO.getPostId()))
                     .fetchOne();
 
             Follow subscribedExpression = new JPAQuery<>(em)
                     .select(qFollow)
                     .from(qFollow)
                     .where(qFollow.srcUser.userId.eq(srcUserId))
-                    .where(qFollow.dstUser.userId.eq(readPostOutDTO.getUserId()))
+                    .where(qFollow.dstUser.userId.eq(readPostByPostIdOutDTO.getUserId()))
                     .fetchOne();
 
-            readPostOutDTO.setLiked(likedExpression != null);
-            readPostOutDTO.setBookMarked(true);
-            readPostOutDTO.setSubscribed(subscribedExpression != null);
+            readPostByPostIdOutDTO.setLiked(likedExpression != null);
+            readPostByPostIdOutDTO.setBookMarked(true);
+            readPostByPostIdOutDTO.setSubscribed(subscribedExpression != null);
         }
 
         if (mark.equals("true"))
-            readPostOutDTOList.removeIf(el -> !el.getBookMarked());
+            readPostByPostIdOutDTOList.removeIf(el -> !el.getBookMarked());
 
-        return readPostOutDTOList;
+        return Optional.ofNullable(readPostByPostIdOutDTOList);
     }
 
 
     @Override
     // 특정 사용자에 대한 작품 목록
-    public List<ReadPostOutDTO> findPostsWithUser(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+    public Optional<List<ReadPostByPostIdOutDTO>> findPostsWithUser(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
 
-        List<ReadPostOutDTO> readPostOutDTOList = new JPAQuery<>(em)
-                .select(Projections.constructor(ReadPostOutDTO.class,
+        List<ReadPostByPostIdOutDTO> readPostByPostIdOutDTOList = new JPAQuery<>(em)
+                .select(Projections.constructor(ReadPostByPostIdOutDTO.class,
                         qPost.postId,
                         qPost.user.userId,
                         qPost.user.userName,
                         qPost.postType,
+                        qPost.postAlign,
+                        qPost.postVisibility,
                         qPost.content,
                         qPost.url,
                         qPost.likedCnt,
@@ -391,11 +417,14 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                         Expressions.TRUE,
                         Expressions.TRUE,
                         Expressions.TRUE,
+                        qPost.word.wordId,
+                        qPost.word.word,
                         qPost.createdAt,
                         qPost.updatedAt))
                 .from(qPost)
                 .where(qPost.user.userId.eq(userId))
                 .where(qPost.postType.in(postTypeList))
+                .where(qPost.postVisibility.eq(PostVisibility.PUBLIC).or(qPost.user.userId.eq(srcUserId)))
                 .where((query == null || query.trim().length() == 0) ? Expressions.TRUE : qPost.word.word.eq(query))
                 .offset((page - 1) * size)
                 .limit(size)
@@ -414,13 +443,13 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .where(qFollow.dstUser.userId.eq(userId))
                 .fetchOne();
 
-        for (ReadPostOutDTO readPostOutDTO : readPostOutDTOList){
+        for (ReadPostByPostIdOutDTO readPostByPostIdOutDTO : readPostByPostIdOutDTOList){
             Post likedExpression = new JPAQuery<>(em)
                     .select(qPost)
                     .from(qPost)
                     .join(qPost.postLikeds, qPostLiked)
                     .where(qPostLiked.user.userId.eq(srcUserId))
-                    .where(qPost.postId.eq(readPostOutDTO.getPostId()))
+                    .where(qPost.postId.eq(readPostByPostIdOutDTO.getPostId()))
                     .fetchOne();
 
             Post bookMarkedExpression = new JPAQuery<>(em)
@@ -428,18 +457,18 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                     .from(qPost)
                     .join(qPost.bookMarks, qBookMark)
                     .where(qBookMark.user.userId.eq(srcUserId))
-                    .where(qPost.postId.eq(readPostOutDTO.getPostId()))
+                    .where(qPost.postId.eq(readPostByPostIdOutDTO.getPostId()))
                     .fetchOne();
 
-            readPostOutDTO.setLiked(likedExpression != null);
-            readPostOutDTO.setBookMarked(bookMarkedExpression != null);
-            readPostOutDTO.setSubscribed(subscribedExpression != null);
+            readPostByPostIdOutDTO.setLiked(likedExpression != null);
+            readPostByPostIdOutDTO.setBookMarked(bookMarkedExpression != null);
+            readPostByPostIdOutDTO.setSubscribed(subscribedExpression != null);
         }
 
         if (mark.equals("true"))
-            readPostOutDTOList.removeIf(el -> !el.getBookMarked());
+            readPostByPostIdOutDTOList.removeIf(el -> !el.getBookMarked());
 
-        return readPostOutDTOList;
+        return Optional.ofNullable(readPostByPostIdOutDTOList);
     }
 
     public List<ReadCommentOutDTO> findCommentAllBy(Long postId, Long page, Long size) {
