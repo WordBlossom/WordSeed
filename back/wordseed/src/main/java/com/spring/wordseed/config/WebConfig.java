@@ -10,8 +10,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Value("${auth.header}")
-    private String AUTHORIZATION_HEADER;
     @Value("${client.url}")
     private String CLIENT_URL;
 
@@ -26,7 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(CLIENT_URL)
                 .exposedHeaders("GET", "POST", "PUT", "DELETE")
-                .allowedHeaders(AUTHORIZATION_HEADER)
+                .allowedHeaders("*")
                 .allowCredentials(true);
     }
 
