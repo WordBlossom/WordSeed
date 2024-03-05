@@ -4,11 +4,7 @@ import { useInView } from "react-intersection-observer";
 import useFilterButtonHiddenStateStore from "@/stores/profile-filter";
 import { ContentCardList } from "@/components";
 import { Header, ProfileCategory } from "../_component";
-import {
-  getUserInfo,
-  getUserInfo2,
-  useUserInfo,
-} from "@/api/user/get-user-info";
+import { userInfoQuery } from "@/api/user/get-user-info";
 import { useQuery } from "@tanstack/react-query";
 
 interface ContentCardProps {
@@ -60,7 +56,11 @@ const datas: ContentCardProps[] = [
   },
 ];
 
-export default function Profile({ params }: { params: { user_id: string } }) {
+type ProfileProps = {
+  params: { user_id: number };
+};
+
+export default function Profile({ params }: ProfileProps) {
   const { setIsFilterButtonHidden } = useFilterButtonHiddenStateStore();
   const [ref] = useInView({
     threshold: 1,
@@ -70,11 +70,9 @@ export default function Profile({ params }: { params: { user_id: string } }) {
     initialInView: true,
   });
 
-  const { data } = useQuery({
-    queryKey: ["userinfo"],
-    queryFn: getUserInfo2,
-    // queryFn: getUserInfo2({ userId: 9 }),
-  });
+  const userId = params.user_id;
+  const { queryKey, queryFn } = userInfoQuery.userInfo(userId);
+  const { data } = useQuery({ queryKey, queryFn });
 
   return (
     <>

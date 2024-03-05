@@ -1,21 +1,25 @@
-import { getUserInfo2 } from "@/api/user/get-user-info";
-import { Hydrate, getDehydratedQuery } from "@/utils/react-query";
+import { userInfoQuery } from "@/api/user/get-user-info";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
 
 export default async function DashboardLayout({
-  children, // will be a page or nested layout
+  children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { user_id: number };
 }) {
-  const query = await getDehydratedQuery({
-    queryKey: ["userinfo"],
-    queryFn: getUserInfo2,
-    // queryFn: getUserInfo2({ userId: 9 }),
-  });
+  const userId = params.user_id;
+  const { queryKey, queryFn } = userInfoQuery.userInfo(userId);
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({ queryKey, queryFn });
 
   return (
-    <Hydrate state={{ queries: [query] }}>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       {children}
-      {/* {JSON.stringify(query.state.data)} */}
-    </Hydrate>
+    </HydrationBoundary>
   );
 }
