@@ -4,14 +4,14 @@ import { Ref } from "react";
 
 interface ProfileCategoryProps {
   categoryRef: Ref<HTMLDivElement>;
-  params: { user_id: string };
+  params: { user_id: number };
 }
 
 export default function ProfileCategory({
   params,
   categoryRef,
 }: ProfileCategoryProps) {
-  const myId = "1";
+  const myId = 1;
 
   return (
     <div className={styles.wrapper} ref={categoryRef}>
