@@ -133,13 +133,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ReadPostByPostIdOutDTO readPostByPostId(Long postId) {
-        ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postRepo.findPostByPostId(postId);
+    public ReadPostByPostIdOutDTO readPostByPostId(Long postId, Long srcUserId) {
+        ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postRepo.findPostByPostId(postId, srcUserId);
         return readPostByPostIdOutDTO;
     }
 
     @Override
-    public UpdatePostOutDTO updatePost(UpdatePostInDTO updatePostInDTO) throws Exception {
+    public UpdatePostOutDTO updatePost(UpdatePostInDTO updatePostInDTO, Long srcUserId) throws Exception {
         Post post = postRepo.findById(updatePostInDTO.getPostId()).orElseThrow(Exception::new);
 
         post.setPostId(updatePostInDTO.getPostId());
@@ -149,7 +149,7 @@ public class PostServiceImpl implements PostService {
         post.setPostAlign(updatePostInDTO.getPostAlign());
         post.setPostVisibility(updatePostInDTO.getPostVisibility());
 
-        ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postRepo.findPostByPostId(post.getPostId());
+        ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postRepo.findPostByPostId(post.getPostId(), srcUserId);
 
         return UpdatePostOutDTO.builder()
                 .postId(readPostByPostIdOutDTO.getPostId())

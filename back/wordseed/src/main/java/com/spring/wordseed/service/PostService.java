@@ -14,8 +14,8 @@ public interface PostService {
     ReadPostOutDTOs readMyPosts(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId);
     ReadPostOutDTOs readMyPostsWithBookMark(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId);
     ReadPostOutDTOs readPostsWithUser(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId);
-    ReadPostByPostIdOutDTO readPostByPostId(Long postId);
-    UpdatePostOutDTO updatePost(UpdatePostInDTO updatePostInDTO) throws Exception;
+    ReadPostByPostIdOutDTO readPostByPostId(Long postId, Long srcUserId);
+    UpdatePostOutDTO updatePost(UpdatePostInDTO updatePostInDTO, Long srcUserId) throws Exception;
     ReadCommentOutDTOs readComment(Long postId, Long page, Long size);
     void deletePost(DeletePostInDTO deletePostInDTO, Long userId) throws Exception;
 }

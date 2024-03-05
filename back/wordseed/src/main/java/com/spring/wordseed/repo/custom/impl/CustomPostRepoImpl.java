@@ -42,7 +42,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
     private final QComment qComment = QComment.comment;
 
     @Override
-    public ReadPostByPostIdOutDTO findPostByPostId(Long postId) {
+    public ReadPostByPostIdOutDTO findPostByPostId(Long postId, Long wordId) {
         BooleanExpression likedExpression = JPAExpressions
                 .selectOne()
                 .from(qPost)

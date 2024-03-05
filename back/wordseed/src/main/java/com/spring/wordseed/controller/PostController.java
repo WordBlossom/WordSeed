@@ -116,15 +116,18 @@ public class PostController {
 
     // 작품 상세 조회
     @GetMapping("/detail")
-    public ResponseEntity<ReadPostByPostIdOutDTO> readPostByPostId(@RequestParam("postId") Long postId) throws Exception {
-        ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postService.readPostByPostId(postId);
+    public ResponseEntity<ReadPostByPostIdOutDTO> readPostByPostId(@RequestParam("postId") Long postId, HttpServletRequest request) throws Exception {
+        long srcUserId = (long) request.getAttribute("userId");
+
+        ReadPostByPostIdOutDTO readPostByPostIdOutDTO = postService.readPostByPostId(postId, srcUserId);
         return ResponseEntity.status(HttpStatus.OK).body(readPostByPostIdOutDTO);
     }
 
     // 작품 수정
     @PutMapping("")
-    public ResponseEntity<UpdatePostOutDTO> updatePost(@RequestBody UpdatePostInDTO updatePostInDTO) throws Exception {
-        UpdatePostOutDTO updatePostOutDTO = postService.updatePost(updatePostInDTO);
+    public ResponseEntity<UpdatePostOutDTO> updatePost(@RequestBody UpdatePostInDTO updatePostInDTO, HttpServletRequest request ) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        UpdatePostOutDTO updatePostOutDTO = postService.updatePost(updatePostInDTO, userId);
         return ResponseEntity.status(HttpStatus.OK).body(updatePostOutDTO);
     }
 
