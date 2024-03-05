@@ -1,6 +1,5 @@
 "use client";
 
-import { useInView } from "react-intersection-observer";
 import { useWordseedList } from "@/api/wordseed";
 import { useAuthorList } from "@/api/author";
 import useSearchPageStateStore from "@/stores/search-page";
@@ -21,6 +20,7 @@ export default function SearchList() {
     params: {
       query: searchKeyword,
     },
+    config: { enabled: isWordseed && !!searchKeyword },
   });
 
   const {
@@ -31,17 +31,28 @@ export default function SearchList() {
     params: {
       query: searchKeyword,
     },
+    config: { enabled: !isWordseed && !!searchKeyword },
   });
 
   return (
     <div className={style["list-container"]}>
       {!searchKeyword && <SearchGuidance />}
+
+      {searchKeyword &&
+        ((wordseedListStatus === "success" &&
+          wordseedListData.pages.length === 0) ||
+          (authorListStatus === "success" &&
+            authorListData.pages.length === 0)) && (
+          <SearchGuidance searchKeyword={searchKeyword} />
+        )}
+
       {searchKeyword && isWordseed && (
         <WordSeedList
           data={wordseedListData?.pages}
           fetchNextPage={wordseedListFetchNextPage}
         />
       )}
+
       {searchKeyword && !isWordseed && (
         <ArtistCardList
           data={authorListData?.pages}
