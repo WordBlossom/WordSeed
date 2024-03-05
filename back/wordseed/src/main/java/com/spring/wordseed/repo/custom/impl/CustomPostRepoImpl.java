@@ -42,12 +42,12 @@ public class CustomPostRepoImpl implements CustomPostRepo {
     private final QComment qComment = QComment.comment;
 
     @Override
-    public ReadPostByPostIdOutDTO findPostByPostId(Long postId, Long wordId) {
+    public ReadPostByPostIdOutDTO findPostByPostId(Long postId, Long srcUserId) {
         BooleanExpression likedExpression = JPAExpressions
                 .selectOne()
                 .from(qPost)
                 .join(qPost.postLikeds, qPostLiked)
-                .where(qPostLiked.user.userId.eq(7L))
+                .where(qPostLiked.user.userId.eq(srcUserId))
                 .where(qPost.postId.eq(postId))
                 .exists();
 
@@ -55,7 +55,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .selectOne()
                 .from(qPost)
                 .join(qPost.bookMarks, qBookMark)
-                .where(qBookMark.user.userId.eq(7L))
+                .where(qBookMark.user.userId.eq(srcUserId))
                 .where(qPost.postId.eq(postId))
                 .exists();
 
@@ -65,7 +65,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .join(qFollow.srcUser, qUser)
                 .join(qFollow.dstUser, qUser2)
                 .join(qUser2.posts, qPost)
-                .where(qUser.userId.eq(7L))
+                .where(qUser.userId.eq(srcUserId))
                 .where(qPost.postId.eq(postId))
                 .exists();
 
@@ -392,8 +392,6 @@ public class CustomPostRepoImpl implements CustomPostRepo {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
-
-        System.out.println(postTypes.toString() + " " + mark + " " + userId + " " + sort.toString() + " " + query + " ");
 
         List<ReadPostByPostIdOutDTO> readPostByPostIdOutDTOList = new JPAQuery<>(em)
                 .select(Projections.constructor(ReadPostByPostIdOutDTO.class,
