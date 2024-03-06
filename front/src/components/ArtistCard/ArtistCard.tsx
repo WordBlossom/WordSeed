@@ -22,12 +22,12 @@ export default function ArtistCard({
   sendCnt,
   subscribed,
 }: ArtistCardProps) {
-  const [isFollow, setIsFollow] = useState(subscribed);
+  // const [isFollow, setIsFollow] = useState(subscribed);
 
   const followHandler = (e: any) => {
     e.stopPropagation();
     e.nativeEvent.preventDefault();
-    setIsFollow(!isFollow);
+    // setIsFollow(!isFollow);
     // 여기에 팔로우 팔로워 api 로직
   };
 
@@ -43,7 +43,7 @@ export default function ArtistCard({
         </div>
         <div className={styles.icon} onClick={followHandler}>
           <Icon
-            iconName={isFollow ? "afterFollow" : "beforeFollow"}
+            iconName={subscribed ? "afterFollow" : "beforeFollow"}
             size={35}
           />
         </div>

@@ -1,4 +1,4 @@
-import { userInfoQuery } from "@/api/user/get-user-info";
+import { userInfoQuery } from "@/api/user/get-user-api";
 import {
   HydrationBoundary,
   QueryClient,
@@ -12,7 +12,7 @@ export default async function DashboardLayout({
   children: React.ReactNode;
   params: { user_id: number };
 }) {
-  const userId = params.user_id;
+  const userId = Number(params.user_id);
   const { queryKey, queryFn } = userInfoQuery.userInfo(userId);
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({ queryKey, queryFn });
