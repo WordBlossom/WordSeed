@@ -74,8 +74,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ReadPostByPostIdOutDTOs readPostsWithWord(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId, Long wordId) {
-        Optional<List<ReadPostByPostIdOutDTO>> readPostByPostIdOutDTOs = postRepo.findPostsWithWord(postTypes, mark, sort, query, page, size, srcUserId, wordId);
+    public ReadPostByPostIdOutDTOs readPostsWithWord(String postTypes, PostSort sort, Long page, Long size, Long srcUserId, Long wordId) {
+        Optional<List<ReadPostByPostIdOutDTO>> readPostByPostIdOutDTOs = postRepo.findPostsWithWord(postTypes, sort, page, size, srcUserId, wordId);
 
         ReadPostByPostIdOutDTOs posts = ReadPostByPostIdOutDTOs.builder().posts(readPostByPostIdOutDTOs.orElse(new ArrayList<>())).build();
 
@@ -83,8 +83,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ReadPostByPostIdOutDTOs readPostsWithSubs(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
-        Optional<List<ReadPostByPostIdOutDTO>> readPostByPostIdOutDTOs = postRepo.findPostsWithSubs(postTypes, mark, sort, query, page, size, srcUserId);
+    public ReadPostByPostIdOutDTOs readPostsWithSubs(String postTypes, PostSort sort, Long page, Long size, Long srcUserId) {
+        Optional<List<ReadPostByPostIdOutDTO>> readPostByPostIdOutDTOs = postRepo.findPostsWithSubs(postTypes, sort, page, size, srcUserId);
 
         ReadPostByPostIdOutDTOs posts = ReadPostByPostIdOutDTOs.builder().posts(readPostByPostIdOutDTOs.orElse(new ArrayList<>())).build();
 
@@ -92,8 +92,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ReadPostByPostIdOutDTOs readMyPosts(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
-        Optional<List<ReadPostByPostIdOutDTO>> readPostByPostIdOutDTOs = postRepo.findMyPosts(postTypes, mark, sort, query, page, size, srcUserId);
+    public ReadPostByPostIdOutDTOs readMyPosts(String postTypes, PostSort sort, Long page, Long size, Long srcUserId) {
+        Optional<List<ReadPostByPostIdOutDTO>> readPostByPostIdOutDTOs = postRepo.findMyPosts(postTypes, sort, page, size, srcUserId);
 
         ReadPostByPostIdOutDTOs posts = ReadPostByPostIdOutDTOs.builder().posts(readPostByPostIdOutDTOs.orElse(new ArrayList<>())).build();
 
@@ -101,8 +101,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ReadPostByPostIdOutDTOs readMyPostsWithBookMark(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
-        Optional<List<ReadPostByPostIdOutDTO>> readPostByPostIdOutDTOs = postRepo.findMyPostsWithBookMark(postTypes, mark, sort, query, page, size, srcUserId);
+    public ReadPostByPostIdOutDTOs readMyPostsWithBookMark(String postTypes, PostSort sort, Long page, Long size, Long srcUserId) {
+        Optional<List<ReadPostByPostIdOutDTO>> readPostByPostIdOutDTOs = postRepo.findMyPostsWithBookMark(postTypes, sort, page, size, srcUserId);
 
         ReadPostByPostIdOutDTOs posts = ReadPostByPostIdOutDTOs.builder().posts(readPostByPostIdOutDTOs.orElse(new ArrayList<>())).build();
 
@@ -110,8 +110,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ReadPostByPostIdOutDTOs readPostsWithUser(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
-        Optional<List<ReadPostByPostIdOutDTO>> readPostByPostIdOutDTOs = postRepo.findPostsWithUser(postTypes, mark, userId, sort, query, page, size, srcUserId);
+    public ReadPostByPostIdOutDTOs readPostsWithUser(String postTypes, Long userId, PostSort sort, Long page, Long size, Long srcUserId) {
+        Optional<List<ReadPostByPostIdOutDTO>> readPostByPostIdOutDTOs = postRepo.findPostsWithUser(postTypes, userId, sort, page, size, srcUserId);
 
         ReadPostByPostIdOutDTOs posts = ReadPostByPostIdOutDTOs.builder().posts(readPostByPostIdOutDTOs.orElse(new ArrayList<>())).build();
 
@@ -165,7 +165,7 @@ public class PostServiceImpl implements PostService {
 
         List<ReadCommentOutDTO> readCommentOutDTOList = postRepo.findCommentAllBy(postId, page, size);
 
-        for(ReadCommentOutDTO readCommentOutDTO : readCommentOutDTOList)
+        for (ReadCommentOutDTO readCommentOutDTO : readCommentOutDTOList)
             comments.getComments().add(readCommentOutDTO);
 
         return comments;
