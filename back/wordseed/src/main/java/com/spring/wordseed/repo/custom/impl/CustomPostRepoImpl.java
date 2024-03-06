@@ -178,7 +178,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
     @Override
     // 관심 작가 등록한 사람들의 작품 목록
-    public Optional<List<ReadPostByPostIdOutDTO>> findPostsWithSubs(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+    public Optional<List<ReadPostByPostIdOutDTO>> findPostsWithSubs(String postTypes, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
@@ -243,15 +243,12 @@ public class CustomPostRepoImpl implements CustomPostRepo {
             readPostByPostIdOutDTO.setSubscribed(true);
         }
 
-        if (mark.equals("true"))
-            readPostByPostIdOutDTOList.removeIf(el -> !el.getBookMarked());
-
         return Optional.ofNullable(readPostByPostIdOutDTOList);
     }
 
     @Override
     // 내 작품 목록
-    public Optional<List<ReadPostByPostIdOutDTO>> findMyPosts(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+    public Optional<List<ReadPostByPostIdOutDTO>> findMyPosts(String postTypes, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
@@ -312,15 +309,12 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
         }
 
-        if (mark.equals("true"))
-            readPostByPostIdOutDTOList.removeIf(el -> !el.getBookMarked());
-
         return Optional.ofNullable(readPostByPostIdOutDTOList);
     }
 
     @Override
     // 내가 북마크한 작품 목록
-    public Optional<List<ReadPostByPostIdOutDTO>> findMyPostsWithBookMark(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+    public Optional<List<ReadPostByPostIdOutDTO>> findMyPostsWithBookMark(String postTypes, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
@@ -383,16 +377,13 @@ public class CustomPostRepoImpl implements CustomPostRepo {
             readPostByPostIdOutDTO.setSubscribed(subscribedExpression != null);
         }
 
-        if (mark.equals("true"))
-            readPostByPostIdOutDTOList.removeIf(el -> !el.getBookMarked());
-
         return Optional.ofNullable(readPostByPostIdOutDTOList);
     }
 
 
     @Override
     // 특정 사용자에 대한 작품 목록
-    public Optional<List<ReadPostByPostIdOutDTO>> findPostsWithUser(String postTypes, String mark, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
+    public Optional<List<ReadPostByPostIdOutDTO>> findPostsWithUser(String postTypes, Long userId, PostSort sort, String query, Long page, Long size, Long srcUserId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
@@ -460,9 +451,6 @@ public class CustomPostRepoImpl implements CustomPostRepo {
             readPostByPostIdOutDTO.setBookMarked(bookMarkedExpression != null);
             readPostByPostIdOutDTO.setSubscribed(subscribedExpression != null);
         }
-
-        if (mark.equals("true"))
-            readPostByPostIdOutDTOList.removeIf(el -> !el.getBookMarked());
 
         return Optional.ofNullable(readPostByPostIdOutDTOList);
     }
