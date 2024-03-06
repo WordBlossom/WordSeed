@@ -14,6 +14,11 @@ export const useFollow = (
   return useMutation({
     mutationFn: queryFn,
     onMutate: async () => {
+      // 진행중인 refetch가 있다면 취소시킨다.
+      // 만약 그러지 않는다면 refetchOnMount등을 true로 해뒀을 때
+      // 페이지를 들어오자 마자 refetch를 하면 refetch가 두번 실행되고,
+      // 화면에 최신 데이터를 그려주지 않을 가능성이 있다.
+      // 그것을 방지하기 위해 cancelQueries를 실행시켜준다.
       await queryClient.cancelQueries({ queryKey });
 
       // 이전 값
