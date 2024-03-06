@@ -1,19 +1,23 @@
-"use client";
-
-import { useEffect } from "react";
 import { todaysDate } from "@/utils/getDateUtils";
 import WordseedMain from "@/components/wordseed-main/wordseed-main";
 
-import { axios } from "@/lib/axios";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { getWordseed } from "@/api/wordseed";
 
-export default function Home() {
-  const getWordseed = () => {
-    axios.get("/user/info?userId=1").then((res) => console.log(res));
-  };
+export default async function Home() {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["todayWordseed", todaysDate],
+    queryFn: () => getWordseed(todaysDate),
+  });
 
-  useEffect(() => {
-    getWordseed();
-  }, []);
-
-  return <WordseedMain date={todaysDate} />;
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <WordseedMain date={todaysDate} />;
+    </HydrationBoundary>
+  );
 }
