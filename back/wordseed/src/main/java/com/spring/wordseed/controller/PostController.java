@@ -53,7 +53,7 @@ public class PostController {
                                                      @RequestParam("size") Long size,
                                                      HttpServletRequest request) throws Exception {
         long srcUserId = (long) request.getAttribute("userId");
-        ReadPostByPostIdOutDTOs readPostByPostIdOutDTOs = postService.readPostsWithWord(postType, sort,  page, size, srcUserId, wordId);
+        ReadPostByPostIdOutDTOs readPostByPostIdOutDTOs = postService.readPostsWithWord(postType, sort, page, size, srcUserId, wordId);
         return ResponseEntity.status(HttpStatus.OK).body(readPostByPostIdOutDTOs);
     }
     
@@ -61,24 +61,22 @@ public class PostController {
     @GetMapping("/list/subs")
     public ResponseEntity<ReadPostByPostIdOutDTOs> readPostsWithSubs(@RequestParam("postType") String postType,
                                                              @RequestParam("sort") PostSort sort,
-                                                             @RequestParam(value = "query", required = false, defaultValue = "") String query,
                                                              @RequestParam("page") Long page,
                                                              @RequestParam("size") Long size,
                                                              HttpServletRequest request) throws Exception {
         long srcUserId = (long) request.getAttribute("userId");
-        ReadPostByPostIdOutDTOs readPostByPostIdOutDTOs = postService.readPostsWithSubs(postType, sort, query, page, size, srcUserId);
+        ReadPostByPostIdOutDTOs readPostByPostIdOutDTOs = postService.readPostsWithSubs(postType, sort, page, size, srcUserId);
         return ResponseEntity.status(HttpStatus.OK).body(readPostByPostIdOutDTOs);
     }
     // 나의 작품 목록 조회
     @GetMapping("/list/self")
     public ResponseEntity<ReadPostByPostIdOutDTOs> readMyPosts(@RequestParam("postType") String postType,
                                                              @RequestParam("sort") PostSort sort,
-                                                             @RequestParam(value = "query", required = false, defaultValue = "") String query,
                                                              @RequestParam("page") Long page,
                                                              @RequestParam("size") Long size,
                                                              HttpServletRequest request) throws Exception {
         long srcUserId = (long) request.getAttribute("userId");
-        ReadPostByPostIdOutDTOs readPostByPostIdOutDTOs = postService.readMyPosts(postType, sort, query, page, size, srcUserId);
+        ReadPostByPostIdOutDTOs readPostByPostIdOutDTOs = postService.readMyPosts(postType, sort, page, size, srcUserId);
         return ResponseEntity.status(HttpStatus.OK).body(readPostByPostIdOutDTOs);
     }
     
@@ -86,12 +84,11 @@ public class PostController {
     @GetMapping("/list/book-mark")
     public ResponseEntity<ReadPostByPostIdOutDTOs> readMyPostsWithBookMark(@RequestParam("postType") String postType,
                                                        @RequestParam("sort") PostSort sort,
-                                                       @RequestParam(value = "query", required = false, defaultValue = "") String query,
                                                        @RequestParam("page") Long page,
                                                        @RequestParam("size") Long size,
                                                        HttpServletRequest request) throws Exception {
         long srcUserId = (long) request.getAttribute("userId");
-        ReadPostByPostIdOutDTOs readPostByPostIdOutDTOs = postService.readMyPostsWithBookMark(postType, sort, query, page, size, srcUserId);
+        ReadPostByPostIdOutDTOs readPostByPostIdOutDTOs = postService.readMyPostsWithBookMark(postType, sort, page, size, srcUserId);
         return ResponseEntity.status(HttpStatus.OK).body(readPostByPostIdOutDTOs);
     }
     
@@ -100,12 +97,11 @@ public class PostController {
     public ResponseEntity<ReadPostByPostIdOutDTOs> readPostsWithUser(@RequestParam("postType") String postType,
                                                              @RequestParam(value = "userId", required = false, defaultValue = "0") Long userId,
                                                              @RequestParam("sort") PostSort sort,
-                                                             @RequestParam(value = "query", required = false, defaultValue = "") String query,
                                                              @RequestParam("page") Long page,
                                                              @RequestParam("size") Long size,
                                                              HttpServletRequest request) throws Exception {
         long srcUserId = (long) request.getAttribute("userId");
-        ReadPostByPostIdOutDTOs readPostByPostIdOutDTOs = postService.readPostsWithUser(postType, userId, sort, query, page, size, srcUserId);
+        ReadPostByPostIdOutDTOs readPostByPostIdOutDTOs = postService.readPostsWithUser(postType, userId, sort, page, size, srcUserId);
         return ResponseEntity.status(HttpStatus.OK).body(readPostByPostIdOutDTOs);
     }
 
