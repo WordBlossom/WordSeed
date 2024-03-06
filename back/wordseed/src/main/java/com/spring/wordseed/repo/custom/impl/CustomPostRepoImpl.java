@@ -103,7 +103,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
 
     @Override
     // 특정 말씨에 해당하는 모든 작품 목록
-    public Optional<List<ReadPostByPostIdOutDTO>> findPostsWithWord(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId, Long wordId) {
+    public Optional<List<ReadPostByPostIdOutDTO>> findPostsWithWord(String postTypes, PostSort sort, Long page, Long size, Long srcUserId, Long wordId) {
         List<PostType> postTypeList = Arrays.stream(postTypes.split(","))
                 .map(PostType::valueOf)
                 .toList();
@@ -132,7 +132,6 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .where(qPost.word.wordId.eq(wordId))
                 .where(qPost.postType.in(postTypeList))
                 .where(qPost.postVisibility.eq(PostVisibility.PUBLIC).or(qPost.user.userId.eq(srcUserId)))
-                .where((query == null || query.trim().length() == 0) ? Expressions.TRUE : qPost.word.word.eq(query))
                 .offset((page - 1) * size)
                 .limit(size)
                 .orderBy(switch(sort){
@@ -171,9 +170,6 @@ public class CustomPostRepoImpl implements CustomPostRepo {
             readPostByPostIdOutDTO.setBookMarked(bookMarkedExpression != null);
             readPostByPostIdOutDTO.setSubscribed(subscribedExpression != null);
         }
-
-        if (mark.equals("true"))
-            readPostByPostIdOutDTOList.removeIf(el -> !el.getBookMarked());
 
         return Optional.ofNullable(readPostByPostIdOutDTOList);
     }

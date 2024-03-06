@@ -74,8 +74,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ReadPostByPostIdOutDTOs readPostsWithWord(String postTypes, String mark, PostSort sort, String query, Long page, Long size, Long srcUserId, Long wordId) {
-        Optional<List<ReadPostByPostIdOutDTO>> readPostByPostIdOutDTOs = postRepo.findPostsWithWord(postTypes, mark, sort, query, page, size, srcUserId, wordId);
+    public ReadPostByPostIdOutDTOs readPostsWithWord(String postTypes, PostSort sort, Long page, Long size, Long srcUserId, Long wordId) {
+        Optional<List<ReadPostByPostIdOutDTO>> readPostByPostIdOutDTOs = postRepo.findPostsWithWord(postTypes, sort, page, size, srcUserId, wordId);
 
         ReadPostByPostIdOutDTOs posts = ReadPostByPostIdOutDTOs.builder().posts(readPostByPostIdOutDTOs.orElse(new ArrayList<>())).build();
 

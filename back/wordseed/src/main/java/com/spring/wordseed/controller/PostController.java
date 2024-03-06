@@ -47,15 +47,13 @@ public class PostController {
     // 특정 말씨에 대한 작품 목록 조회
     @GetMapping("/list/word")
     public ResponseEntity<ReadPostByPostIdOutDTOs> readPostsWithWord(@RequestParam("postType") String postType,
-                                                     @RequestParam("mark") String mark,
                                                      @RequestParam("sort") PostSort sort,
-                                                     @RequestParam(value = "query", required = false, defaultValue = "") String query,
                                                      @RequestParam(value = "wordId", required = false, defaultValue = "0") Long wordId,
                                                      @RequestParam("page") Long page,
                                                      @RequestParam("size") Long size,
                                                      HttpServletRequest request) throws Exception {
         long srcUserId = (long) request.getAttribute("userId");
-        ReadPostByPostIdOutDTOs readPostByPostIdOutDTOs = postService.readPostsWithWord(postType, mark, sort, query, page, size, srcUserId, wordId);
+        ReadPostByPostIdOutDTOs readPostByPostIdOutDTOs = postService.readPostsWithWord(postType, sort,  page, size, srcUserId, wordId);
         return ResponseEntity.status(HttpStatus.OK).body(readPostByPostIdOutDTOs);
     }
     
