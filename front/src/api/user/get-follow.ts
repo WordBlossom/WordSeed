@@ -55,6 +55,7 @@ export const useListFollow = (
 ) => {
   const queryClient = useQueryClient();
   const { queryKey, queryFn } = userInfoQuery[queryName](userId);
+  const addFollow = queryName === "followUser" ? 1 : -1;
   const searchKeyword = useSearchPageStateStore().searchKeyword;
   const AuthorListQueryKey = ["AuthorList", { query: searchKeyword }];
 
@@ -70,7 +71,11 @@ export const useListFollow = (
       const updatedPages = previousUserInfo.pages.map((page: any) => {
         const updatedUsers = page.users.map((user: Author) =>
           user.userId === userId
-            ? { ...user, subscribed: !user.subscribed }
+            ? {
+                ...user,
+                subscribed: !user.subscribed,
+                recvCnt: user.recvCnt + addFollow,
+              }
             : user
         );
         return { ...page, users: updatedUsers };

@@ -5,6 +5,7 @@ import styles from "./ArtistCard.module.scss";
 import Link from "next/link";
 import { formatNumber } from "@/utils/numberUtils";
 import { useListFollow } from "@/api/user/get-follow";
+import React from "react";
 
 type ArtistCardProps = {
   userId: number;
@@ -15,7 +16,7 @@ type ArtistCardProps = {
   subscribed: boolean;
 };
 
-export default function ArtistCard({
+export function ArtistCardC({
   userId,
   userName,
   userDecp,
@@ -71,3 +72,5 @@ export default function ArtistCard({
     </Link>
   );
 }
+
+export const ArtistCard = () => React.memo(ArtistCardC);
