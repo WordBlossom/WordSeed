@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { userInfoQuery } from "./get-user-api";
 import { userInfo } from "./types";
+import { Author, AuthorList } from "../author/types";
+import useSearchPageStateStore from "@/stores/search-page";
 
 export const useFollow = (
   userId: number,
@@ -43,6 +45,53 @@ export const useFollow = (
     // 오류 또는 성공 후에는 항상 refetch
     onSettled() {
       queryClient.invalidateQueries({ queryKey: userInfo.queryKey });
+    },
+  });
+};
+
+export const useListFollow = (
+  userId: number,
+  queryName: "followUser" | "unFollowUser"
+) => {
+  const queryClient = useQueryClient();
+  const { queryKey, queryFn } = userInfoQuery[queryName](userId);
+  const searchKeyword = useSearchPageStateStore().searchKeyword;
+  const AuthorListQueryKey = ["AuthorList", { query: searchKeyword }];
+
+  return useMutation({
+    mutationFn: queryFn,
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey });
+
+      const previousUserInfo = queryClient.getQueryData(
+        AuthorListQueryKey
+      ) as any;
+
+      const updatedPages = previousUserInfo.pages.map((page: any) => {
+        const updatedUsers = page.users.map((user: Author) =>
+          user.userId === userId
+            ? { ...user, subscribed: !user.subscribed }
+            : user
+        );
+        return { ...page, users: updatedUsers };
+      });
+
+      const updatedAuthorList = {
+        pages: updatedPages,
+        pageParams: previousUserInfo.pageParams,
+      };
+
+      queryClient.setQueryData(AuthorListQueryKey, updatedAuthorList);
+
+      return { previousUserInfo };
+    },
+
+    onError(error, newData, context: any) {
+      queryClient.setQueryData(AuthorListQueryKey, context.previousUserInfo);
+    },
+
+    onSettled() {
+      queryClient.invalidateQueries({ queryKey });
     },
   });
 };

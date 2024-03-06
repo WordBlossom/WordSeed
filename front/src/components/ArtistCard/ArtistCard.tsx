@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+
 import { Icon } from "..";
 import styles from "./ArtistCard.module.scss";
 import Link from "next/link";
 import { formatNumber } from "@/utils/numberUtils";
+import { useListFollow } from "@/api/user/get-follow";
 
 type ArtistCardProps = {
   userId: number;
@@ -22,14 +23,11 @@ export default function ArtistCard({
   sendCnt,
   subscribed,
 }: ArtistCardProps) {
-  // const [isFollow, setIsFollow] = useState(subscribed);
+  // 내 아이디
+  const myId = 4;
 
-  const followHandler = (e: any) => {
-    e.stopPropagation();
-    e.nativeEvent.preventDefault();
-    // setIsFollow(!isFollow);
-    // 여기에 팔로우 팔로워 api 로직
-  };
+  const followMutation = useListFollow(userId, "followUser");
+  const unFollowMutation = useListFollow(userId, "unFollowUser");
 
   return (
     <Link className={styles.container} href={`/profile/${userId}`}>
@@ -41,12 +39,31 @@ export default function ArtistCard({
             <p>관심작가 {formatNumber(sendCnt)}</p>
           </div>
         </div>
-        <div className={styles.icon} onClick={followHandler}>
-          <Icon
-            iconName={subscribed ? "afterFollow" : "beforeFollow"}
-            size={35}
-          />
-        </div>
+        {myId === userId ? (
+          ""
+        ) : subscribed ? (
+          <button
+            className={styles.button}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.nativeEvent.preventDefault();
+              unFollowMutation.mutate();
+            }}
+          >
+            <Icon iconName="afterFollow" />
+          </button>
+        ) : (
+          <button
+            className={styles.button}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.nativeEvent.preventDefault();
+              followMutation.mutate();
+            }}
+          >
+            <Icon iconName="beforeFollow" />
+          </button>
+        )}
       </div>
       <div className={styles["bottom-section"]}>
         <p>{userDecp}</p>
