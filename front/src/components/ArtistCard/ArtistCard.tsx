@@ -16,7 +16,7 @@ type ArtistCardProps = {
   subscribed: boolean;
 };
 
-export function ArtistCardC({
+export function ArtistCardMemo({
   userId,
   userName,
   userDecp,
@@ -73,4 +73,4 @@ export function ArtistCardC({
   );
 }
 
-export const ArtistCard = () => React.memo(ArtistCardC);
+export const ArtistCard = React.memo(ArtistCardMemo);
