@@ -16,6 +16,7 @@ const queryConfig: DefaultOptions = {
     },
     refetchOnWindowFocus: false,
     retry: false,
+    staleTime: 30 * 1000,
   },
 };
 

@@ -2,6 +2,7 @@ import styles from "./Header.module.scss";
 import { Icon } from "@/components";
 import Link from "next/link";
 import { formatNumber } from "@/utils/numberUtils";
+import { useFollow } from "@/api/user";
 
 type UserProfileProps = {
   userId: number;
@@ -18,9 +19,13 @@ export default function Header({
   userDecp,
   recvCnt,
   sendCnt,
+  subscribed,
 }: UserProfileProps) {
   // 내 아이디
-  const myId = 2;
+  const myId = 4;
+
+  const followMutation = useFollow(userId, "followUser");
+  const unFollowMutation = useFollow(userId, "unFollowUser");
 
   return (
     <header className={styles.container}>
@@ -32,8 +37,22 @@ export default function Header({
             <Link className={styles.link} href="/settings">
               <Icon iconName="profileEdit" />
             </Link>
+          ) : subscribed ? (
+            <button
+              className={styles.button}
+              onClick={() => {
+                unFollowMutation.mutate();
+              }}
+            >
+              <Icon iconName="afterFollow" />
+            </button>
           ) : (
-            <button className={styles.button}>
+            <button
+              className={styles.button}
+              onClick={() => {
+                followMutation.mutate();
+              }}
+            >
               <Icon iconName="beforeFollow" />
             </button>
           )}

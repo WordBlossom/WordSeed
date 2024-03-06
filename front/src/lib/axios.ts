@@ -7,7 +7,7 @@ export const axios = Axios.create({
   headers: {
     "Content-Type": "application/json",
     // 임시로 1로 설정함
-    Authorization: `Bearer 1`,
+    Authorization: `Bearer 4`,
   },
 });
 

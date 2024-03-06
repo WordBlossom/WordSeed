@@ -31,7 +31,10 @@ export default function SearchList() {
     params: {
       query: searchKeyword,
     },
-    config: { enabled: !isWordseed && !!searchKeyword },
+    config: {
+      enabled: !isWordseed && !!searchKeyword,
+      refetchOnMount: "always",
+    },
   });
 
   return (

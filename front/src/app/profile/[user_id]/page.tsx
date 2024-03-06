@@ -4,8 +4,9 @@ import { useInView } from "react-intersection-observer";
 import useFilterButtonHiddenStateStore from "@/stores/profile-filter";
 import { ContentCardList } from "@/components";
 import { Header, ProfileCategory } from "../_component";
-import { userInfoQuery } from "@/api/user/get-user-info";
+import { userInfoQuery } from "@/api/user/get-user-api";
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 
 interface ContentCardProps {
   postId: number;
@@ -70,15 +71,19 @@ export default function Profile({ params }: ProfileProps) {
     initialInView: true,
   });
 
-  const userId = params.user_id;
+  const userId = Number(params.user_id);
   const { queryKey, queryFn } = userInfoQuery.userInfo(userId);
   const { data } = useQuery({ queryKey, queryFn });
+
+  const contentData = useMemo(() => {
+    return datas;
+  }, []);
 
   return (
     <>
       {data && <Header {...data} />}
       <ProfileCategory categoryRef={ref} params={params} />
-      <ContentCardList datas={datas} />
+      <ContentCardList datas={contentData} />
     </>
   );
 }
