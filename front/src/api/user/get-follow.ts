@@ -58,6 +58,7 @@ export const useListFollow = (
   const addFollow = queryName === "followUser" ? 1 : -1;
   const searchKeyword = useSearchPageStateStore().searchKeyword;
   const AuthorListQueryKey = ["AuthorList", { query: searchKeyword }];
+  const myId = 4;
 
   return useMutation({
     mutationFn: queryFn,
@@ -69,15 +70,25 @@ export const useListFollow = (
       ) as any;
 
       const updatedPages = previousUserInfo.pages.map((page: any) => {
-        const updatedUsers = page.users.map((user: Author) =>
-          user.userId === userId
-            ? {
-                ...user,
-                subscribed: !user.subscribed,
-                recvCnt: user.recvCnt + addFollow,
-              }
-            : user
-        );
+        const updatedUsers = page.users.map((user: Author) => {
+          if (user.userId === userId) {
+            return {
+              ...user,
+              subscribed: !user.subscribed,
+              recvCnt: user.recvCnt + addFollow,
+            };
+          }
+
+          if (user.userId === myId) {
+            return {
+              ...user,
+              sendCnt: user.sendCnt + addFollow,
+            };
+          }
+
+          return user;
+        });
+
         return { ...page, users: updatedUsers };
       });
 
