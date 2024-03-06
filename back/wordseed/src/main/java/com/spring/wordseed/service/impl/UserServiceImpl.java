@@ -1,6 +1,7 @@
 package com.spring.wordseed.service.impl;
 
 import com.spring.wordseed.dto.in.CreateUserInDTO;
+import com.spring.wordseed.dto.in.ReadFollowerInDTOs;
 import com.spring.wordseed.dto.in.ReadUserInDTOs;
 import com.spring.wordseed.dto.in.UpdateUserInDTO;
 import com.spring.wordseed.dto.out.DeleteUserOutDTO;
@@ -17,8 +18,6 @@ import com.spring.wordseed.repo.UserInfoRepo;
 import com.spring.wordseed.repo.UserRepo;
 import com.spring.wordseed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -119,5 +118,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public ReadUserInfoByIdOutDTO readUserInfo(long srcUserId, long dstUserId) throws Exception {
         return userRepo.findUserInfoBy(srcUserId, dstUserId).orElseThrow(IllegalArgumentException::new);
+    }
+
+    @Override
+    public ReadUserOutDTOs readFollowers(ReadFollowerInDTOs readFollowerInDTOs) throws Exception {
+        if(readFollowerInDTOs.getPage() < 1) readFollowerInDTOs.setPage(1);
+        List<UserDTO> users = userRepo.findUserBy(readFollowerInDTOs.getType(), readFollowerInDTOs.getAuthUserId(),
+                        readFollowerInDTOs.getUserId(), readFollowerInDTOs.getPage(), readFollowerInDTOs.getSize())
+                .orElse(new ArrayList<>());
+        return ReadUserOutDTOs.builder()
+                .users(users)
+                .build();
     }
 }

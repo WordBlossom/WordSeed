@@ -1,14 +1,7 @@
 package com.spring.wordseed.controller;
 
-import com.spring.wordseed.dto.in.CreateFollowInDTO;
-import com.spring.wordseed.dto.in.DeleteFollowInDTO;
-import com.spring.wordseed.dto.in.ReadUserInDTOs;
-import com.spring.wordseed.dto.in.UpdateUserInDTO;
+import com.spring.wordseed.dto.in.*;
 import com.spring.wordseed.dto.out.*;
-import com.spring.wordseed.dto.tool.UserDTO;
-import com.spring.wordseed.enu.FollowType;
-import com.spring.wordseed.enu.Informable;
-import com.spring.wordseed.enu.UserType;
 import com.spring.wordseed.service.FollowService;
 import com.spring.wordseed.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user", produces = "application/json; charset=utf-8")
@@ -68,28 +58,16 @@ public class UserController {
         ReadUserInfoByIdOutDTO readUserInfoByIdOutDTO = userService.readUserInfo(srcUserId, dstUserId);
         return ResponseEntity.status(HttpStatus.OK).body(readUserInfoByIdOutDTO);
     }
-    @GetMapping("/follow") // out dto에 구독자인지 관심작가인지 enum 만들어서 보내주는 것도 좋을듯?
-    public ResponseEntity<ReadFollowOutDTOs> readFollows(@RequestParam("userId") long userId,
-                                                         @RequestParam("type") FollowType type,
-                                                         @RequestParam("page") long page,
-                                                         @RequestParam("size") long size) throws Exception {
-        List<UserDTO> users = new ArrayList<>();
-        for(int i=1;i<=size;i++) {
-            UserDTO user = UserDTO.builder()
-                    .userId(i)
-                    .userName("" + type + page + i)
-                    .sendCnt(i* 10L)
-                    .recvCnt(i* 100L)
-                    .userDecp("언젠가 어디선가 이글을 읽는 당신에게 작은 힘이 되기를 바라본다")
-                    .subscribed((i % 2 == 0))
-                    .build();
-            users.add(user);
-        }
-        ReadFollowOutDTOs readFollowOutDTOs = new ReadFollowOutDTOs(users);
-        return ResponseEntity.status(HttpStatus.OK).body(readFollowOutDTOs);
+    @GetMapping("/follow")
+    public ResponseEntity<ReadUserOutDTOs> readFollowers(@ModelAttribute ReadFollowerInDTOs readFollowerInDTOs,
+                                                       HttpServletRequest request) throws Exception {
+        long userId = (long) request.getAttribute("userId");
+        readFollowerInDTOs.setAuthUserId(userId);
+        ReadUserOutDTOs readFollowerOutDTOs = userService.readFollowers(readFollowerInDTOs);
+        return ResponseEntity.status(HttpStatus.OK).body(readFollowerOutDTOs);
     }
 
-    @PostMapping("follow")
+    @PostMapping("/follow")
     public ResponseEntity<String> createFollow(@RequestBody CreateFollowInDTO createFollowInDTO,
                                                HttpServletRequest request) throws Exception {
         long userId = (long) request.getAttribute("userId");
@@ -98,7 +76,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("SUCCESS");
     }
 
-    @DeleteMapping("follow")
+    @DeleteMapping("/follow")
     public ResponseEntity<String> deleteFollow(@RequestBody DeleteFollowInDTO deleteFollowInDTO,
                                                HttpServletRequest request) throws Exception {
         long userId = (long) request.getAttribute("userId");
