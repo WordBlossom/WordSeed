@@ -1,10 +1,18 @@
+export type FeedListDTO = {
+  wordId: number;
+  postType: string;
+  sort: "DATE_ASC" | "DATE_DSC" | "LIKE_ASC" | "LIKE_DSC";
+  page?: number;
+  size?: number;
+};
+
 export type FeedDetail = {
   postId: number;
   userId: number;
   userName: string;
-  postAlign: "LEST" | "CENTER" | "RIGHT"; // 02.19 수정 (type -> postType)
-  postType: "TEXT" | "PAINT" | "MUSIC" | "VIDEO"; // 02.19 추가
-  PostVisibility: "PUBLIC" | "PRIVATE"; // 02.19 추가
+  postAlign: "LEFT" | "CENTER" | "RIGHT";
+  postType: "TEXT" | "PAINT" | "MUSIC" | "VIDEO";
+  PostVisibility: "PUBLIC" | "PRIVATE";
   content: string;
   url: string;
   likedCnt: number;
@@ -17,4 +25,8 @@ export type FeedDetail = {
   word: String;
   createdAt: string;
   updatedAt: string;
+};
+
+export type FeedList = {
+  posts: FeedDetail[];
 };
