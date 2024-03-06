@@ -9,7 +9,7 @@ type WordseedProps = {
 };
 export default function WordSeed({ date, wordseed }: WordseedProps) {
   return (
-    <Link href={`/wordseed/${wordseed}`} className={styles.container}>
+    <Link href={`/wordseed/${date}`} className={styles.container}>
       <p className={styles.date}>{date}</p>
       <p className={styles.wordseed}>{wordseed}</p>
     </Link>

@@ -1,9 +1,10 @@
 import { todaysDate } from "@/utils/getDateUtils";
+import { Wordseed } from "@/api/wordseed/types";
 import style from "./wordseed.module.scss";
 
 type WordseedContentProps = {
   date: string;
-  wordseed: string;
+  wordseed: string | undefined;
 };
 
 export default function WordseedContent({
