@@ -4,7 +4,7 @@ import {
   DEFAULT_POST_TYPE,
   DEFAULT_SORT,
 } from "@/api/feed/";
-import { FeedListDTO } from "@/api/feed/types";
+import { WordFeedListDTO } from "@/api/feed/types";
 
 type FeedLayoutProps = {
   children: React.ReactNode;
@@ -18,7 +18,7 @@ export default async function FeedLayout({
   const wordId = params.word_id;
 
   const queryClient = new QueryClient();
-  const defaultParams: FeedListDTO = {
+  const defaultParams: WordFeedListDTO = {
     wordId: wordId,
     postType: DEFAULT_POST_TYPE,
     sort: DEFAULT_SORT,
@@ -27,6 +27,7 @@ export default async function FeedLayout({
   const dehydratedQueryClient = await usePrefetchFeedList({
     queryClient: queryClient,
     params: defaultParams,
+    type: "word",
   });
 
   return (
