@@ -1,2 +1,7 @@
 export { getFeedDetail } from "./get-feed-detail";
-export { getFeedList, useFeedList } from "./get-feed-list";
+export {
+  useFeedList,
+  usePrefetchFeedList,
+  DEFAULT_POST_TYPE as DEFAULT_POST_TYPE,
+  DEFAULT_SORT as DEFAULT_SORT,
+} from "./get-feed-list";

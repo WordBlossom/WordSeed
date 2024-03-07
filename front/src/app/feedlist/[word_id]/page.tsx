@@ -1,12 +1,12 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useInView } from "react-intersection-observer";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FeedContent, FeedInterface, Comment } from "@/components";
 import { useFeedList } from "@/api/feed";
 import useSearchFilterStateStore from "@/stores/search-filter";
 import useCommentToggleStateStore from "@/stores/comment-toggle";
+import { FeedListDTO } from "@/api/feed/types";
 import style from "./feedlist.module.scss";
 
 type FeedlistProps = {
@@ -50,7 +50,7 @@ export default function Feedlist({ params }: FeedlistProps) {
   // 해당 말씨로 작품 조회
   const wordId = params.word_id;
   const { text, paint, video, music, isLatest } = useSearchFilterStateStore();
-  const postType = [
+  let postType = [
     text ? "TEXT" : null,
     paint ? "PAINT" : null,
     video ? "VIDEO" : null,
@@ -59,20 +59,14 @@ export default function Feedlist({ params }: FeedlistProps) {
     .filter((type) => type)
     .join(",");
 
-  const { status, data, fetchNextPage } = useFeedList({
-    params: {
-      wordId: wordId,
-      postType: postType,
-      sort: isLatest ? "DATE_DSC" : "LIKE_DSC",
-    },
-  });
+  const feedListParams: FeedListDTO = {
+    wordId: wordId,
+    postType: postType,
+    sort: isLatest ? "DATE_DSC" : "LIKE_DSC",
+  };
 
-  const [ref] = useInView({
-    onChange: (inView) => {
-      if (inView) {
-        fetchNextPage();
-      }
-    },
+  const { data, status, fetchNextPage } = useFeedList({
+    params: feedListParams,
   });
 
   const swiperRef = useRef<any>(null);
@@ -207,9 +201,11 @@ export default function Feedlist({ params }: FeedlistProps) {
       hasListenerFirstSlide.current = true;
     }
   };
+
   return (
     <>
-      {status === "success" && (
+      {status === "success" && !data.pages.length && <p>결과 없음</p>}
+      {status === "success" && data.pages.length && (
         <Swiper
           ref={swiperRef}
           className={`${style["swiper-container"]} ${
@@ -225,7 +221,7 @@ export default function Feedlist({ params }: FeedlistProps) {
           longSwipesRatio={0.05}
           onReachEnd={() => fetchNextPage()}
         >
-          {data?.pages.map((feedData) => (
+          {data.pages.map((feedData) => (
             <SwiperSlide key={feedData.postId} className={style["swiper-card"]}>
               <FeedContent feedData={feedData} />
               <FeedInterface feedData={feedData} />
