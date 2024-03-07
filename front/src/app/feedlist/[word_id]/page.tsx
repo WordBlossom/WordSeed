@@ -59,11 +59,6 @@ export default function Feedlist({ params }: FeedlistProps) {
     .filter((type) => type)
     .join(",");
 
-  if (!postType) {
-    alert("하나 이상의 종류를 선택해주세요");
-    postType = "TEXT";
-  }
-
   const feedListParams: FeedListDTO = {
     wordId: wordId,
     postType: postType,
