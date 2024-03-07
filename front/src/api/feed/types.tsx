@@ -30,3 +30,15 @@ export type FeedDetail = {
 export type FeedList = {
   posts: FeedDetail[];
 };
+
+export type BookMarkDTO = {
+  postId: number;
+};
+
+export type BookMark = {
+  bookMarkId: Number;
+  userId: Number;
+  postId: Number;
+  createAt: string;
+  updateAt: string;
+};
