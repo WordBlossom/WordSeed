@@ -21,6 +21,13 @@ export const initialState: SearchFilterState = {
   isLatest: true,
 };
 
+const postTypes: (keyof SearchFilterState)[] = [
+  "text",
+  "paint",
+  "video",
+  "music",
+];
+
 const useSearchFilterStateStore = create<
   SearchFilterState & SearchFilterStateStore
 >((set) => ({
@@ -30,7 +37,17 @@ const useSearchFilterStateStore = create<
   music: true,
   isLatest: true,
   setIsActive: (clickedType: keyof SearchFilterState) =>
-    set((state) => ({ [clickedType]: !state[clickedType] })),
+    set((state) => {
+      const otherTypesBoolean: boolean[] = [];
+      postTypes.forEach((type) => {
+        if (type === clickedType) return;
+        otherTypesBoolean.push(state[type]);
+      });
+      if (otherTypesBoolean.every((el) => el === false) && state[clickedType]) {
+        return state;
+      }
+      return { [clickedType]: !state[clickedType] };
+    }),
   clearSearchFilterState: () => set(initialState),
 }));
 
