@@ -163,7 +163,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                     .select(qFollow)
                     .from(qFollow)
                     .where(qFollow.srcUser.userId.eq(srcUserId))
-                    .where(qFollow.dstUser.userId.eq(readPostByPostIdOutDTO.getPostId()))
+                    .where(qFollow.dstUser.userId.eq(readPostByPostIdOutDTO.getUserId()))
                     .fetchOne();
 
             readPostByPostIdOutDTO.setLiked(likedExpression != null);
