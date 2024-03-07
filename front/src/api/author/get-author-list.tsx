@@ -25,7 +25,7 @@ export function useAuthorList({ params, config }: UseAuthorListOptions) {
     getNextPageParam: (lastPage, allPages) => {
       const morePagesExist = lastPage?.users?.length === REQUEST_SIZE;
       if (!morePagesExist) return undefined;
-      return allPages.length + 1;
+      return allPages.length;
     },
     select: (data) => ({
       ...data,
