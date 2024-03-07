@@ -1,3 +1,4 @@
+import React from "react";
 import { FeedDetail } from "@/api/feed/types";
 import style from "./feed.module.scss";
 
@@ -5,7 +6,7 @@ type FeedContentProps = {
   feedData: FeedDetail;
 };
 
-export default function FeedContent({ feedData }: FeedContentProps) {
+function FeedContent({ feedData }: FeedContentProps) {
   return (
     <div className={style["content-container"]}>
       <div className={style["content-wrapper"]}>
@@ -14,3 +15,5 @@ export default function FeedContent({ feedData }: FeedContentProps) {
     </div>
   );
 }
+
+export default React.memo(FeedContent);
