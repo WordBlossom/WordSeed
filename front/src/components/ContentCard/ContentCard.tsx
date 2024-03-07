@@ -3,7 +3,7 @@
 import styles from "./ContentCard.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useInView } from "react-intersection-observer";
 
 interface ContentCardProps {
