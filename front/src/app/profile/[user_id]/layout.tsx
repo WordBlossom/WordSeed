@@ -23,6 +23,7 @@ export default async function DashboardLayout({
     ...myParams,
     userId,
   };
+
   const props = {
     queryClient: queryClient,
     params: isMe ? myParams : userParams,

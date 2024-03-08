@@ -1,31 +1,24 @@
 "use client";
 
+import { FeedDetail } from "@/api/feed/types";
 import styles from "./ContentCard.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { useInView } from "react-intersection-observer";
 
-interface ContentCardProps {
-  postId: number;
-  type: "text" | "img" | "video" | "sound";
-  title: string;
-  content: string;
-  textAlign: "start" | "center" | "end";
-  userName: string;
-  url: string;
-}
-
 export default function ContentCard({
   postId,
-  type,
-  title,
+  postType,
+  postAlign,
+  word,
   content,
-  textAlign,
   userName,
   url,
-}: ContentCardProps) {
-  const contentClassName = `${styles.content} ${styles[textAlign]}`;
+}: FeedDetail) {
+  const contentClassName = `${styles.content} ${
+    styles[postAlign.toLowerCase()]
+  }`;
   const videoRef = useRef<HTMLVideoElement>(null);
   const [ref] = useInView({
     threshold: 0.8,
@@ -41,18 +34,18 @@ export default function ContentCard({
 
   return (
     <Link className={styles.link} href={`/feed/${postId}`} ref={ref}>
-      {type === "text" ? (
+      {postType === "TEXT" ? (
         <main className={styles.container}>
           <div className={styles.wrapper}>
-            <p className={styles.title}>{title}</p>
+            <p className={styles.title}>{word}</p>
             <p className={contentClassName}>{content}</p>
             <p className={styles.artist}>{userName}</p>
           </div>
         </main>
       ) : (
         <main className={styles.media}>
-          {type === "img" && <Image src={url} alt="12" fill />}
-          {type === "video" && (
+          {postType === "PAINT" && <Image src={url} alt="12" fill />}
+          {postType === "VIDEO" && (
             <video
               ref={videoRef}
               muted
@@ -63,7 +56,7 @@ export default function ContentCard({
               src={url}
             ></video>
           )}
-          {type === "sound" && <audio src={url} controls />}
+          {postType === "MUSIC" && <audio src={url} controls />}
         </main>
       )}
     </Link>
