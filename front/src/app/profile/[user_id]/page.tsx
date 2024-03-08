@@ -26,7 +26,7 @@ export default function Profile({ params }: ProfileProps) {
     <div className={styles.container}>
       <Header userId={userId} />
       <ProfileCategory categoryRef={ref} params={params} />
-      <ContentCardList />
+      <ContentCardList userId={userId} />
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import useSearchFilterStateStore from "@/stores/search-filter";
 import { ContentCard } from "..";
 import styles from "./ContentCardList.module.scss";
 
@@ -50,7 +51,17 @@ const datas: ContentCardProps[] = [
   },
 ];
 
-export default function ContentCardList() {
+export default function ContentCardList({ userId }: { userId: number }) {
+  const { text, paint, video, music, isLatest } = useSearchFilterStateStore();
+  let postType = [
+    text ? "TEXT" : null,
+    paint ? "PAINT" : null,
+    video ? "VIDEO" : null,
+    music ? "MUSIC" : null,
+  ]
+    .filter((type) => type)
+    .join(",");
+
   return (
     <div className={styles.container}>
       {datas.map((data) => (

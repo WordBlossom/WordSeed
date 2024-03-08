@@ -1,5 +1,12 @@
 export type FeedType = "word" | "my" | "bookmark" | "user";
 
+export enum FeedTypeEnum {
+  Word = "word",
+  My = "my",
+  Bookmark = "bookmark",
+  User = "user",
+}
+
 export type ParamsByType<T extends FeedType> = T extends "word"
   ? WordFeedListDTO
   : T extends "my" | "bookmark"
