@@ -34,6 +34,10 @@ export const userInfoQuery = {
     queryKey: ["myInfo"],
     queryFn: () => getMyInfo(),
   }),
+  editInfo: (params: EditMyInfoParams) => ({
+    queryKey: ["myInfo", params],
+    queryFn: () => putMyInfo(params),
+  }),
   userInfo: (userId: number) => ({
     queryKey: ["userInfo", { userId }],
     queryFn: () => getUserInfo({ userId }),

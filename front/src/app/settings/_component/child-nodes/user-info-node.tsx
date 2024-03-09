@@ -3,13 +3,19 @@
 import Link from "next/link";
 import style from "../settings.module.scss";
 import { Icon } from "@/components";
+import { useQuery } from "@tanstack/react-query";
+import { userInfoQuery } from "@/api/user";
 
 export default function UserInfoNode() {
+  const { data } = useQuery(userInfoQuery.myInfo());
+
   return (
     <div className={style["settings-content"]}>
-      <Link className={style["link"]} href={"/user-info"}>
-        유저 이름
-      </Link>
+      {data && (
+        <Link className={style["link"]} href={"/user-info"}>
+          {data.userName}
+        </Link>
+      )}
       <Icon iconName="rightArrow" />
     </div>
   );
