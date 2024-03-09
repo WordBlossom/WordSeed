@@ -37,8 +37,10 @@ export default function ContentCard({
       {postType === "TEXT" ? (
         <main className={styles.container}>
           <div className={styles.wrapper}>
-            <p className={styles.title}>{word}</p>
-            <p className={contentClassName}>{content}</p>
+            <div className={styles["text-section"]}>
+              <p className={styles.title}>{word}</p>
+              <p className={contentClassName}>{content}</p>
+            </div>
             <p className={styles.artist}>{userName}</p>
           </div>
         </main>

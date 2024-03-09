@@ -9,8 +9,9 @@
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  width: 100%;
 
-  min-height: 20rem;
+  min-height: 30rem;
 }
 
 .media {
@@ -44,21 +45,34 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
+  min-height: 24rem;
   gap: 1rem;
+}
+
+.text-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
 }
 
 .title {
   @include font($body1, $bold, $black, $noto-serif);
+  width: 100%;
+
+  text-align: center;
 }
 
 .content {
   @include font($body2, $regular, $black, $noto-serif);
   white-space: pre-line;
+  width: 100%;
 }
 
-.start {
+.left {
   text-align: left;
 }
 
@@ -66,10 +80,13 @@
   text-align: center;
 }
 
-.end {
+.right {
   text-align: right;
 }
 
 .artist {
   @include font($body2, $regular, $black, $noto-sans);
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1rem;
 }
