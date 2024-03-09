@@ -11,11 +11,12 @@ export default function ProfileCategory({
   params,
   categoryRef,
 }: ProfileCategoryProps) {
-  const myId = 1;
+  const myId = 4;
+  const userId = Number(params.user_id);
 
   return (
     <div className={styles.wrapper} ref={categoryRef}>
-      {myId === params.user_id && (
+      {myId === userId && (
         <ToggleButton type="wide" toggleA="내 작품" toggleB="북마크" />
       )}
       <Filter />

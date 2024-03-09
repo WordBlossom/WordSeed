@@ -1,5 +1,6 @@
 "use client";
 
+import styles from "./profile.module.scss";
 import { useInView } from "react-intersection-observer";
 import useFilterButtonHiddenStateStore from "@/stores/profile-filter";
 import { ContentCardList } from "@/components";
@@ -22,10 +23,10 @@ export default function Profile({ params }: ProfileProps) {
   const userId = Number(params.user_id);
 
   return (
-    <>
+    <div className={styles.container}>
       <Header userId={userId} />
       <ProfileCategory categoryRef={ref} params={params} />
-      <ContentCardList />
-    </>
+      <ContentCardList userId={userId} />
+    </div>
   );
 }

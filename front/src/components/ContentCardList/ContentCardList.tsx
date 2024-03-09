@@ -1,5 +1,9 @@
+import useSearchFilterStateStore from "@/stores/search-filter";
 import { ContentCard } from "..";
 import styles from "./ContentCardList.module.scss";
+import { FeedListDTO, FeedTypeEnum, UserFeedListDTO } from "@/api/feed/types";
+import profileToggleStore from "@/stores/profile-toggle";
+import { useFeedList } from "@/api/feed";
 
 interface ContentCardProps {
   postId: number;
@@ -50,12 +54,52 @@ const datas: ContentCardProps[] = [
   },
 ];
 
-export default function ContentCardList() {
+export default function ContentCardList({ userId }: { userId: number }) {
+  const myId = 4;
+  const isMe = myId === userId;
+
+  const { selected } = profileToggleStore();
+  const { text, paint, video, music, isLatest } = useSearchFilterStateStore();
+  let postType = [
+    text ? "TEXT" : null,
+    paint ? "PAINT" : null,
+    video ? "VIDEO" : null,
+    music ? "MUSIC" : null,
+  ]
+    .filter((type) => type)
+    .join(",");
+
+  const feedListParams: FeedListDTO = {
+    postType: postType,
+    sort: isLatest ? "DATE_DSC" : "LIKE_DSC",
+  };
+
+  const userFeedListParams: UserFeedListDTO = {
+    ...feedListParams,
+    userId,
+  };
+
+  const props = {
+    params: isMe ? feedListParams : userFeedListParams,
+    type: isMe
+      ? selected
+        ? FeedTypeEnum.Bookmark
+        : FeedTypeEnum.My
+      : FeedTypeEnum.User,
+  };
+
+  const { data, status, fetchNextPage } = useFeedList(props);
+
   return (
-    <div className={styles.container}>
-      {datas.map((data) => (
-        <ContentCard key={data.postId} {...data} />
-      ))}
-    </div>
+    <>
+      {status === "success" && !data.pages.length && <p>결과 없음</p>}
+      {status === "success" && data.pages.length && (
+        <div className={styles.container}>
+          {data.pages.map((feedData) => (
+            <ContentCard key={feedData.postId} {...feedData} />
+          ))}
+        </div>
+      )}
+    </>
   );
 }

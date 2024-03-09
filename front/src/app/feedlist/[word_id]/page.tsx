@@ -6,7 +6,7 @@ import { FeedContent, FeedInterface, Comment } from "@/components";
 import { useFeedList } from "@/api/feed";
 import useSearchFilterStateStore from "@/stores/search-filter";
 import useCommentToggleStateStore from "@/stores/comment-toggle";
-import { FeedListDTO } from "@/api/feed/types";
+import { WordFeedListDTO } from "@/api/feed/types";
 import style from "./feedlist.module.scss";
 
 type FeedlistProps = {
@@ -59,7 +59,7 @@ export default function Feedlist({ params }: FeedlistProps) {
     .filter((type) => type)
     .join(",");
 
-  const feedListParams: FeedListDTO = {
+  const feedListParams: WordFeedListDTO = {
     wordId: wordId,
     postType: postType,
     sort: isLatest ? "DATE_DSC" : "LIKE_DSC",
@@ -67,6 +67,7 @@ export default function Feedlist({ params }: FeedlistProps) {
 
   const { data, status, fetchNextPage } = useFeedList({
     params: feedListParams,
+    type: "word",
   });
 
   const swiperRef = useRef<any>(null);

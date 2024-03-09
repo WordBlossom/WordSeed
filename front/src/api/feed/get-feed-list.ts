@@ -1,37 +1,43 @@
-import { axios } from "@/lib/axios";
 import {
   QueryClient,
   useInfiniteQuery,
   dehydrate,
 } from "@tanstack/react-query";
 import { InfiniteQueryConfig } from "@/lib/react-query";
-import { FeedListDTO, FeedList } from "./types";
+import { FeedType, ParamsByType, QueryFnType } from "./types";
+import { feedListQuery } from "./get-feed-api";
 
 const REQUEST_SIZE = 5;
 export const DEFAULT_POST_TYPE = "TEXT,PAINT,VIDEO,MUSIC";
 export const DEFAULT_SORT = "DATE_DSC";
 
-export async function getFeedList(params: FeedListDTO): Promise<FeedList> {
-  return axios.get(`/post/list/word`, { params });
+interface UseFeedListOptions<T extends FeedType> {
+  params: ParamsByType<T>;
+  type: T;
+  config?: InfiniteQueryConfig<QueryFnType<T>>;
 }
 
-type QueryFnType = typeof getFeedList;
-
-interface UseFeedListOptions {
-  params: FeedListDTO;
-  config?: InfiniteQueryConfig<QueryFnType>;
-}
-
-interface PrefetchUseFeedListOptions extends UseFeedListOptions {
+interface PrefetchUseFeedListOptions<T extends FeedType>
+  extends UseFeedListOptions<T> {
   queryClient: QueryClient;
 }
 
-export function useFeedList({ params, config }: UseFeedListOptions) {
+export function useFeedList<T extends FeedType>({
+  params,
+  type,
+  config,
+}: UseFeedListOptions<T>) {
+  const { queryKey, queryFn } = feedListQuery[type]();
+
   return useInfiniteQuery({
     ...config,
-    queryKey: ["FeedList", params],
+    queryKey: queryKey(params),
     queryFn: ({ pageParam }) =>
-      getFeedList({ ...params, size: REQUEST_SIZE, page: pageParam }),
+      queryFn({
+        ...params,
+        size: REQUEST_SIZE,
+        page: pageParam,
+      }),
     initialPageParam: 2,
     getNextPageParam: (lastPage, allPages) => {
       const morePagesExist = lastPage?.posts?.length === REQUEST_SIZE;
@@ -45,16 +51,19 @@ export function useFeedList({ params, config }: UseFeedListOptions) {
   });
 }
 
-export async function usePrefetchFeedList({
+export async function usePrefetchFeedList<T extends FeedType>({
   queryClient,
+  type,
   params,
   config,
-}: PrefetchUseFeedListOptions) {
+}: PrefetchUseFeedListOptions<T>) {
+  const { queryKey, queryFn } = feedListQuery[type]();
+
   await queryClient.prefetchInfiniteQuery({
     ...config,
-    queryKey: ["FeedList", params],
+    queryKey: queryKey(params),
     queryFn: ({ pageParam }) =>
-      getFeedList({ ...params, size: 5, page: pageParam }),
+      queryFn({ ...params, size: 5, page: pageParam }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       const morePagesExist = lastPage?.posts?.length === 5;
