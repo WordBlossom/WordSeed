@@ -8,7 +8,7 @@ export const getMyInfo = async (): Promise<MyInfo> => {
 export const putMyInfo = async (
   params: EditMyInfoParams
 ): Promise<UserInfo> => {
-  return await axios.post("/user", params);
+  return await axios.put("/user", params);
 };
 
 export const getUserInfo = async ({ userId }: UserDTO): Promise<UserInfo> => {

@@ -29,8 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={fontClassName}>
       <body>
-        <Navbar />
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          <Navbar />
+          {children}
+        </AppProvider>
       </body>
     </html>
   );
