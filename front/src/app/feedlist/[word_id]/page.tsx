@@ -1,7 +1,7 @@
 "use client";
 
 import { useFeedList, DEFAULT_POST_TYPE } from "@/api/feed";
-import { FeedListDTO } from "@/api/feed/types";
+import { WordFeedListDTO } from "@/api/feed/types";
 import useSearchFilterStateStore from "@/stores/search-filter";
 import SwiperComponent from "./_component/swiper-component";
 
@@ -14,7 +14,7 @@ export default function Feedlist({ params }: FeedlistProps) {
   const { selectedType, isLatest } = useSearchFilterStateStore();
   const postType = selectedType ? selectedType : DEFAULT_POST_TYPE;
 
-  const feedListParams: FeedListDTO = {
+  const feedListParams: WordFeedListDTO = {
     wordId: wordId,
     postType: postType,
     sort: isLatest ? "DATE_DSC" : "LIKE_DSC",
@@ -22,6 +22,7 @@ export default function Feedlist({ params }: FeedlistProps) {
 
   const { data, status, fetchNextPage } = useFeedList({
     params: feedListParams,
+    type: "word",
   });
 
   return (
