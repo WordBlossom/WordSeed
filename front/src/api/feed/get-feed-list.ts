@@ -32,7 +32,7 @@ export function useFeedList({ params, config }: UseFeedListOptions) {
     queryKey: ["FeedList", params],
     queryFn: ({ pageParam }) =>
       getFeedList({ ...params, size: REQUEST_SIZE, page: pageParam }),
-    initialPageParam: 2,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       const morePagesExist = lastPage?.posts?.length === REQUEST_SIZE;
       if (!morePagesExist) return undefined;
