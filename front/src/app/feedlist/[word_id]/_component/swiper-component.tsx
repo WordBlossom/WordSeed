@@ -113,7 +113,7 @@ export default function SwiperComponent({
             return;
           }
           // 스크롤을 아래로 내리는 상황
-          if (!scrollUp && scrollTop && scrollTop >= diff) {
+          if (!scrollUp && scrollTop >= diff) {
             swiper.allowTouchMove = true;
             removeListener({
               activeContentRef,
