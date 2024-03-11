@@ -2,7 +2,8 @@ import { useMutation, InfiniteData } from "@tanstack/react-query";
 import { getQueryClient, MutationConfig } from "@/lib/react-query";
 import { postBookMark, bookMarkQuery } from "./bookmark-api";
 import useSearchFilterStateStore from "@/stores/search-filter";
-import { BookMarkDTO, BookMark } from "./types";
+import { DEFAULT_POST_TYPE } from ".";
+import { BookMarkDTO } from "./types";
 import { FeedDetail, FeedList } from "./types";
 
 type useListBookMarkOptions = {
@@ -20,22 +21,15 @@ export const useListBookMark = ({
 }: useListBookMarkOptions) => {
   const queryClient = getQueryClient();
   const { queryKey, queryFn } = bookMarkQuery[queryName](postId);
-  const { text, paint, video, music, isLatest } = useSearchFilterStateStore();
-  let postType = [
-    text ? "TEXT" : null,
-    paint ? "PAINT" : null,
-    video ? "VIDEO" : null,
-    music ? "MUSIC" : null,
-  ]
-    .filter((type) => type)
-    .join(",");
+  const { selectedType, isLatest } = useSearchFilterStateStore();
+  const postType = selectedType ? selectedType : DEFAULT_POST_TYPE;
 
   const feedListQueryKey = [
-    "FeedList",
+    "wordFeedList",
     {
+      wordId: String(wordId),
       postType: postType,
       sort: isLatest ? "DATE_DSC" : "LIKE_DSC",
-      wordId: String(wordId),
     },
   ];
 
