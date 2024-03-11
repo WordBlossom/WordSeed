@@ -1,8 +1,36 @@
-export type userDTO = {
+export type UserDTO = {
   userId: number;
 };
 
-export type userInfo = {
+export interface MyInfo {
+  userId: number;
+  userName: string;
+  userType: "USER" | "QUIT";
+  email: string;
+  userDecp: string;
+  informable: "TRUE" | "FALSE";
+}
+
+export interface EditMyInfo extends MyInfo {
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface EditMyInfoParams {
+  userName: string;
+  userType: "USER" | "QUIT";
+  userDecp: string;
+  informable: "TRUE" | "FALSE";
+}
+
+export type DeleteUserInfo = {
+  userId: number;
+  userName: string;
+  userType: "USER" | "QUIT";
+  email: string;
+};
+
+export type UserInfo = {
   userId: number;
   userName: string;
   userDecp: string;

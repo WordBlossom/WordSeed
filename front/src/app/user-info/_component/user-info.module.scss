@@ -22,7 +22,8 @@
     width: 100%;
     border-left: 3px solid $gray;
     padding-left: 0.4rem;
-    textarea {
+    textarea,
+    div {
       @include font($fs: $h4, $fw: $regular, $fc: $gray, $ff: $noto-serif);
       resize: none;
       width: 100%;

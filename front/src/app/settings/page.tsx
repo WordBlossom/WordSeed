@@ -15,7 +15,7 @@ export default function Settings() {
       {/* <SettingsItem title={"글자 크기"} childNode={<FontSizeNode />} />
       <SettingsItem title={"테마"} childNode={<ThemeNode />} />
       <SettingsItem title={"알림 설정"} childNode={<AlramSettingNode />} /> */}
-      <LogOutButton />
+      {/* <LogOutButton /> */}
     </SettingsWrapper>
   );
 }

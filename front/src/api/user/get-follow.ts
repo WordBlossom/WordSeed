@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { userInfoQuery } from "./get-user-api";
-import { userInfo } from "./types";
-import { Author, AuthorList } from "../author/types";
+import { UserInfo } from "./types";
+import { Author } from "../author/types";
 import useSearchPageStateStore from "@/stores/search-page";
 
 export const useFollow = (
@@ -26,7 +26,7 @@ export const useFollow = (
       // 이전 값
       const previousUserInfo = queryClient.getQueryData(
         userInfo.queryKey
-      ) as userInfo;
+      ) as UserInfo;
 
       // 새로운 값으로 낙관적 업데이트 진행
       queryClient.setQueryData(userInfo.queryKey, {
