@@ -1,0 +1,18 @@
+.swiper-container {
+  overflow: hidden;
+  height: calc(100vh - 5rem);
+
+  .swiper-card {
+    @include flex;
+    height: calc(100vh - 5rem);
+    flex-direction: column;
+  }
+}
+
+.guidance {
+  @include font($fs: $body1, $fw: $regular, $fc: $gray, $ff: $noto-sans);
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  margin-top: 6rem;
+}
