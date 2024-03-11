@@ -1,6 +1,6 @@
 "use client";
 
-import { useFeedList } from "@/api/feed";
+import { useFeedList, DEFAULT_POST_TYPE } from "@/api/feed";
 import { FeedListDTO } from "@/api/feed/types";
 import useSearchFilterStateStore from "@/stores/search-filter";
 import SwiperComponent from "./_component/swiper-component";
@@ -10,17 +10,9 @@ type FeedlistProps = {
 };
 
 export default function Feedlist({ params }: FeedlistProps) {
-  // 해당 말씨로 작품 조회
   const wordId = params.word_id;
-  const { text, paint, video, music, isLatest } = useSearchFilterStateStore();
-  let postType = [
-    text ? "TEXT" : null,
-    paint ? "PAINT" : null,
-    video ? "VIDEO" : null,
-    music ? "MUSIC" : null,
-  ]
-    .filter((type) => type)
-    .join(",");
+  const { selectedType, isLatest } = useSearchFilterStateStore();
+  const postType = selectedType ? selectedType : DEFAULT_POST_TYPE;
 
   const feedListParams: FeedListDTO = {
     wordId: wordId,
