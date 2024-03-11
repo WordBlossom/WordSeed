@@ -3,12 +3,9 @@ import Icon from "@/components/Icon/Icon";
 import useSearchFilterStateStore from "@/stores/search-filter";
 
 export default function SortSwitch() {
-  const { isLatest, setIsActive } = useSearchFilterStateStore();
+  const { isLatest, setIsLatest } = useSearchFilterStateStore();
   return (
-    <div
-      className={styles["switch-container"]}
-      onClick={() => setIsActive("isLatest")}
-    >
+    <div className={styles["switch-container"]} onClick={() => setIsLatest()}>
       <div
         className={`${styles["switch-wrapper"]} ${
           isLatest ? styles["latest"] : ""

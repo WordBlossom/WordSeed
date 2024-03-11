@@ -5,21 +5,21 @@ import SortSwitch from "./sort-switch";
 import styles from "./filter.module.scss";
 
 type ContentCategoryType = {
-  글: "text";
-  그림: "paint";
-  영상: "video";
-  음악: "music";
+  글: "TEXT";
+  그림: "PAINT";
+  영상: "VIDEO";
+  음악: "MUSIC";
 };
 
 const contentCategory: ContentCategoryType = {
-  글: "text",
-  그림: "paint",
-  영상: "video",
-  음악: "music",
+  글: "TEXT",
+  그림: "PAINT",
+  영상: "VIDEO",
+  음악: "MUSIC",
 };
 
 export default function Filter() {
-  const searchFilterStateStore = useSearchFilterStateStore();
+  const { selectedType, setIsActive } = useSearchFilterStateStore();
   const categories = Object.keys(
     contentCategory
   ) as (keyof ContentCategoryType)[];
@@ -29,10 +29,8 @@ export default function Filter() {
         <Button
           key={category}
           content={category}
-          isActive={searchFilterStateStore[contentCategory[category]]}
-          onClick={() =>
-            searchFilterStateStore.setIsActive(contentCategory[category])
-          }
+          isActive={selectedType === contentCategory[category]}
+          onClick={() => setIsActive(contentCategory[category])}
         />
       ))}
       <SortSwitch />

@@ -54,12 +54,24 @@ export type FeedDetail = {
   liked: boolean;
   bookMarked: boolean;
   subscribed: boolean;
-  wordId: Number;
-  word: String;
+  wordId: number;
+  word: string;
   createdAt: string;
   updatedAt: string;
 };
 
 export type FeedList = {
   posts: FeedDetail[];
+};
+
+export type BookMarkDTO = {
+  postId: number;
+};
+
+export type BookMark = {
+  bookMarkId: number;
+  userId: number;
+  postId: number;
+  createAt: string;
+  updateAt: string;
 };

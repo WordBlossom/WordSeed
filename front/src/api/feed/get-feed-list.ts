@@ -38,7 +38,7 @@ export function useFeedList<T extends FeedType>({
         size: REQUEST_SIZE,
         page: pageParam,
       }),
-    initialPageParam: 2,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       const morePagesExist = lastPage?.posts?.length === REQUEST_SIZE;
       if (!morePagesExist) return undefined;
