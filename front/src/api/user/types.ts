@@ -23,6 +23,13 @@ export interface EditMyInfoParams {
   informable: "TRUE" | "FALSE";
 }
 
+export type DeleteUserInfo = {
+  userId: number;
+  userName: string;
+  userType: "USER" | "QUIT";
+  email: string;
+};
+
 export type UserInfo = {
   userId: number;
   userName: string;

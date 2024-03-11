@@ -1,5 +1,12 @@
 import { axios } from "@/lib/axios";
-import { EditMyInfoParams, MyInfo, UserDTO, UserInfo } from "./types";
+import {
+  DeleteUserInfo,
+  EditMyInfo,
+  EditMyInfoParams,
+  MyInfo,
+  UserDTO,
+  UserInfo,
+} from "./types";
 
 export const getMyInfo = async (): Promise<MyInfo> => {
   return await axios.get("/user");
@@ -7,8 +14,12 @@ export const getMyInfo = async (): Promise<MyInfo> => {
 
 export const putMyInfo = async (
   params: EditMyInfoParams
-): Promise<UserInfo> => {
+): Promise<EditMyInfo> => {
   return await axios.put("/user", params);
+};
+
+export const deleteUser = async (): Promise<DeleteUserInfo> => {
+  return await axios.delete("/user");
 };
 
 export const getUserInfo = async ({ userId }: UserDTO): Promise<UserInfo> => {
@@ -37,6 +48,10 @@ export const userInfoQuery = {
   editInfo: (params: EditMyInfoParams) => ({
     queryKey: ["myInfo", params],
     queryFn: () => putMyInfo(params),
+  }),
+  deleteUser: () => ({
+    queryKey: ["deleteUser"],
+    queryFn: () => deleteUser(),
   }),
   userInfo: (userId: number) => ({
     queryKey: ["userInfo", { userId }],
