@@ -34,7 +34,7 @@ export default function Feedlist({ params }: FeedlistProps) {
           // // 슬라이드가 다시 처음으로 되돌아 가게 됨
           // // 따라서 postType으로 key를 설정해서 postType이 달라질 때만 컴포넌트를 새롭게 생성하고
           // // 데이터가 추가되는 경우는 유지하도록 함
-          postType={postType}
+          swiperKey={feedListParams.postType + feedListParams.sort}
           data={data}
           fetchNextPage={fetchNextPage}
         />
