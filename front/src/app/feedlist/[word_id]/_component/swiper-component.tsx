@@ -10,13 +10,13 @@ import { addListener, removeListener } from "./utils/listener-util";
 import style from "./feedlist.module.scss";
 
 type SwiperComponentProps = {
-  postType: string;
+  swiperKey: string;
   data: FeedListData;
   fetchNextPage: FeedListFetchNextPage;
 };
 
 export default function SwiperComponent({
-  postType,
+  swiperKey,
   data,
   fetchNextPage,
 }: SwiperComponentProps) {
@@ -31,6 +31,7 @@ export default function SwiperComponent({
 
   useEffect(() => {
     if (swiper && !swiper.destroyed && activeContentRef.current) {
+      console.log(swiper);
       if (swiper.previousIndex !== undefined) {
         const prevIndex = swiper.previousIndex;
         const prevSlide = swiper.slides[prevIndex];
@@ -151,9 +152,9 @@ export default function SwiperComponent({
       {!!data?.pages.length && (
         <Swiper
           // key를 설정하면 key가 달라질 때 이 컴포넌트가 새롭게 생성됨
-          // 따라서 postType으로 key를 설정해서 postType이 달라질 때만 컴포넌트를 새롭게 생성하고
+          // 따라서 swiperKey으로 key를 설정해서 swiperKey이 달라질 때만 컴포넌트를 새롭게 생성하고
           // 데이터가 추가되는 경우는 유지하도록 함
-          key={postType}
+          key={swiperKey}
           className={`${style["swiper-container"]}`}
           direction={"vertical"}
           onInit={(swiper) => {
