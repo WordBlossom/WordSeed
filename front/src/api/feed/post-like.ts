@@ -1,6 +1,6 @@
 import { useMutation, InfiniteData } from "@tanstack/react-query";
 import { getQueryClient, MutationConfig } from "@/lib/react-query";
-import { postBookMark, bookMarkQuery } from "./bookmark-api";
+import { postLike, likeQuery } from "./like-api";
 import {
   BookMarkAndLikeDTO,
   FeedDetail,
@@ -8,30 +8,32 @@ import {
   InfiniteQueriesUpdater,
 } from "./types";
 
-type useListBookMarkOptions = {
+type useListLikeOptions = {
   postId: BookMarkAndLikeDTO["postId"];
   wordId: FeedDetail["wordId"];
   postType: FeedDetail["postType"];
-  queryName: keyof typeof bookMarkQuery;
-  config?: MutationConfig<typeof postBookMark>;
+  queryName: keyof typeof likeQuery;
+  config?: MutationConfig<typeof postLike>;
 };
 
-export const useListBookMark = ({
+export const useListLike = ({
   postId,
   wordId,
   postType,
   queryName,
   config,
-}: useListBookMarkOptions) => {
+}: useListLikeOptions) => {
   const queryClient = getQueryClient();
-  const { queryKey, queryFn } = bookMarkQuery[queryName](postId);
+  const { queryKey, queryFn } = likeQuery[queryName](postId);
 
   const broadQueryKey = [
     "wordFeedList",
     {
       wordId: String(wordId),
     },
-    { [postType]: true },
+    {
+      [postType]: true,
+    },
   ];
 
   const feedListQueryKey = { queryKey: broadQueryKey };
@@ -42,7 +44,7 @@ export const useListBookMark = ({
         if (post.postId !== postId) return post;
         return {
           ...post,
-          bookMarked: !post.bookMarked,
+          liked: !post.liked,
         };
       });
       return { ...page, posts: updatedPosts };
@@ -62,7 +64,6 @@ export const useListBookMark = ({
 
       const previousFeedLists =
         queryClient.getQueriesData<InfiniteData<FeedList>>(feedListQueryKey);
-      console.log(previousFeedLists);
 
       queryClient.setQueriesData<InfiniteData<FeedList>>(
         feedListQueryKey,

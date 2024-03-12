@@ -1,18 +1,34 @@
 import Button from "./Button";
 import Icon from "@/components/Icon/Icon";
+import { FeedDetail } from "@/api/feed/types";
+import { useListLike } from "@/api/feed/post-like";
 
 type LikeButtonProps = {
-  isLiked: boolean;
+  postId: FeedDetail["postId"];
+  wordId: FeedDetail["wordId"];
+  postType: FeedDetail["postType"];
+  liked: FeedDetail["liked"];
 };
 
-export default function LikeButton({ isLiked }: LikeButtonProps) {
+export default function LikeButton({
+  postId,
+  wordId,
+  postType,
+  liked,
+}: LikeButtonProps) {
+  const likeMutation = useListLike({
+    postId: postId,
+    wordId: wordId,
+    postType: postType,
+    queryName: liked ? "deleteLike" : "postLike",
+  });
   const onClick = () => {
-    // 좋아요 통신
+    likeMutation.mutate();
   };
 
   return (
     <Button
-      content={<Icon iconName={isLiked ? "afterLike" : "beforeLike"} />}
+      content={<Icon iconName={liked ? "afterLike" : "beforeLike"} />}
       onClick={onClick}
     />
   );
