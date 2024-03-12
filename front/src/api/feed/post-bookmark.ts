@@ -3,11 +3,11 @@ import { getQueryClient, MutationConfig } from "@/lib/react-query";
 import { postBookMark, bookMarkQuery } from "./bookmark-api";
 import useSearchFilterStateStore from "@/stores/search-filter";
 import { DEFAULT_POST_TYPE } from ".";
-import { BookMarkDTO } from "./types";
+import { BookMarkAndLikeDTO } from "./types";
 import { FeedDetail, FeedList } from "./types";
 
 type useListBookMarkOptions = {
-  postId: BookMarkDTO["postId"];
+  postId: BookMarkAndLikeDTO["postId"];
   wordId: FeedDetail["wordId"];
   queryName: keyof typeof bookMarkQuery;
   config?: MutationConfig<typeof postBookMark>;

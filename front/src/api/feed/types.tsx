@@ -64,14 +64,21 @@ export type FeedList = {
   posts: FeedDetail[];
 };
 
-export type BookMarkDTO = {
+export type BookMarkAndLikeDTO = {
   postId: number;
 };
 
-export type BookMark = {
-  bookMarkId: number;
+interface BookMarkAndLike {
   userId: number;
   postId: number;
   createAt: string;
   updateAt: string;
-};
+}
+
+export interface BookMark extends BookMarkAndLike {
+  bookMarkId: number;
+}
+
+export interface Like extends BookMarkAndLike {
+  postLikedId: number;
+}

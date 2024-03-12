@@ -1,15 +1,15 @@
 import { axios } from "@/lib/axios";
-import { BookMarkDTO, BookMark } from "./types";
+import { BookMarkAndLikeDTO, BookMark } from "./types";
 
 export const postBookMark = async ({
   postId,
-}: BookMarkDTO): Promise<BookMark> => {
+}: BookMarkAndLikeDTO): Promise<BookMark> => {
   return await axios.post(`/post/mark`, { postId });
 };
 
 export const deleteBookMark = async ({
   postId,
-}: BookMarkDTO): Promise<BookMark> => {
+}: BookMarkAndLikeDTO): Promise<BookMark> => {
   return await axios.delete(`/post/mark`, { data: { postId } });
 };
 
