@@ -25,7 +25,7 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
           wordId={wordId}
           bookMarked={bookMarked}
         />
-        <LikeButton isLiked={liked} />
+        <LikeButton postId={postId} wordId={wordId} liked={liked} />
         <CommentButton />
       </div>
     </div>
