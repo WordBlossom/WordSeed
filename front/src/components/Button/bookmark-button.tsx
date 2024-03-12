@@ -6,17 +6,20 @@ import { useListBookMark } from "@/api/feed/post-bookmark";
 type BookmarkButtonProps = {
   postId: FeedDetail["postId"];
   wordId: FeedDetail["wordId"];
+  postType: FeedDetail["postType"];
   bookMarked: FeedDetail["bookMarked"];
 };
 
 export default function BookmarkButton({
   postId,
   wordId,
+  postType,
   bookMarked,
 }: BookmarkButtonProps) {
   const bookMarkMutation = useListBookMark({
     postId: postId,
     wordId: wordId,
+    postType: postType,
     queryName: bookMarked ? "deleteBookMark" : "postBookMark",
   });
 

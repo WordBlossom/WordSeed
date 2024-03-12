@@ -32,6 +32,7 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
         <BookmarkButton
           postId={postId}
           wordId={wordId}
+          postType={postType}
           bookMarked={bookMarked}
         />
         <LikeButton
