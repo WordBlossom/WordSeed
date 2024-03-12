@@ -10,7 +10,16 @@ type FeedInterfaceProps = {
 };
 
 export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
-  const { userName, userId, postId, wordId, subscribed, bookMarked, liked } = {
+  const {
+    userName,
+    userId,
+    postId,
+    wordId,
+    postType,
+    subscribed,
+    bookMarked,
+    liked,
+  } = {
     ...feedData,
   };
   return (
@@ -25,7 +34,12 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
           wordId={wordId}
           bookMarked={bookMarked}
         />
-        <LikeButton postId={postId} wordId={wordId} liked={liked} />
+        <LikeButton
+          postId={postId}
+          wordId={wordId}
+          postType={postType}
+          liked={liked}
+        />
         <CommentButton />
       </div>
     </div>

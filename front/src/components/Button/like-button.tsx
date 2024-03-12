@@ -6,13 +6,20 @@ import { useListLike } from "@/api/feed/post-like";
 type LikeButtonProps = {
   postId: FeedDetail["postId"];
   wordId: FeedDetail["wordId"];
+  postType: FeedDetail["postType"];
   liked: FeedDetail["liked"];
 };
 
-export default function LikeButton({ postId, wordId, liked }: LikeButtonProps) {
+export default function LikeButton({
+  postId,
+  wordId,
+  postType,
+  liked,
+}: LikeButtonProps) {
   const likeMutation = useListLike({
     postId: postId,
     wordId: wordId,
+    postType: postType,
     queryName: liked ? "deleteLike" : "postLike",
   });
   const onClick = () => {

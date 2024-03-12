@@ -1,14 +1,17 @@
 import { useMutation, InfiniteData } from "@tanstack/react-query";
 import { getQueryClient, MutationConfig } from "@/lib/react-query";
 import { postLike, likeQuery } from "./like-api";
-import useSearchFilterStateStore from "@/stores/search-filter";
-import { DEFAULT_POST_TYPE } from ".";
-import { BookMarkAndLikeDTO } from "./types";
-import { FeedDetail, FeedList } from "./types";
+import {
+  BookMarkAndLikeDTO,
+  FeedDetail,
+  FeedList,
+  InfiniteQueriesUpdater,
+} from "./types";
 
 type useListLikeOptions = {
   postId: BookMarkAndLikeDTO["postId"];
   wordId: FeedDetail["wordId"];
+  postType: FeedDetail["postType"];
   queryName: keyof typeof likeQuery;
   config?: MutationConfig<typeof postLike>;
 };
@@ -16,22 +19,42 @@ type useListLikeOptions = {
 export const useListLike = ({
   postId,
   wordId,
+  postType,
   queryName,
   config,
 }: useListLikeOptions) => {
   const queryClient = getQueryClient();
   const { queryKey, queryFn } = likeQuery[queryName](postId);
-  const { selectedType, isLatest } = useSearchFilterStateStore();
-  const postType = selectedType ? selectedType : DEFAULT_POST_TYPE;
 
-  const feedListQueryKey = [
+  const broadQueryKey = [
     "wordFeedList",
     {
       wordId: String(wordId),
-      postType: postType,
-      sort: isLatest ? "DATE_DSC" : "LIKE_DSC",
+    },
+    {
+      [postType]: true,
     },
   ];
+
+  const feedListQueryKey = { queryKey: broadQueryKey };
+
+  const newData: InfiniteQueriesUpdater<FeedList> = (previousEachData) => {
+    const updatedPages = previousEachData?.pages.map((page) => {
+      const updatedPosts = page.posts.map((post) => {
+        if (post.postId !== postId) return post;
+        return {
+          ...post,
+          liked: !post.liked,
+        };
+      });
+      return { ...page, posts: updatedPosts };
+    });
+    const updatedFeedList = {
+      pages: updatedPages,
+      pageParams: previousEachData?.pageParams,
+    } as InfiniteData<FeedList>;
+    return updatedFeedList;
+  };
 
   return useMutation({
     ...config,
@@ -39,33 +62,22 @@ export const useListLike = ({
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
 
-      const previousFeedList = queryClient.getQueryData(
-        feedListQueryKey
-      ) as InfiniteData<FeedList>;
+      const previousFeedLists =
+        queryClient.getQueriesData<InfiniteData<FeedList>>(feedListQueryKey);
 
-      const updatedPages = previousFeedList.pages.map((page) => {
-        const updatedPosts = page.posts.map((post) => {
-          if (post.postId !== postId) return post;
-          return {
-            ...post,
-            liked: !post.liked,
-          };
-        });
-        return { ...page, posts: updatedPosts };
-      });
+      queryClient.setQueriesData<InfiniteData<FeedList>>(
+        feedListQueryKey,
+        newData
+      );
 
-      const updatedFeedList = {
-        pages: updatedPages,
-        pageParams: previousFeedList.pageParams,
-      } as InfiniteData<FeedList>;
-
-      queryClient.setQueryData(feedListQueryKey, updatedFeedList);
-
-      return { previousFeedList };
+      return { previousFeedLists };
     },
 
     onError: (error, newData, context) => {
-      queryClient.setQueryData(feedListQueryKey, context?.previousFeedList);
+      context?.previousFeedLists.forEach((oldFeedList) => {
+        const queryKey = oldFeedList[0];
+        queryClient.setQueryData(queryKey, oldFeedList);
+      });
     },
 
     onSettled: () => {

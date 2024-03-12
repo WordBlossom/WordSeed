@@ -7,6 +7,7 @@ import {
   FeedType,
   FeedListQueryType,
 } from "./types";
+import { DEFAULT_POST_TYPE } from "./get-feed-list";
 
 export async function getWordFeedList(
   params: WordFeedListDTO
@@ -30,11 +31,23 @@ export async function getUserFeedList(
   return axios.get(`/post/list/user`, { params });
 }
 
+// getQueriesData를 사용할 때, queryKey에 type을 개별 string으로만 넣으면 원하는 쿼리에 접근하지 못함
+// Object로 넣으면 접근 가능
+const postType = (params: WordFeedListDTO) => {
+  const types: { [key: string]: boolean } = {};
+  params.postType.split(",").forEach((type) => (types[type] = true));
+  return types;
+};
+
 export const feedListQuery: {
   [K in FeedType]: () => FeedListQueryType<K>;
 } = {
   word: () => ({
-    queryKey: (params: WordFeedListDTO) => ["wordFeedList", params],
+    queryKey: (params: WordFeedListDTO) => [
+      "wordFeedList",
+      params,
+      postType(params),
+    ],
     queryFn: (params: WordFeedListDTO) => getWordFeedList(params),
   }),
   my: () => ({

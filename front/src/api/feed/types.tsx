@@ -1,3 +1,13 @@
+import { Updater, InfiniteData } from "@tanstack/react-query";
+import { DEFAULT_POST_TYPE } from "./get-feed-list";
+
+export type PostType =
+  | "TEXT"
+  | "PAINT"
+  | "MUSIC"
+  | "VIDEO"
+  | typeof DEFAULT_POST_TYPE;
+
 export type FeedType = "word" | "my" | "bookmark" | "user";
 
 export enum FeedTypeEnum {
@@ -20,12 +30,12 @@ export type QueryFnType<T extends FeedType> = (
 ) => Promise<FeedList>;
 
 export type FeedListQueryType<T extends FeedType> = {
-  queryKey: (params: ParamsByType<T>) => (string | ParamsByType<T>)[];
+  queryKey: (params: ParamsByType<T>) => (string | ParamsByType<T> | Object)[];
   queryFn: QueryFnType<T>;
 };
 
 export interface FeedListDTO {
-  postType: string;
+  postType: PostType;
   sort: "DATE_ASC" | "DATE_DSC" | "LIKE_ASC" | "LIKE_DSC";
   page?: number;
   size?: number;
@@ -82,3 +92,8 @@ export interface BookMark extends BookMarkAndLike {
 export interface Like extends BookMarkAndLike {
   postLikedId: number;
 }
+
+export type InfiniteQueriesUpdater<Data> = Updater<
+  InfiniteData<Data, unknown> | undefined,
+  InfiniteData<Data, unknown> | undefined
+>;

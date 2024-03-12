@@ -55,7 +55,7 @@ export type InfiniteQueryConfig<QueryFnType extends (...args: any) => any> =
       AxiosError,
       ExtractFnReturnType<QueryFnType>,
       ExtractFnReturnType<QueryFnType>,
-      Array<string | Parameters<QueryFnType>[0]>,
+      Array<string | Object | Parameters<QueryFnType>[0]>,
       number
     >,
     "queryKey" | "getNextPageParam" | "initialPageParam"
