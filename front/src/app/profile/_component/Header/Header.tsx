@@ -53,7 +53,7 @@ export default function Header({ userId }: { userId: number }) {
             >
               <div>
                 <p>{formatNumber(data.sendCnt)}</p>
-                <p>관심 작가</p>
+                <p>관심작가</p>
               </div>
               <div>
                 <p>{formatNumber(data.recvCnt)}</p>
