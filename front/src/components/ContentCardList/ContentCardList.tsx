@@ -4,22 +4,15 @@ import { ContentCard } from "..";
 import styles from "./ContentCardList.module.scss";
 import { FeedListDTO, FeedTypeEnum, UserFeedListDTO } from "@/api/feed/types";
 import profileToggleStore from "@/stores/profile-toggle";
-import { useFeedList } from "@/api/feed";
+import { DEFAULT_POST_TYPE, useFeedList } from "@/api/feed";
 
 export default function ContentCardList({ userId }: { userId: number }) {
   const myId = 4;
   const isMe = myId === userId;
 
   const { selected } = profileToggleStore();
-  const { text, paint, video, music, isLatest } = useSearchFilterStateStore();
-  let postType = [
-    text ? "TEXT" : null,
-    paint ? "PAINT" : null,
-    video ? "VIDEO" : null,
-    music ? "MUSIC" : null,
-  ]
-    .filter((type) => type)
-    .join(",");
+  const { selectedType, isLatest } = useSearchFilterStateStore();
+  const postType = selectedType ? selectedType : DEFAULT_POST_TYPE;
 
   const feedListParams: FeedListDTO = {
     postType: postType,
