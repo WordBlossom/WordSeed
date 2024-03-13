@@ -18,7 +18,11 @@ export default function AuthorList({ userId }: { userId: number }) {
   return (
     <div className={styles.wrapper}>
       {data && (
-        <ArtistCardList data={data?.pages} fetchNextPage={fetchNextPage} />
+        <ArtistCardList
+          data={data?.pages}
+          fetchNextPage={fetchNextPage}
+          type="follow"
+        />
       )}
     </div>
   );

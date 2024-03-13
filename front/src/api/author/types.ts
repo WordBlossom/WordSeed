@@ -1,3 +1,5 @@
+import { Updater, InfiniteData } from "@tanstack/react-query";
+
 export type AuthorListDTO = {
   query: string;
   page?: number;
@@ -25,3 +27,8 @@ export type AuthorList = {
 };
 
 export type QueryFnType<T> = (params: T) => Promise<AuthorList>;
+
+export type InfiniteQueriesUpdater<Data> = Updater<
+  InfiniteData<Data, unknown> | undefined,
+  InfiniteData<Data, unknown> | undefined
+>;
