@@ -1,5 +1,5 @@
 import { axios } from "@/lib/axios";
-import { UserDTO } from "../user/types";
+import { UserDTO } from "@/api/user/types";
 
 export const postFollow = async ({ userId }: UserDTO) => {
   return await axios.post("/user/follow", {

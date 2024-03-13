@@ -1,12 +1,12 @@
 import { useMutation, InfiniteData } from "@tanstack/react-query";
 import { getQueryClient, MutationConfig } from "@/lib/react-query";
-import { postLike, likeQuery } from "./like-api";
+import { postLike, likeQuery } from "@/api/feed/apis/like-api";
 import {
   BookMarkAndLikeDTO,
   FeedDetail,
   FeedList,
   InfiniteQueriesUpdater,
-} from "./types";
+} from "../types";
 
 type useListLikeOptions = {
   postId: BookMarkAndLikeDTO["postId"];

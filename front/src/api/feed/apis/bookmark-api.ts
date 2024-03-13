@@ -1,5 +1,5 @@
 import { axios } from "@/lib/axios";
-import { BookMarkAndLikeDTO, BookMark } from "./types";
+import { BookMarkAndLikeDTO, BookMark } from "@/api/feed/types";
 
 export const postBookMark = async ({
   postId,

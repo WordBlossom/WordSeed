@@ -1,7 +1,7 @@
 import Button from "./Button";
 import Icon from "@/components/Icon/Icon";
 import { FeedDetail } from "@/api/feed/types";
-import { useFeedListFollow } from "@/api/feed/post-follow";
+import { useFeedListFollow } from "@/api/feed/hooks/post-follow";
 
 type FollowButtonProps = {
   userId: FeedDetail["userId"];

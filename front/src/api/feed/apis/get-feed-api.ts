@@ -6,8 +6,7 @@ import {
   UserFeedListDTO,
   FeedType,
   FeedListQueryType,
-} from "./types";
-import { DEFAULT_POST_TYPE } from "./get-feed-list";
+} from "@/api/feed/types";
 
 export async function getWordFeedList(
   params: WordFeedListDTO

@@ -1,7 +1,7 @@
 import { useMutation, InfiniteData } from "@tanstack/react-query";
 import { getQueryClient, MutationConfig } from "@/lib/react-query";
-import { postFollow, followQuery } from "./follow-api";
-import { FollowDTO, FeedList, InfiniteQueriesUpdater } from "./types";
+import { postFollow, followQuery } from "@/api/feed/apis/follow-api";
+import { FollowDTO, FeedList, InfiniteQueriesUpdater } from "@/api/feed/types";
 
 type useFeedListFollowOptions = {
   userId: FollowDTO["userId"];
