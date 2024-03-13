@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { userInfoQuery } from "./get-user-api";
-import { UserInfo } from "./types";
-import { Author } from "../author/types";
+import { userInfoQuery } from "../";
+import { UserInfo } from "../types";
+import { Author } from "../../author/types";
 import useSearchPageStateStore from "@/stores/search-page";
 
 export const useFollow = (

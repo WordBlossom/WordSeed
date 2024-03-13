@@ -3,7 +3,7 @@ import { Icon } from "@/components";
 import Link from "next/link";
 import { formatNumber } from "@/utils/numberUtils";
 import { useFollow } from "@/api/user";
-import { userInfoQuery } from "@/api/user/get-user-api";
+import { userInfoQuery } from "@/api/user";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Header({ userId }: { userId: number }) {

@@ -4,7 +4,7 @@ import { Icon } from "..";
 import styles from "./ArtistCard.module.scss";
 import Link from "next/link";
 import { formatNumber } from "@/utils/numberUtils";
-import { useListFollow } from "@/api/user/get-follow";
+import { useListFollow } from "@/api/user";
 import React from "react";
 
 type ArtistCardProps = {
