@@ -4,8 +4,9 @@ export type AuthorListDTO = {
   size?: number;
 };
 
-export type FollowAuthorDTO = {
+export type FollowAuthorListDTO = {
   userId: number;
+  type: "SEND" | "RECV";
   page?: number;
   size?: number;
 };

@@ -1,4 +1,4 @@
-import UserCategory from "../_component/UserCategory/UserCategory";
+import { AuthorCategory, AuthorList } from "../_component";
 
 const fakeDatas = [
   {
@@ -79,8 +79,8 @@ export default function Follow({ params }: { params: { user_id: string } }) {
   const userId = Number(params.user_id);
   return (
     <>
-      <UserCategory />
-      {/* <ArtistCardList datas={fakeDatas} /> */}
+      <AuthorCategory />
+      <AuthorList userId={userId} />
     </>
   );
 }
