@@ -22,11 +22,16 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
   } = {
     ...feedData,
   };
+
+  // 임시로 내 userId 설정, follow 버튼 렌더링 유무
+  const myId = 4;
   return (
     <div className={styles["interface-bottom-container"]}>
       <div className={styles["artist-wrapper"]}>
         <span className={styles["artist-name"]}>{userName}</span>
-        <FollowButton isFollow={subscribed} />
+        {myId !== userId && (
+          <FollowButton userId={userId} subscribed={subscribed} />
+        )}
       </div>
       <div className={styles["button-wrapper"]}>
         <BookmarkButton

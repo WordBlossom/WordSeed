@@ -78,6 +78,10 @@ export type BookMarkAndLikeDTO = {
   postId: number;
 };
 
+export type FollowDTO = {
+  userId: number;
+};
+
 interface BookMarkAndLike {
   userId: number;
   postId: number;

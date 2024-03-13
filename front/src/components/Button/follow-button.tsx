@@ -1,18 +1,29 @@
 import Button from "./Button";
 import Icon from "@/components/Icon/Icon";
+import { FeedDetail } from "@/api/feed/types";
+import { useFeedListFollow } from "@/api/feed/post-follow";
 
 type FollowButtonProps = {
-  isFollow: boolean;
+  userId: FeedDetail["userId"];
+  subscribed: FeedDetail["subscribed"];
 };
 
-export default function FollowButton({ isFollow }: FollowButtonProps) {
+export default function FollowButton({
+  userId,
+  subscribed,
+}: FollowButtonProps) {
+  const followMutation = useFeedListFollow({
+    userId: userId,
+    queryName: subscribed ? "deleteFollow" : "postFollow",
+  });
+
   const onClick = () => {
-    // follow 통신
+    followMutation.mutate();
   };
 
   return (
     <Button
-      content={<Icon iconName={isFollow ? "afterFollow" : "beforeFollow"} />}
+      content={<Icon iconName={subscribed ? "afterFollow" : "beforeFollow"} />}
       onClick={onClick}
     />
   );
