@@ -31,7 +31,6 @@ export default function SwiperComponent({
 
   useEffect(() => {
     if (swiper && !swiper.destroyed && activeContentRef.current) {
-      console.log(swiper);
       if (swiper.previousIndex !== undefined) {
         const prevIndex = swiper.previousIndex;
         const prevSlide = swiper.slides[prevIndex];
