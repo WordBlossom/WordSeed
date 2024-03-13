@@ -3,8 +3,6 @@ import {
   DeleteUserInfo,
   EditMyInfo,
   EditMyInfoParams,
-  FollowerList,
-  FollowerListDTO,
   MyInfo,
   UserDTO,
   UserInfo,
@@ -42,12 +40,6 @@ export const getUnFollowUser = ({ userId }: UserDTO) => {
   });
 };
 
-export const getFollowerList = async (
-  params: FollowerListDTO
-): Promise<FollowerList> => {
-  return await axios.get("/user/follow", { params });
-};
-
 export const userInfoQuery = {
   myInfo: () => ({
     queryKey: ["myInfo"],
@@ -72,9 +64,5 @@ export const userInfoQuery = {
   unFollowUser: (userId: number) => ({
     queryKey: ["unFollow", { userId }],
     queryFn: () => getUnFollowUser({ userId }),
-  }),
-  followerList: () => ({
-    queryKey: (params: FollowerListDTO) => ["followerList", params],
-    queryFn: (params: FollowerListDTO) => getFollowerList(params),
   }),
 };

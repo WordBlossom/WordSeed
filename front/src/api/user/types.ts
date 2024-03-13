@@ -38,22 +38,3 @@ export type UserInfo = {
   sendCnt: number;
   subscribed: boolean;
 };
-
-export type FollowerListDTO = {
-  userId: number;
-  page?: number;
-  size?: number;
-};
-
-export type Follower = {
-  userId: number;
-  userName: string;
-  sendCnt: number;
-  recvCnt: number;
-  userDecp: string;
-  subscribed: boolean;
-};
-
-export type FollowerList = {
-  users: Follower[];
-};
