@@ -4,8 +4,8 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import { InfiniteQueryConfig } from "@/lib/react-query";
-import { FeedType, ParamsByType, QueryFnType } from "./types";
-import { feedListQuery } from "./get-feed-api";
+import { FeedType, ParamsByType, QueryFnType } from "@/api/feed/types";
+import { feedListQuery } from "@/api/feed/apis/get-feed-api";
 
 const REQUEST_SIZE = 5;
 export const DEFAULT_POST_TYPE = "TEXT,PAINT,VIDEO,MUSIC";

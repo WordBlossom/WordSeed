@@ -1,7 +1,7 @@
 import Button from "./Button";
 import Icon from "@/components/Icon/Icon";
 import { FeedDetail } from "@/api/feed/types";
-import { useListLike } from "@/api/feed/post-like";
+import { useListLike } from "@/api/feed/hooks/post-like";
 
 type LikeButtonProps = {
   postId: FeedDetail["postId"];

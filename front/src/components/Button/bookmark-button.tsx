@@ -1,7 +1,7 @@
 import Button from "./Button";
 import Icon from "@/components/Icon/Icon";
 import { FeedDetail } from "@/api/feed/types";
-import { useListBookMark } from "@/api/feed/post-bookmark";
+import { useListBookMark } from "@/api/feed/hooks/post-bookmark";
 
 type BookmarkButtonProps = {
   postId: FeedDetail["postId"];

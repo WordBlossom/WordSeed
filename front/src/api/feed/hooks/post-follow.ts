@@ -1,50 +1,32 @@
 import { useMutation, InfiniteData } from "@tanstack/react-query";
 import { getQueryClient, MutationConfig } from "@/lib/react-query";
-import { postLike, likeQuery } from "./like-api";
-import {
-  BookMarkAndLikeDTO,
-  FeedDetail,
-  FeedList,
-  InfiniteQueriesUpdater,
-} from "./types";
+import { postFollow, followQuery } from "@/api/feed/apis/follow-api";
+import { FollowDTO, FeedList, InfiniteQueriesUpdater } from "@/api/feed/types";
 
-type useListLikeOptions = {
-  postId: BookMarkAndLikeDTO["postId"];
-  wordId: FeedDetail["wordId"];
-  postType: FeedDetail["postType"];
-  queryName: keyof typeof likeQuery;
-  config?: MutationConfig<typeof postLike>;
+type useFeedListFollowOptions = {
+  userId: FollowDTO["userId"];
+  queryName: keyof typeof followQuery;
+  config?: MutationConfig<typeof postFollow>;
 };
 
-export const useListLike = ({
-  postId,
-  wordId,
-  postType,
+export const useFeedListFollow = ({
+  userId,
   queryName,
   config,
-}: useListLikeOptions) => {
+}: useFeedListFollowOptions) => {
   const queryClient = getQueryClient();
-  const { queryKey, queryFn } = likeQuery[queryName](postId);
+  const { queryKey, queryFn } = followQuery[queryName](userId);
 
-  const broadQueryKey = [
-    "wordFeedList",
-    {
-      wordId: String(wordId),
-    },
-    {
-      [postType]: true,
-    },
-  ];
-
+  const broadQueryKey = ["wordFeedList"];
   const feedListQueryKey = { queryKey: broadQueryKey };
 
   const newData: InfiniteQueriesUpdater<FeedList> = (previousEachData) => {
     const updatedPages = previousEachData?.pages.map((page) => {
       const updatedPosts = page.posts.map((post) => {
-        if (post.postId !== postId) return post;
+        if (post.userId !== userId) return post;
         return {
           ...post,
-          liked: !post.liked,
+          subscribed: !post.subscribed,
         };
       });
       return { ...page, posts: updatedPosts };

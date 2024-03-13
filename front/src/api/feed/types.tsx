@@ -1,5 +1,5 @@
 import { Updater, InfiniteData } from "@tanstack/react-query";
-import { DEFAULT_POST_TYPE } from "./get-feed-list";
+import { DEFAULT_POST_TYPE } from "./hooks/get-feed-list";
 
 export type PostType =
   | "TEXT"
@@ -76,6 +76,10 @@ export type FeedList = {
 
 export type BookMarkAndLikeDTO = {
   postId: number;
+};
+
+export type FollowDTO = {
+  userId: number;
 };
 
 interface BookMarkAndLike {

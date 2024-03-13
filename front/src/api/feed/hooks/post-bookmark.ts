@@ -1,12 +1,12 @@
 import { useMutation, InfiniteData } from "@tanstack/react-query";
 import { getQueryClient, MutationConfig } from "@/lib/react-query";
-import { postBookMark, bookMarkQuery } from "./bookmark-api";
+import { postBookMark, bookMarkQuery } from "@/api/feed/apis/bookmark-api";
 import {
   BookMarkAndLikeDTO,
   FeedDetail,
   FeedList,
   InfiniteQueriesUpdater,
-} from "./types";
+} from "@/api/feed/types";
 
 type useListBookMarkOptions = {
   postId: BookMarkAndLikeDTO["postId"];
@@ -62,7 +62,6 @@ export const useListBookMark = ({
 
       const previousFeedLists =
         queryClient.getQueriesData<InfiniteData<FeedList>>(feedListQueryKey);
-      console.log(previousFeedLists);
 
       queryClient.setQueriesData<InfiniteData<FeedList>>(
         feedListQueryKey,
