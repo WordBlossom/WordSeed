@@ -455,6 +455,7 @@ public class CustomPostRepoImpl implements CustomPostRepo {
                 .select(Projections.constructor(ReadCommentOutDTO.class,
                         qComment.commentId,
                         qComment.user.userId,
+                        qComment.user.userName,
                         qComment.post.postId,
                         qComment.content,
                         qComment.createdAt))

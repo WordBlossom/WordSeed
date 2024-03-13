@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class ReadCommentOutDTO {
     private Long commentId;
     private Long userId;
+    private String userName;
     private Long postId;
     private String content;
     LocalDateTime createdAt;
