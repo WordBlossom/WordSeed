@@ -1,14 +1,22 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  dehydrate,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
 import { FollowAuthorListDTO, QueryFnType } from "../types";
 import { InfiniteQueryConfig } from "@/lib/react-query";
 import { authorQuery } from "..";
 
 const REQUEST_SIZE = 10;
 
-type UseAuthorListOptions = {
+interface UseAuthorListOptions {
   params: FollowAuthorListDTO;
   config?: InfiniteQueryConfig<QueryFnType<FollowAuthorListDTO>>;
-};
+}
+
+interface PrefetchUseAuthorListOptions extends UseAuthorListOptions {
+  queryClient: QueryClient;
+}
 
 export function useFollowAuthorList({ params, config }: UseAuthorListOptions) {
   const { queryKey, queryFn } = authorQuery.followAuthorList();
@@ -29,4 +37,27 @@ export function useFollowAuthorList({ params, config }: UseAuthorListOptions) {
       pages: data.pages.flatMap((page) => page.users),
     }),
   });
+}
+
+export async function usePrefetchFollowAuthorList({
+  queryClient,
+  params,
+  config,
+}: PrefetchUseAuthorListOptions) {
+  const { queryKey, queryFn } = authorQuery.followAuthorList();
+
+  await queryClient.prefetchInfiniteQuery({
+    ...config,
+    queryKey: queryKey(params),
+    queryFn: ({ pageParam }) =>
+      queryFn({ ...params, size: 5, page: pageParam }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      const morePagesExist = lastPage?.users?.length === 5;
+      if (!morePagesExist) return undefined;
+      return allPages.length + 1;
+    },
+    pages: 1,
+  });
+  return dehydrate(queryClient);
 }

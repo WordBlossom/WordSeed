@@ -3,4 +3,8 @@
   flex-grow: 1;
   overflow: auto;
   height: calc(100dvh - 10.6rem);
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -1,5 +1,10 @@
 import { Updater, InfiniteData } from "@tanstack/react-query";
 
+export enum FollowType {
+  Send = "SEND",
+  Recv = "RECV",
+}
+
 export type AuthorListDTO = {
   query: string;
   page?: number;
