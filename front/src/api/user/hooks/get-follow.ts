@@ -1,7 +1,11 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { userInfoQuery } from "./get-user-api";
-import { UserInfo } from "./types";
-import { Author } from "../author/types";
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { userInfoQuery } from "../";
+import { UserInfo } from "../types";
+import { Author, AuthorList, InfiniteQueriesUpdater } from "../../author/types";
 import useSearchPageStateStore from "@/stores/search-page";
 
 export const useFollow = (
@@ -51,59 +55,62 @@ export const useFollow = (
 
 export const useListFollow = (
   userId: number,
-  queryName: "followUser" | "unFollowUser"
+  queryName: "followUser" | "unFollowUser",
+  type: "search" | "follow"
 ) => {
   const queryClient = useQueryClient();
   const { queryKey, queryFn } = userInfoQuery[queryName](userId);
   const addFollow = queryName === "followUser" ? 1 : -1;
   const searchKeyword = useSearchPageStateStore().searchKeyword;
-  const AuthorListQueryKey = ["AuthorList", { query: searchKeyword }];
+
+  const AuthorListQueryKey = {
+    queryKey:
+      type === "search"
+        ? ["AuthorList", { query: searchKeyword }]
+        : ["FollowAuthorList"],
+  };
+
   const myId = 4;
+
+  const newData: InfiniteQueriesUpdater<AuthorList> = (previousEachData) => {
+    const updatedPages = previousEachData?.pages.map((page) => {
+      const updatedUsers = page.users.map((user) => {
+        if (user.userId !== userId) return user;
+        return {
+          ...user,
+          subscribed: !user.subscribed,
+          recvCnt: user.recvCnt + addFollow,
+        };
+      });
+      return { ...page, users: updatedUsers };
+    });
+    const updatedFeedList = {
+      pages: updatedPages,
+      pageParams: previousEachData?.pageParams,
+    } as InfiniteData<AuthorList>;
+    return updatedFeedList;
+  };
 
   return useMutation({
     mutationFn: queryFn,
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
 
-      const previousUserInfo = queryClient.getQueryData(
-        AuthorListQueryKey
-      ) as any;
+      const previousUserInfos =
+        queryClient.getQueriesData<InfiniteData<AuthorList>>(
+          AuthorListQueryKey
+        );
 
-      const updatedPages = previousUserInfo.pages.map((page: any) => {
-        const updatedUsers = page.users.map((user: Author) => {
-          if (user.userId === userId) {
-            return {
-              ...user,
-              subscribed: !user.subscribed,
-              recvCnt: user.recvCnt + addFollow,
-            };
-          }
+      queryClient.setQueriesData<InfiniteData<AuthorList>>(
+        AuthorListQueryKey,
+        newData
+      );
 
-          if (user.userId === myId) {
-            return {
-              ...user,
-              sendCnt: user.sendCnt + addFollow,
-            };
-          }
-
-          return user;
-        });
-
-        return { ...page, users: updatedUsers };
-      });
-
-      const updatedAuthorList = {
-        pages: updatedPages,
-        pageParams: previousUserInfo.pageParams,
-      };
-
-      queryClient.setQueryData(AuthorListQueryKey, updatedAuthorList);
-
-      return { previousUserInfo };
+      return { previousUserInfos };
     },
 
     onError(error, newData, context: any) {
-      queryClient.setQueryData(AuthorListQueryKey, context.previousUserInfo);
+      queryClient.setQueriesData(AuthorListQueryKey, context.previousUserInfo);
     },
 
     onSettled() {

@@ -1,4 +1,4 @@
-import { ArtistCardList } from "@/components";
+import { AuthorCategory, AuthorList } from "../_component";
 
 const fakeDatas = [
   {
@@ -76,12 +76,11 @@ const fakeDatas = [
 ];
 
 export default function Follow({ params }: { params: { user_id: string } }) {
-  const userId = params.user_id;
+  const userId = Number(params.user_id);
   return (
     <>
-      <h1>Follow</h1>
-      <h2>userId : {userId}</h2>
-      <ArtistCardList datas={fakeDatas} />
+      <AuthorCategory />
+      <AuthorList userId={userId} />
     </>
   );
 }

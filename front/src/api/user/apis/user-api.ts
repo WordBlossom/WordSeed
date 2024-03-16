@@ -6,7 +6,7 @@ import {
   MyInfo,
   UserDTO,
   UserInfo,
-} from "./types";
+} from "../types";
 
 export const getMyInfo = async (): Promise<MyInfo> => {
   return await axios.get("/user");
@@ -32,8 +32,8 @@ export const getFollowUser = async ({ userId }: UserDTO) => {
   });
 };
 
-export const getUnFollowUser = async ({ userId }: UserDTO) => {
-  return await axios.delete("/user/follow", {
+export const getUnFollowUser = ({ userId }: UserDTO) => {
+  return axios.delete("/user/follow", {
     data: {
       userId: userId,
     },
