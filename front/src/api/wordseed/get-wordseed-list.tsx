@@ -1,5 +1,9 @@
 import { axios } from "@/lib/axios";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  dehydrate,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
 import { WordseedListDTO, WordseedList } from "./types";
 import { InfiniteQueryConfig } from "@/lib/react-query";
 
@@ -10,10 +14,14 @@ async function getWordseedList(params: WordseedListDTO): Promise<WordseedList> {
 }
 
 type QueryFnType = typeof getWordseedList;
-type UseWordseedListOptions = {
+interface UseWordseedListOptions {
   params: WordseedListDTO;
   config?: InfiniteQueryConfig<QueryFnType>;
-};
+}
+
+interface PrefetchUseWordseedListOptions extends UseWordseedListOptions {
+  queryClient: QueryClient;
+}
 
 export function useWordseedList({ params, config }: UseWordseedListOptions) {
   return useInfiniteQuery({
@@ -32,4 +40,25 @@ export function useWordseedList({ params, config }: UseWordseedListOptions) {
       pages: data.pages.flatMap((page) => page.words),
     }),
   });
+}
+
+export async function usePrefetchWordseedList({
+  queryClient,
+  params,
+  config,
+}: PrefetchUseWordseedListOptions) {
+  await queryClient.prefetchInfiniteQuery({
+    ...config,
+    queryKey: ["wordseedList", params],
+    queryFn: ({ pageParam }) =>
+      getWordseedList({ ...params, size: REQUEST_SIZE, page: pageParam }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      const morePagesExist = lastPage?.words?.length === REQUEST_SIZE;
+      if (!morePagesExist) return undefined;
+      return allPages.length + 1;
+    },
+    pages: 1,
+  });
+  return dehydrate(queryClient);
 }

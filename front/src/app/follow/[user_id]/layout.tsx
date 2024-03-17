@@ -1,8 +1,4 @@
-import { userInfoQuery } from "@/api/user";
-import { usePrefetchFeedList } from "@/api/feed/";
 import { HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { UserFeedListDTO, FeedTypeEnum } from "@/api/feed/types";
-import { myParams } from "@/constants/feed-default";
 import { usePrefetchFollowAuthorList } from "@/api/author";
 import { FollowType } from "@/api/author/types";
 
