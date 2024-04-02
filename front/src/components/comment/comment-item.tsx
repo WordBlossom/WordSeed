@@ -13,6 +13,9 @@ export default function CommentItem({ comment }: CommentItemProps) {
     // 댓글 삭제 요청
   };
 
+  // 임시 myID
+  const myId = 4;
+
   return (
     <div className={styles["comment-item"]}>
       <div className={styles["comment-content"]}>{comment.content}</div>
@@ -20,7 +23,9 @@ export default function CommentItem({ comment }: CommentItemProps) {
         <Link className={styles["link"]} href={`/profile/${comment.userId}`}>
           - {comment.userName}
         </Link>
-        <Button type="small" content={"삭제"} onClick={handleDeleteClick} />
+        {myId === comment.userId && (
+          <Button type="small" content={"삭제"} onClick={handleDeleteClick} />
+        )}
         {/* <div className={styles["button-wrapper"]}>
         <Button type="small" content={"수정"} onClick={handleModifyClick} />
         </div> */}
