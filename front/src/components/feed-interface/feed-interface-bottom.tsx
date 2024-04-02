@@ -46,7 +46,7 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
           postType={postType}
           liked={liked}
         />
-        <CommentButton />
+        <CommentButton postId={postId} />
       </div>
     </div>
   );

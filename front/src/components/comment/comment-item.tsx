@@ -1,25 +1,31 @@
 import Link from "next/link";
-import styles from "./comment.module.scss";
 import Button from "@/components/Button/Button";
+import { Comment } from "@/api/comment/types";
+import styles from "./comment.module.scss";
 
-export default function CommentItem() {
+type CommentItemProps = {
+  comment: Comment;
+};
+
+export default function CommentItem({ comment }: CommentItemProps) {
   const handleModifyClick = () => {};
   const handleDeleteClick = () => {
     // 댓글 삭제 요청
   };
 
+  // 임시 myID
+  const myId = 4;
+
   return (
     <div className={styles["comment-item"]}>
-      <div className={styles["comment-content"]}>
-        동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화
-        삼천리 화려 강산 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이
-        보전하세 동해물과 백
-      </div>
+      <div className={styles["comment-content"]}>{comment.content}</div>
       <div className={styles["comment-item-bottom"]}>
-        <Link className={styles["link"]} href={"/profile/1"}>
-          - 초아누리
+        <Link className={styles["link"]} href={`/profile/${comment.userId}`}>
+          - {comment.userName}
         </Link>
-        <Button type="small" content={"삭제"} onClick={handleDeleteClick} />
+        {myId === comment.userId && (
+          <Button type="small" content={"삭제"} onClick={handleDeleteClick} />
+        )}
         {/* <div className={styles["button-wrapper"]}>
         <Button type="small" content={"수정"} onClick={handleModifyClick} />
         </div> */}
