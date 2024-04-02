@@ -1,63 +1,19 @@
-import { WordSeedList } from "@/components";
+"use client";
 
-const datas: {
-  date: string;
-  wordSeed: string;
-}[] = [
-  {
-    date: "2024년 2월 9일",
-    wordSeed: "한 걸음",
-  },
-  {
-    date: "2024년 2월 9일",
-    wordSeed: "한 걸음",
-  },
-  {
-    date: "2024년 2월 9일",
-    wordSeed: "한 걸음",
-  },
-  {
-    date: "2024년 2월 9일",
-    wordSeed: "한 걸음",
-  },
-  {
-    date: "2024년 2월 9일",
-    wordSeed: "한 걸음",
-  },
-  {
-    date: "2024년 2월 9일",
-    wordSeed: "한 걸음",
-  },
-  {
-    date: "2024년 2월 9일",
-    wordSeed: "한 걸음",
-  },
-  {
-    date: "2024년 2월 9일",
-    wordSeed: "한 걸음",
-  },
-  {
-    date: "2024년 2월 9일",
-    wordSeed: "한 걸음",
-  },
-  {
-    date: "2024년 2월 9일",
-    wordSeed: "한 걸음",
-  },
-  {
-    date: "2024년 2월 9일",
-    wordSeed: "한 걸음",
-  },
-  {
-    date: "2024년 2월 9일",
-    wordSeed: "한 걸음",
-  },
-];
+import { useWordseedList } from "@/api/wordseed";
+import { WordSeedList } from "@/components";
+import styles from "./wordlist.module.scss";
+
 export default function Wordlist() {
+  const { data, fetchNextPage } = useWordseedList({
+    params: {
+      query: "",
+    },
+  });
+
   return (
-    <>
-      <h1>Wordlist</h1>
-      <WordSeedList datas={datas} />
-    </>
+    <div className={styles.container}>
+      {data && <WordSeedList data={data.pages} fetchNextPage={fetchNextPage} />}
+    </div>
   );
 }

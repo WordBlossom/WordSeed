@@ -19,6 +19,6 @@
   @include font($fs: $body3, $fw: $regular, $fc: $gray, $ff: $noto-sans);
 }
 
-.wordSeed {
+.wordseed {
   @include font($fs: $h3, $fw: $regular, $fc: $black, $ff: $noto-serif);
 }

@@ -60,6 +60,7 @@ export default function SearchList() {
         <ArtistCardList
           data={authorListData?.pages}
           fetchNextPage={authorListFetchNextPage}
+          type="search"
         />
       )}
     </div>

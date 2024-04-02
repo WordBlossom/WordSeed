@@ -9,11 +9,13 @@ import styles from "./ArtistCardList.module.scss";
 type ArtistCardListProps = {
   data: Author[] | undefined;
   fetchNextPage: ArtistCardListFetchNextPage;
+  type: "search" | "follow";
 };
 
 export default function ArtistCardList({
   data,
   fetchNextPage,
+  type,
 }: ArtistCardListProps) {
   const [ref] = useInView({
     onChange: (inView) => {
@@ -32,6 +34,7 @@ export default function ArtistCardList({
             recvCnt={Author.recvCnt}
             sendCnt={Author.sendCnt}
             subscribed={Author.subscribed}
+            type={type}
           />
         </div>
       ))}

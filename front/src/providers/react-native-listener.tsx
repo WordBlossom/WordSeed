@@ -16,13 +16,6 @@ export default function RNListener({ children }: AppProviderProps) {
     const type = data.type;
 
     switch (type) {
-      case "Upload paint":
-        useContentStore.setPaint(data.data);
-        break;
-      case "Upload video":
-        useContentStore.setVideo(data.data);
-        alert(data.data);
-        break;
       case "router":
         router.push(data.path);
         break;

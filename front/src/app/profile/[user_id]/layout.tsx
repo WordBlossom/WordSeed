@@ -1,4 +1,4 @@
-import { userInfoQuery } from "@/api/user/get-user-api";
+import { userInfoQuery } from "@/api/user";
 import { usePrefetchFeedList } from "@/api/feed/";
 import { HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { UserFeedListDTO, FeedTypeEnum } from "@/api/feed/types";
@@ -9,7 +9,7 @@ type ProfileLayoutProps = {
   params: { user_id: number };
 };
 
-export default async function DashboardLayout({
+export default async function ProfileLayout({
   children,
   params,
 }: ProfileLayoutProps) {

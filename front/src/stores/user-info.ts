@@ -1,5 +1,3 @@
-import { userInfoQuery } from "@/api/user";
-import { useQuery } from "@tanstack/react-query";
 import { create } from "zustand";
 
 type UserInfoState = {

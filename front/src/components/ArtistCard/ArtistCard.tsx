@@ -4,7 +4,7 @@ import { Icon } from "..";
 import styles from "./ArtistCard.module.scss";
 import Link from "next/link";
 import { formatNumber } from "@/utils/numberUtils";
-import { useListFollow } from "@/api/user/get-follow";
+import { useListFollow } from "@/api/user";
 import React from "react";
 
 type ArtistCardProps = {
@@ -14,6 +14,7 @@ type ArtistCardProps = {
   recvCnt: number;
   sendCnt: number;
   subscribed: boolean;
+  type: "search" | "follow";
 };
 
 export function ArtistCardMemo({
@@ -23,12 +24,13 @@ export function ArtistCardMemo({
   recvCnt,
   sendCnt,
   subscribed,
+  type,
 }: ArtistCardProps) {
   // 내 아이디
   const myId = 4;
 
-  const followMutation = useListFollow(userId, "followUser");
-  const unFollowMutation = useListFollow(userId, "unFollowUser");
+  const followMutation = useListFollow(userId, "followUser", type);
+  const unFollowMutation = useListFollow(userId, "unFollowUser", type);
 
   return (
     <Link className={styles.container} href={`/profile/${userId}`}>
