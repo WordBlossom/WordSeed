@@ -1,20 +1,27 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, MutableRefObject } from "react";
 import { usePostComment } from "@/api/comment/hook/post-comment";
 import styles from "./comment.module.scss";
 import Button from "@/components/Button/Button";
 
 type CommentInputProps = {
+  commentContainerRef: MutableRefObject<HTMLDivElement | null>;
   commentPostId: number;
 };
 
-export default function CommentInput({ commentPostId }: CommentInputProps) {
+export default function CommentInput({
+  commentContainerRef,
+  commentPostId,
+}: CommentInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [commentText, setCommentText] = useState<string>("");
   const [isTextareaFocused, setIsTextareaFocused] = useState<boolean>(false);
 
-  const postComment = usePostComment({ postId: commentPostId });
+  const postComment = usePostComment({
+    postId: commentPostId,
+    commentContainerRef,
+  });
 
   const handleClickButton = () => {
     if (!isTextareaFocused) return;
