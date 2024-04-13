@@ -1,15 +1,18 @@
 "use client";
 
+import { MutableRefObject } from "react";
 import { useInView } from "react-intersection-observer";
 import { useCommentList } from "@/api/comment/";
 import CommentItem from "./comment-item";
 import styles from "./comment.module.scss";
 
 type CommentContainerProps = {
+  commentContainerRef: MutableRefObject<HTMLDivElement | null>;
   commentPostId: number;
 };
 
 export default function CommentContainer({
+  commentContainerRef,
   commentPostId,
 }: CommentContainerProps) {
   const { status, data, fetchNextPage } = useCommentList({
@@ -30,7 +33,7 @@ export default function CommentContainer({
     <>
       {status === "pending" && "Loading..."}
       {status === "success" && (
-        <div className={styles["comment-container"]}>
+        <div ref={commentContainerRef} className={styles["comment-container"]}>
           {data.pages.map((comment, idx) => (
             <div
               key={comment.commentId}

@@ -14,7 +14,7 @@ type UseCommentListOptions = {
 export function useCommentList({ params, config }: UseCommentListOptions) {
   return useInfiniteQuery({
     ...config,
-    queryKey: ["CommentList", params],
+    queryKey: ["commentList", params],
     queryFn: ({ pageParam }) =>
       getCommentList({ ...params, size: REQUEST_SIZE, page: pageParam }),
     initialPageParam: 1,
