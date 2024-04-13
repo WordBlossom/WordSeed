@@ -16,3 +16,14 @@ export type Comment = {
 export type CommentList = {
   comments: Comment[];
 };
+
+export type PostCommentDTO = {
+  postId: number;
+  content: string;
+};
+
+export type PostComment = Omit<Comment, "userName">;
+
+export type DeleteCommentDTO = {
+  commentId: number;
+};
