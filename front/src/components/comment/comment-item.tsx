@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
-import Button from "@/components/Button/Button";
 import { Comment } from "@/api/comment/types";
+import { useDeleteComment } from "@/api/comment";
+import Button from "@/components/Button/Button";
 import styles from "./comment.module.scss";
 
 type CommentItemProps = {
@@ -8,9 +11,15 @@ type CommentItemProps = {
 };
 
 export default function CommentItem({ comment }: CommentItemProps) {
+  const deleteComment = useDeleteComment({
+    commentId: comment.commentId,
+    postId: comment.postId,
+  });
   const handleModifyClick = () => {};
   const handleDeleteClick = () => {
-    // 댓글 삭제 요청
+    if (confirm("삭제하시겠습니까?")) {
+      deleteComment.mutate();
+    }
   };
 
   // 임시 myID
