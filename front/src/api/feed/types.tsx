@@ -8,7 +8,7 @@ export type PostType =
   | "VIDEO"
   | typeof DEFAULT_POST_TYPE;
 
-export type FeedType = "word" | "my" | "bookmark" | "user";
+export type FeedType = "word" | "my" | "bookmark" | "user" | "follow";
 
 export enum FeedTypeEnum {
   Word = "word",
@@ -18,8 +18,8 @@ export enum FeedTypeEnum {
 }
 
 export type ParamsByType<T extends FeedType> = T extends "word"
-  ? WordFeedListDTO
-  : T extends "my" | "bookmark"
+  ? MainFeedListDTO
+  : T extends "my" | "bookmark" | "follow"
   ? FeedListDTO
   : T extends "user"
   ? UserFeedListDTO
@@ -41,8 +41,8 @@ export interface FeedListDTO {
   size?: number;
 }
 
-export interface WordFeedListDTO extends FeedListDTO {
-  wordId: number;
+export interface MainFeedListDTO extends FeedListDTO {
+  wordId?: number;
 }
 
 export interface UserFeedListDTO extends FeedListDTO {
