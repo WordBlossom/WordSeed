@@ -6,11 +6,13 @@ import { myParams } from "@/constants/feed-default";
 
 type ProfileLayoutProps = {
   children: React.ReactNode;
+  feedDetail: React.ReactNode;
   params: { user_id: number };
 };
 
 export default async function ProfileLayout({
   children,
+  feedDetail,
   params,
 }: ProfileLayoutProps) {
   const queryClient = new QueryClient();
@@ -37,6 +39,7 @@ export default async function ProfileLayout({
   return (
     <HydrationBoundary state={dehydratedQueryClient}>
       {children}
+      {feedDetail}
     </HydrationBoundary>
   );
 }

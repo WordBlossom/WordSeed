@@ -8,18 +8,23 @@ import { FeedDetail } from "@/api/feed/types";
 import styles from "./feed-interface.module.scss";
 
 type FeedInterfaceProps = {
-  activeInterfaceRef: MutableRefObject<HTMLDivElement | null>;
+  activeInterfaceRef?: MutableRefObject<HTMLDivElement | null>;
   feedData: FeedDetail;
+  type?: "detail" | "profile";
 };
-function FeedInterface({ activeInterfaceRef, feedData }: FeedInterfaceProps) {
+function FeedInterface({
+  activeInterfaceRef,
+  feedData,
+  type,
+}: FeedInterfaceProps) {
   const slide = useSwiperSlide();
   return (
     <div
-      ref={slide.isActive ? activeInterfaceRef : null}
+      ref={activeInterfaceRef && slide.isActive ? activeInterfaceRef : null}
       className={styles["feed-interface-container"]}
     >
       <FeedInterfaceTop createdAt={feedData.createdAt} />
-      <FeedInterfaceBottom feedData={feedData} />
+      <FeedInterfaceBottom feedData={feedData} type={type} />
     </div>
   );
 }

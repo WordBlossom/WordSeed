@@ -6,7 +6,14 @@ import {
   UserFeedListDTO,
   FeedType,
   FeedListQueryType,
+  FeedDetail,
 } from "@/api/feed/types";
+
+export async function getFeedDetail(params: {
+  postId: number;
+}): Promise<FeedDetail> {
+  return axios.get(`/post/detail`, { params });
+}
 
 export async function getWordFeedList(
   params: MainFeedListDTO
@@ -50,25 +57,37 @@ export const feedListQuery: {
   word: () => ({
     queryKey: (params: MainFeedListDTO) => [
       "wordFeedList",
-      params,
       postType(params),
+      params,
     ],
     queryFn: (params: MainFeedListDTO) => getWordFeedList(params),
   }),
   follow: () => ({
-    queryKey: (params: FeedListDTO) => ["followFeedList", params],
+    queryKey: (params: FeedListDTO) => [
+      "followFeedList",
+      postType(params),
+      params,
+    ],
     queryFn: (params: FeedListDTO) => getFollowFeedList(params),
   }),
   my: () => ({
-    queryKey: (params: FeedListDTO) => ["myFeedList", params],
+    queryKey: (params: FeedListDTO) => ["myFeedList", postType(params), params],
     queryFn: (params: FeedListDTO) => getMyFeedList(params),
   }),
   bookmark: () => ({
-    queryKey: (params: FeedListDTO) => ["bookmarkFeedList", params],
+    queryKey: (params: FeedListDTO) => [
+      "bookmarkFeedList",
+      postType(params),
+      params,
+    ],
     queryFn: (params: FeedListDTO) => getBookmarkFeedList(params),
   }),
   user: () => ({
-    queryKey: (params: UserFeedListDTO) => ["userFeedList", params],
+    queryKey: (params: UserFeedListDTO) => [
+      "userFeedList",
+      postType(params),
+      params,
+    ],
     queryFn: (params: UserFeedListDTO) => getUserFeedList(params),
   }),
 };

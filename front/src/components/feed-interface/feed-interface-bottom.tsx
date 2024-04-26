@@ -7,9 +7,13 @@ import styles from "./feed-interface.module.scss";
 
 type FeedInterfaceProps = {
   feedData: FeedDetail;
+  type?: "detail" | "profile";
 };
 
-export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
+export default function FeedInterfaceBottom({
+  feedData,
+  type,
+}: FeedInterfaceProps) {
   const {
     userName,
     userId,
@@ -30,7 +34,12 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
       <div className={styles["artist-wrapper"]}>
         <span className={styles["artist-name"]}>{userName}</span>
         {myId !== userId && (
-          <FollowButton userId={userId} subscribed={subscribed} />
+          <FollowButton
+            userId={userId}
+            subscribed={subscribed}
+            postId={postId}
+            type={type}
+          />
         )}
       </div>
       <div className={styles["button-wrapper"]}>
@@ -39,12 +48,14 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
           wordId={wordId}
           postType={postType}
           bookMarked={bookMarked}
+          type={type}
         />
         <LikeButton
           postId={postId}
           wordId={wordId}
           postType={postType}
           liked={liked}
+          type={type}
         />
         <CommentButton postId={postId} />
       </div>

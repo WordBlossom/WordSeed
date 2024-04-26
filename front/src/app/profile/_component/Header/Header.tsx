@@ -21,7 +21,7 @@ export default function Header({ userId }: { userId: number }) {
         <header className={styles.container}>
           <div className={styles["top-section"]}>
             <div className={styles["top-left-section"]}>
-              <p className={styles.nickname}>{data.userName}</p>
+              <h1 className={styles.nickname}>{data.userName}</h1>
               {/* 아직 세팅에서 내정보수정페이지 안만들어 져서 추후 수정해야됨 */}
               {myId === userId ? (
                 <Link className={styles.link} href="/settings">
@@ -63,7 +63,7 @@ export default function Header({ userId }: { userId: number }) {
           </div>
           <div className={styles["bottom-section"]}>
             <div>
-              <p className={styles["description-name"]}>소개</p>
+              <h2 className={styles["description-name"]}>소개</h2>
               <p className={styles.description}>{data.userDecp}</p>
             </div>
           </div>

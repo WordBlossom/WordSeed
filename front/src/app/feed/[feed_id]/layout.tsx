@@ -3,22 +3,22 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { getFeedDetail } from "@/api/feed/";
+import { getFeedDetail } from "@/api/feed/apis/get-feed-api";
 
-type FeedLayoutProps = {
+type FeedDetailLayoutProps = {
   children: React.ReactNode;
   params: { feed_id: number };
 };
 
-export default async function FeedLayout({
+export default async function FeedDetailLayout({
   children,
   params,
-}: FeedLayoutProps) {
-  const feedId = params.feed_id;
+}: FeedDetailLayoutProps) {
+  const feedId = Number(params.feed_id);
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["feedDetail", feedId],
-    queryFn: () => getFeedDetail(feedId),
+    queryFn: () => getFeedDetail({ postId: feedId }),
   });
 
   return (

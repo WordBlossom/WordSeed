@@ -8,6 +8,7 @@ type BookmarkButtonProps = {
   wordId: FeedDetail["wordId"];
   postType: FeedDetail["postType"];
   bookMarked: FeedDetail["bookMarked"];
+  type?: "detail" | "profile";
 };
 
 export default function BookmarkButton({
@@ -15,12 +16,14 @@ export default function BookmarkButton({
   wordId,
   postType,
   bookMarked,
+  type,
 }: BookmarkButtonProps) {
   const bookMarkMutation = useListBookMark({
-    postId: postId,
-    wordId: wordId,
-    postType: postType,
+    postId,
+    wordId,
+    postType,
     queryName: bookMarked ? "deleteBookMark" : "postBookMark",
+    type,
   });
 
   const onClick = () => {
