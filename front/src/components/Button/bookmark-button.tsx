@@ -17,9 +17,9 @@ export default function BookmarkButton({
   bookMarked,
 }: BookmarkButtonProps) {
   const bookMarkMutation = useListBookMark({
-    postId: postId,
-    wordId: wordId,
-    postType: postType,
+    postId,
+    wordId,
+    postType,
     queryName: bookMarked ? "deleteBookMark" : "postBookMark",
   });
 

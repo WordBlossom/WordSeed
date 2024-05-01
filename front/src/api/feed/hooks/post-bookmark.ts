@@ -7,6 +7,7 @@ import {
   FeedList,
   InfiniteQueriesUpdater,
 } from "@/api/feed/types";
+import useFeedTypeStateStore from "@/stores/feed-type";
 
 type useListBookMarkOptions = {
   postId: BookMarkAndLikeDTO["postId"];
@@ -25,21 +26,25 @@ export const useListBookMark = ({
 }: useListBookMarkOptions) => {
   const queryClient = getQueryClient();
   const { queryKey, queryFn } = bookMarkQuery[queryName](postId);
+  const { type, detail } = useFeedTypeStateStore();
 
-  const broadQueryKey = [
-    "wordFeedList",
-    {
-      wordId: String(wordId),
-    },
-    { [postType]: true },
-  ];
+  const feedListQueryKey = {
+    queryKey:
+      type === "word"
+        ? [
+            { [postType]: true },
+            {
+              wordId: String(wordId),
+            },
+          ]
+        : [{ [postType]: true }],
+  };
 
-  const feedListQueryKey = { queryKey: broadQueryKey };
-
-  const newData: InfiniteQueriesUpdater<FeedList> = (previousEachData) => {
+  const listNewData: InfiniteQueriesUpdater<FeedList> = (previousEachData) => {
     const updatedPages = previousEachData?.pages.map((page) => {
       const updatedPosts = page.posts.map((post) => {
         if (post.postId !== postId) return post;
+
         return {
           ...post,
           bookMarked: !post.bookMarked,
@@ -60,21 +65,36 @@ export const useListBookMark = ({
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
 
+      if (detail) {
+        const detailQueryKey = ["feedDetail", postId];
+        const previousFeedDetail: any =
+          queryClient.getQueryData(detailQueryKey);
+
+        queryClient.setQueryData(detailQueryKey, {
+          ...previousFeedDetail,
+          bookMarked: !previousFeedDetail.bookMarked,
+        });
+
+        return { previousFeedDetail };
+      }
+
+      await queryClient.cancelQueries({ queryKey });
+
       const previousFeedLists =
         queryClient.getQueriesData<InfiniteData<FeedList>>(feedListQueryKey);
 
       queryClient.setQueriesData<InfiniteData<FeedList>>(
         feedListQueryKey,
-        newData
+        listNewData
       );
 
       return { previousFeedLists };
     },
 
     onError: (error, newData, context) => {
-      context?.previousFeedLists.forEach((oldFeedList) => {
+      context?.previousFeedLists?.forEach((oldFeedList) => {
         const queryKey = oldFeedList[0];
-        queryClient.setQueryData(queryKey, oldFeedList);
+        queryClient.setQueryData(queryKey, oldFeedList[1]);
       });
     },
 

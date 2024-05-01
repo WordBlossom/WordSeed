@@ -30,7 +30,13 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
       <div className={styles["artist-wrapper"]}>
         <span className={styles["artist-name"]}>{userName}</span>
         {myId !== userId && (
-          <FollowButton userId={userId} subscribed={subscribed} />
+          <FollowButton
+            userId={userId}
+            subscribed={subscribed}
+            postId={postId}
+            wordId={wordId}
+            postType={postType}
+          />
         )}
       </div>
       <div className={styles["button-wrapper"]}>

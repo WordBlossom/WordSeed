@@ -1,23 +1,19 @@
 "use client";
 
-import { FeedDetail } from "@/api/feed/types";
+import { FeedDetail, FeedType } from "@/api/feed/types";
 import styles from "./ContentCard.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { useInView } from "react-intersection-observer";
 
-export default function ContentCard({
-  postId,
-  postType,
-  postAlign,
-  word,
-  content,
-  userName,
-  url,
-}: FeedDetail) {
+type ContentCardType = {
+  data: FeedDetail;
+};
+
+export default function ContentCard({ data }: ContentCardType) {
   const contentClassName = `${styles.content} ${
-    styles[postAlign.toLowerCase()]
+    styles[data.postAlign.toLowerCase()]
   }`;
   const videoRef = useRef<HTMLVideoElement>(null);
   const [ref] = useInView({
@@ -33,21 +29,21 @@ export default function ContentCard({
   });
 
   return (
-    <Link className={styles.link} href={`/feed/${postId}`} ref={ref}>
-      {postType === "TEXT" ? (
+    <Link className={styles.link} href={`/feed/${data.postId}`} ref={ref}>
+      {data.postType === "TEXT" ? (
         <main className={styles.container}>
           <div className={styles.wrapper}>
             <div className={styles["text-section"]}>
-              <p className={styles.title}>{word}</p>
-              <p className={contentClassName}>{content}</p>
+              <p className={styles.title}>{data.word}</p>
+              <p className={contentClassName}>{data.content}</p>
             </div>
-            <p className={styles.artist}>{userName}</p>
+            <p className={styles.artist}>{data.userName}</p>
           </div>
         </main>
       ) : (
         <main className={styles.media}>
-          {postType === "PAINT" && <Image src={url} alt="12" fill />}
-          {postType === "VIDEO" && (
+          {data.postType === "PAINT" && <Image src={data.url} alt="12" fill />}
+          {data.postType === "VIDEO" && (
             <video
               ref={videoRef}
               muted
@@ -55,10 +51,10 @@ export default function ContentCard({
               poster="placeholder.png"
               preload={"none"}
               playsInline
-              src={url}
+              src={data.url}
             ></video>
           )}
-          {postType === "MUSIC" && <audio src={url} controls />}
+          {data.postType === "MUSIC" && <audio src={data.url} controls />}
         </main>
       )}
     </Link>

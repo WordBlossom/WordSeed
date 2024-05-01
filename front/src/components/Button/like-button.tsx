@@ -17,9 +17,9 @@ export default function LikeButton({
   liked,
 }: LikeButtonProps) {
   const likeMutation = useListLike({
-    postId: postId,
-    wordId: wordId,
-    postType: postType,
+    postId,
+    wordId,
+    postType,
     queryName: liked ? "deleteLike" : "postLike",
   });
   const onClick = () => {

@@ -15,6 +15,7 @@ export enum FeedTypeEnum {
   My = "my",
   Bookmark = "bookmark",
   User = "user",
+  Follow = "follow",
 }
 
 export type ParamsByType<T extends FeedType> = T extends "word"

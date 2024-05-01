@@ -5,15 +5,24 @@ import { useFeedListFollow } from "@/api/feed/hooks/post-follow";
 
 type FollowButtonProps = {
   userId: FeedDetail["userId"];
+  postId: FeedDetail["postId"];
+  wordId: FeedDetail["wordId"];
+  postType: FeedDetail["postType"];
   subscribed: FeedDetail["subscribed"];
 };
 
 export default function FollowButton({
   userId,
+  postId,
+  wordId,
+  postType,
   subscribed,
 }: FollowButtonProps) {
   const followMutation = useFeedListFollow({
-    userId: userId,
+    userId,
+    postId,
+    wordId,
+    postType,
     queryName: subscribed ? "deleteFollow" : "postFollow",
   });
 
