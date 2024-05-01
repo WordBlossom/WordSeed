@@ -7,13 +7,13 @@ import {
   FeedList,
   InfiniteQueriesUpdater,
 } from "../types";
+import useFeedTypeStateStore from "@/stores/feed-type";
 
 type useListLikeOptions = {
   postId: BookMarkAndLikeDTO["postId"];
   wordId: FeedDetail["wordId"];
   postType: FeedDetail["postType"];
   queryName: keyof typeof likeQuery;
-  type?: "detail" | "profile";
   config?: MutationConfig<typeof postLike>;
 };
 
@@ -22,11 +22,11 @@ export const useListLike = ({
   wordId,
   postType,
   queryName,
-  type,
   config,
 }: useListLikeOptions) => {
   const queryClient = getQueryClient();
   const { queryKey, queryFn } = likeQuery[queryName](postId);
+  const { type, detail } = useFeedTypeStateStore();
 
   const broadQueryKey = [
     "wordFeedList",
@@ -64,7 +64,7 @@ export const useListLike = ({
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
 
-      if (type === "detail") {
+      if (detail) {
         const detailQueryKey = ["feedDetail", postId];
         const previousFeedDetail: any =
           queryClient.getQueryData(detailQueryKey);

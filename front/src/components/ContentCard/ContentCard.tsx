@@ -1,6 +1,6 @@
 "use client";
 
-import { FeedDetail } from "@/api/feed/types";
+import { FeedDetail, FeedType } from "@/api/feed/types";
 import styles from "./ContentCard.module.scss";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,7 +8,11 @@ import { useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import useFeedDetailStateStore from "@/stores/feed-detail";
 
-export default function ContentCard(data: FeedDetail) {
+type ContentCardType = {
+  data: FeedDetail;
+};
+
+export default function ContentCard({ data }: ContentCardType) {
   const contentClassName = `${styles.content} ${
     styles[data.postAlign.toLowerCase()]
   }`;
@@ -30,8 +34,7 @@ export default function ContentCard(data: FeedDetail) {
   return (
     <Link
       className={styles.link}
-      href={`/feed/${data.postId}`}
-      // as={`/feed/${data.postId}`}
+      href={{ pathname: `/feed/${data.postId}` }}
       ref={ref}
       onClick={() => {
         setFeedDetail(data);

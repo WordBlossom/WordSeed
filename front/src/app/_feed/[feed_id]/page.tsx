@@ -5,6 +5,8 @@ import useCommentToggleStateStore from "@/stores/comment-toggle";
 import { FeedContent, FeedInterface, Comment } from "@/components";
 import style from "./feed.module.scss";
 import { getFeedDetail } from "@/api/feed/apis/get-feed-api";
+import { useEffect } from "react";
+import useFeedTypeStateStore from "@/stores/feed-type";
 
 type FeedProps = {
   params: { feed_id: number };
@@ -17,6 +19,11 @@ export default function Feed({ params }: FeedProps) {
     queryFn: () => getFeedDetail({ postId: feedId }),
   });
   const { commentToggle } = useCommentToggleStateStore();
+  const { IsDetail } = useFeedTypeStateStore();
+
+  useEffect(() => {
+    IsDetail(true);
+  }, [IsDetail]);
 
   return (
     <>
@@ -24,7 +31,7 @@ export default function Feed({ params }: FeedProps) {
         <>
           <div className={style["feed-container"]}>
             <FeedContent feedData={data} />
-            <FeedInterface feedData={data} type="detail" />
+            <FeedInterface feedData={data} />
           </div>
           {commentToggle && <Comment />}
         </>

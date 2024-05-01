@@ -2,12 +2,12 @@ import { useMutation, InfiniteData } from "@tanstack/react-query";
 import { getQueryClient, MutationConfig } from "@/lib/react-query";
 import { postFollow, followQuery } from "@/api/feed/apis/follow-api";
 import { FollowDTO, FeedList, InfiniteQueriesUpdater } from "@/api/feed/types";
+import useFeedTypeStateStore from "@/stores/feed-type";
 
 type useFeedListFollowOptions = {
   userId: FollowDTO["userId"];
   postId: number;
   queryName: keyof typeof followQuery;
-  type?: "detail" | "profile";
   config?: MutationConfig<typeof postFollow>;
 };
 
@@ -15,13 +15,13 @@ export const useFeedListFollow = ({
   userId,
   postId,
   queryName,
-  type,
   config,
 }: useFeedListFollowOptions) => {
   const queryClient = getQueryClient();
   const { queryKey, queryFn } = followQuery[queryName](userId);
   const broadQueryKey = ["wordFeedList"];
   const feedListQueryKey = { queryKey: broadQueryKey };
+  const { type, detail } = useFeedTypeStateStore();
 
   const listNewData: InfiniteQueriesUpdater<FeedList> = (previousEachData) => {
     const updatedPages = previousEachData?.pages.map((page) => {
@@ -47,7 +47,7 @@ export const useFeedListFollow = ({
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
 
-      if (type === "detail") {
+      if (detail) {
         const detailQueryKey = ["feedDetail", postId];
         const previousFeedDetail: any =
           queryClient.getQueryData(detailQueryKey);

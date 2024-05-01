@@ -4,6 +4,8 @@ import { useFeedList, DEFAULT_POST_TYPE } from "@/api/feed";
 import { MainFeedListDTO } from "@/api/feed/types";
 import useSearchFilterStateStore from "@/stores/search-filter";
 import SwiperComponent from "./_component/swiper-component";
+import { useEffect } from "react";
+import useFeedTypeStateStore from "@/stores/feed-type";
 
 type FeedlistProps = {
   params: { word_id?: number[] };
@@ -12,6 +14,7 @@ type FeedlistProps = {
 export default function Feedlist({ params }: FeedlistProps) {
   const wordId = params.word_id && params.word_id[0];
   const { selectedType, isLatest } = useSearchFilterStateStore();
+  const { setFeedType } = useFeedTypeStateStore();
   const postType = selectedType ? selectedType : DEFAULT_POST_TYPE;
 
   const feedListParams: MainFeedListDTO = {
@@ -26,6 +29,10 @@ export default function Feedlist({ params }: FeedlistProps) {
     params: feedListParams,
     type: wordId ? "word" : "follow",
   });
+
+  useEffect(() => {
+    setFeedType("word");
+  }, [setFeedType]);
 
   return (
     <>

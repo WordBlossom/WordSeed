@@ -1,11 +1,13 @@
 import { FeedDetail } from "@/api/feed/types";
 import { create } from "zustand";
 
-type FeedDetailStateStore = {
-  data: FeedDetail;
+interface FeedDetailStateStore extends FeedDetail {
   setFeedDetail: (data: FeedDetail) => void;
+  setBookMarked: (flag: boolean) => void;
+  setLiked: (flag: boolean) => void;
+  setSubscribed: (flag: boolean) => void;
   setStateClear: () => void;
-};
+}
 
 export const initialState: FeedDetail = {
   postId: 0,
@@ -29,9 +31,12 @@ export const initialState: FeedDetail = {
 };
 
 const useFeedDetailStateStore = create<FeedDetailStateStore>((set) => ({
-  data: initialState,
-  setFeedDetail: (data) => set({ data: data }),
-  setStateClear: () => set({ data: initialState }),
+  ...initialState,
+  setFeedDetail: (data) => set({ ...data }),
+  setBookMarked: (flag) => set({ bookMarked: flag }),
+  setLiked: (flag) => set({ liked: flag }),
+  setSubscribed: (flag) => set({ subscribed: flag }),
+  setStateClear: () => set({ ...initialState }),
 }));
 
 export default useFeedDetailStateStore;

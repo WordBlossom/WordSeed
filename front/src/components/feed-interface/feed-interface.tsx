@@ -10,13 +10,8 @@ import styles from "./feed-interface.module.scss";
 type FeedInterfaceProps = {
   activeInterfaceRef?: MutableRefObject<HTMLDivElement | null>;
   feedData: FeedDetail;
-  type?: "detail" | "profile";
 };
-function FeedInterface({
-  activeInterfaceRef,
-  feedData,
-  type,
-}: FeedInterfaceProps) {
+function FeedInterface({ activeInterfaceRef, feedData }: FeedInterfaceProps) {
   const slide = useSwiperSlide();
   return (
     <div
@@ -24,7 +19,7 @@ function FeedInterface({
       className={styles["feed-interface-container"]}
     >
       <FeedInterfaceTop createdAt={feedData.createdAt} />
-      <FeedInterfaceBottom feedData={feedData} type={type} />
+      <FeedInterfaceBottom feedData={feedData} />
     </div>
   );
 }

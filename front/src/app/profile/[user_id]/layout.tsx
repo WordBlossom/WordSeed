@@ -17,7 +17,7 @@ export default async function ProfileLayout({
 }: ProfileLayoutProps) {
   const queryClient = new QueryClient();
 
-  const myId = 4;
+  const myId: number = 4;
   const userId = Number(params.user_id);
   const isMe = myId === userId;
 

@@ -16,14 +16,12 @@ export default function BookmarkButton({
   wordId,
   postType,
   bookMarked,
-  type,
 }: BookmarkButtonProps) {
   const bookMarkMutation = useListBookMark({
     postId,
     wordId,
     postType,
     queryName: bookMarked ? "deleteBookMark" : "postBookMark",
-    type,
   });
 
   const onClick = () => {

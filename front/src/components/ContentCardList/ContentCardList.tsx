@@ -1,3 +1,5 @@
+"use client";
+
 import useSearchFilterStateStore from "@/stores/search-filter";
 import { useInView } from "react-intersection-observer";
 import { ContentCard } from "..";
@@ -5,11 +7,14 @@ import styles from "./ContentCardList.module.scss";
 import { FeedListDTO, FeedTypeEnum, UserFeedListDTO } from "@/api/feed/types";
 import profileToggleStore from "@/stores/profile-toggle";
 import { DEFAULT_POST_TYPE, useFeedList } from "@/api/feed";
+import { useEffect } from "react";
+import useFeedTypeStateStore from "@/stores/feed-type";
 
 export default function ContentCardList({ userId }: { userId: number }) {
   const myId = 4;
   const isMe = myId === userId;
 
+  const { setFeedType } = useFeedTypeStateStore();
   const { selected } = profileToggleStore();
   const { selectedType, isLatest } = useSearchFilterStateStore();
   const postType = selectedType ? selectedType : DEFAULT_POST_TYPE;
@@ -24,13 +29,15 @@ export default function ContentCardList({ userId }: { userId: number }) {
     userId,
   };
 
+  const feedType = isMe
+    ? selected
+      ? FeedTypeEnum.Bookmark
+      : FeedTypeEnum.My
+    : FeedTypeEnum.User;
+
   const props = {
     params: isMe ? feedListParams : userFeedListParams,
-    type: isMe
-      ? selected
-        ? FeedTypeEnum.Bookmark
-        : FeedTypeEnum.My
-      : FeedTypeEnum.User,
+    type: feedType,
   };
 
   const { data, status, fetchNextPage } = useFeedList(props);
@@ -40,6 +47,10 @@ export default function ContentCardList({ userId }: { userId: number }) {
       if (inView) fetchNextPage();
     },
   });
+
+  useEffect(() => {
+    setFeedType(feedType);
+  }, [feedType, setFeedType]);
 
   return (
     <>
@@ -51,7 +62,7 @@ export default function ContentCardList({ userId }: { userId: number }) {
               key={feedData.postId}
               ref={idx === data.pages.length - 5 ? ref : undefined}
             >
-              <ContentCard key={feedData.postId} {...feedData} />
+              <ContentCard key={feedData.postId} data={feedData} />
             </div>
           ))}
         </div>

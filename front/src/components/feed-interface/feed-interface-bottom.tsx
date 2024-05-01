@@ -7,13 +7,9 @@ import styles from "./feed-interface.module.scss";
 
 type FeedInterfaceProps = {
   feedData: FeedDetail;
-  type?: "detail" | "profile";
 };
 
-export default function FeedInterfaceBottom({
-  feedData,
-  type,
-}: FeedInterfaceProps) {
+export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
   const {
     userName,
     userId,
@@ -38,7 +34,6 @@ export default function FeedInterfaceBottom({
             userId={userId}
             subscribed={subscribed}
             postId={postId}
-            type={type}
           />
         )}
       </div>
@@ -48,14 +43,12 @@ export default function FeedInterfaceBottom({
           wordId={wordId}
           postType={postType}
           bookMarked={bookMarked}
-          type={type}
         />
         <LikeButton
           postId={postId}
           wordId={wordId}
           postType={postType}
           liked={liked}
-          type={type}
         />
         <CommentButton postId={postId} />
       </div>

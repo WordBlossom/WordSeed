@@ -8,7 +8,6 @@ type LikeButtonProps = {
   wordId: FeedDetail["wordId"];
   postType: FeedDetail["postType"];
   liked: FeedDetail["liked"];
-  type?: "detail" | "profile";
 };
 
 export default function LikeButton({
@@ -16,14 +15,12 @@ export default function LikeButton({
   wordId,
   postType,
   liked,
-  type,
 }: LikeButtonProps) {
   const likeMutation = useListLike({
     postId,
     wordId,
     postType,
     queryName: liked ? "deleteLike" : "postLike",
-    type,
   });
   const onClick = () => {
     likeMutation.mutate();

@@ -56,37 +56,37 @@ export const feedListQuery: {
 } = {
   word: () => ({
     queryKey: (params: MainFeedListDTO) => [
-      "wordFeedList",
       postType(params),
       params,
+      "wordFeedList",
     ],
     queryFn: (params: MainFeedListDTO) => getWordFeedList(params),
   }),
   follow: () => ({
     queryKey: (params: FeedListDTO) => [
-      "followFeedList",
       postType(params),
       params,
+      "followFeedList",
     ],
     queryFn: (params: FeedListDTO) => getFollowFeedList(params),
   }),
   my: () => ({
-    queryKey: (params: FeedListDTO) => ["myFeedList", postType(params), params],
+    queryKey: (params: FeedListDTO) => [postType(params), params, "myFeedList"],
     queryFn: (params: FeedListDTO) => getMyFeedList(params),
   }),
   bookmark: () => ({
     queryKey: (params: FeedListDTO) => [
-      "bookmarkFeedList",
       postType(params),
       params,
+      "bookmarkFeedList",
     ],
     queryFn: (params: FeedListDTO) => getBookmarkFeedList(params),
   }),
   user: () => ({
     queryKey: (params: UserFeedListDTO) => [
-      "userFeedList",
       postType(params),
       params,
+      "userFeedList",
     ],
     queryFn: (params: UserFeedListDTO) => getUserFeedList(params),
   }),

@@ -5,15 +5,15 @@ import { FeedContent, FeedInterface, Comment } from "@/components";
 import useCommentToggleStateStore from "@/stores/comment-toggle";
 import useFeedDetailStateStore from "@/stores/feed-detail";
 
-export default function FeedDetail() {
-  const { data } = useFeedDetailStateStore();
+export default function Feed() {
+  const feed = useFeedDetailStateStore();
   const { commentToggle } = useCommentToggleStateStore();
 
   return (
     <>
       <div className={style["feed-container"]}>
-        <FeedContent feedData={data} />
-        <FeedInterface feedData={data} type="profile" />
+        <FeedContent feedData={feed} />
+        <FeedInterface feedData={feed} />
       </div>
       {commentToggle && <Comment />}
     </>
