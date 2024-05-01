@@ -8,7 +8,6 @@ import {
   InfiniteQueriesUpdater,
 } from "@/api/feed/types";
 import useFeedTypeStateStore from "@/stores/feed-type";
-import useFeedDetailStateStore from "@/stores/feed-detail";
 
 type useListBookMarkOptions = {
   postId: BookMarkAndLikeDTO["postId"];
@@ -28,7 +27,6 @@ export const useListBookMark = ({
   const queryClient = getQueryClient();
   const { queryKey, queryFn } = bookMarkQuery[queryName](postId);
   const { type, detail } = useFeedTypeStateStore();
-  const { bookMarked, setBookMarked } = useFeedDetailStateStore();
 
   const feedListQueryKey = {
     queryKey:
@@ -43,7 +41,6 @@ export const useListBookMark = ({
   };
 
   const listNewData: InfiniteQueriesUpdater<FeedList> = (previousEachData) => {
-    console.log(previousEachData);
     const updatedPages = previousEachData?.pages.map((page) => {
       const updatedPosts = page.posts.map((post) => {
         if (post.postId !== postId) return post;
@@ -66,6 +63,8 @@ export const useListBookMark = ({
     ...config,
     mutationFn: queryFn,
     onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey });
+
       if (detail) {
         const detailQueryKey = ["feedDetail", postId];
         const previousFeedDetail: any =
@@ -83,17 +82,13 @@ export const useListBookMark = ({
 
       const previousFeedLists =
         queryClient.getQueriesData<InfiniteData<FeedList>>(feedListQueryKey);
+
       queryClient.setQueriesData<InfiniteData<FeedList>>(
         feedListQueryKey,
         listNewData
       );
 
       return { previousFeedLists };
-    },
-    onSuccess: async () => {
-      if (type !== "word") {
-        setBookMarked(!bookMarked);
-      }
     },
 
     onError: (error, newData, context) => {

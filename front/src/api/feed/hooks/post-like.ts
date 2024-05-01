@@ -28,17 +28,17 @@ export const useListLike = ({
   const { queryKey, queryFn } = likeQuery[queryName](postId);
   const { type, detail } = useFeedTypeStateStore();
 
-  const broadQueryKey = [
-    "wordFeedList",
-    {
-      wordId: String(wordId),
-    },
-    {
-      [postType]: true,
-    },
-  ];
-
-  const feedListQueryKey = { queryKey: broadQueryKey };
+  const feedListQueryKey = {
+    queryKey:
+      type === "word"
+        ? [
+            { [postType]: true },
+            {
+              wordId: String(wordId),
+            },
+          ]
+        : [{ [postType]: true }],
+  };
 
   const listNewData: InfiniteQueriesUpdater<FeedList> = (previousEachData) => {
     const updatedPages = previousEachData?.pages.map((page) => {
@@ -91,7 +91,7 @@ export const useListLike = ({
     onError: (error, newData, context) => {
       context?.previousFeedLists?.forEach((oldFeedList) => {
         const queryKey = oldFeedList[0];
-        queryClient.setQueryData(queryKey, oldFeedList);
+        queryClient.setQueryData(queryKey, oldFeedList[1]);
       });
     },
 

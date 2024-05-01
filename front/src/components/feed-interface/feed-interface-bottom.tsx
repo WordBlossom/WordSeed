@@ -34,6 +34,8 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
             userId={userId}
             subscribed={subscribed}
             postId={postId}
+            wordId={wordId}
+            postType={postType}
           />
         )}
       </div>

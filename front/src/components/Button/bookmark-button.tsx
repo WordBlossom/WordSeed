@@ -8,7 +8,6 @@ type BookmarkButtonProps = {
   wordId: FeedDetail["wordId"];
   postType: FeedDetail["postType"];
   bookMarked: FeedDetail["bookMarked"];
-  type?: "detail" | "profile";
 };
 
 export default function BookmarkButton({

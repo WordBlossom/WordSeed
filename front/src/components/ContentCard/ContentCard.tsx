@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { useInView } from "react-intersection-observer";
-import useFeedDetailStateStore from "@/stores/feed-detail";
 
 type ContentCardType = {
   data: FeedDetail;
@@ -29,17 +28,8 @@ export default function ContentCard({ data }: ContentCardType) {
     initialInView: true,
   });
 
-  const { setFeedDetail } = useFeedDetailStateStore();
-
   return (
-    <Link
-      className={styles.link}
-      href={{ pathname: `/feed/${data.postId}` }}
-      ref={ref}
-      onClick={() => {
-        setFeedDetail(data);
-      }}
-    >
+    <Link className={styles.link} href={`/feed/${data.postId}`} ref={ref}>
       {data.postType === "TEXT" ? (
         <main className={styles.container}>
           <div className={styles.wrapper}>

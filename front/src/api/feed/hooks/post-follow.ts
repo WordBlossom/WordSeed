@@ -1,12 +1,19 @@
 import { useMutation, InfiniteData } from "@tanstack/react-query";
 import { getQueryClient, MutationConfig } from "@/lib/react-query";
 import { postFollow, followQuery } from "@/api/feed/apis/follow-api";
-import { FollowDTO, FeedList, InfiniteQueriesUpdater } from "@/api/feed/types";
+import {
+  FollowDTO,
+  FeedList,
+  InfiniteQueriesUpdater,
+  FeedDetail,
+} from "@/api/feed/types";
 import useFeedTypeStateStore from "@/stores/feed-type";
 
 type useFeedListFollowOptions = {
   userId: FollowDTO["userId"];
   postId: number;
+  wordId: FeedDetail["wordId"];
+  postType: FeedDetail["postType"];
   queryName: keyof typeof followQuery;
   config?: MutationConfig<typeof postFollow>;
 };
@@ -14,14 +21,26 @@ type useFeedListFollowOptions = {
 export const useFeedListFollow = ({
   userId,
   postId,
+  wordId,
+  postType,
   queryName,
   config,
 }: useFeedListFollowOptions) => {
   const queryClient = getQueryClient();
   const { queryKey, queryFn } = followQuery[queryName](userId);
-  const broadQueryKey = ["wordFeedList"];
-  const feedListQueryKey = { queryKey: broadQueryKey };
   const { type, detail } = useFeedTypeStateStore();
+
+  const feedListQueryKey = {
+    queryKey:
+      type === "word"
+        ? [
+            { [postType]: true },
+            {
+              wordId: String(wordId),
+            },
+          ]
+        : [{ [postType]: true }],
+  };
 
   const listNewData: InfiniteQueriesUpdater<FeedList> = (previousEachData) => {
     const updatedPages = previousEachData?.pages.map((page) => {
@@ -74,7 +93,7 @@ export const useFeedListFollow = ({
     onError: (error, newData, context) => {
       context?.previousFeedLists?.forEach((oldFeedList) => {
         const queryKey = oldFeedList[0];
-        queryClient.setQueryData(queryKey, oldFeedList);
+        queryClient.setQueryData(queryKey, oldFeedList[1]);
       });
     },
 
