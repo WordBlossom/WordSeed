@@ -36,6 +36,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public CreatePostOutDTO createPost(CreatePostInDTO createPostInDTO, Long srcUserId) throws Exception {
+        System.out.println("000");
 
         Post post = Post.builder()
                 .content(createPostInDTO.getContent())
@@ -50,8 +51,8 @@ public class PostServiceImpl implements PostService {
                 .word(wordRepo.findById(createPostInDTO.getWordId()).orElseThrow(Exception::new)) // word 유입
                 .build();
 
+        System.out.println("111");
         Post result = postRepo.save(post);
-
         CreatePostOutDTO createPostOutDTO =
                 CreatePostOutDTO.builder()
                         .content(result.getContent())
