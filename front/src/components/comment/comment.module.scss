@@ -7,7 +7,7 @@
   height: 100%;
   overflow: hidden;
   background-color: $white;
-  z-index: 2;
+  z-index: 3;
   .close {
     @include flex;
     justify-content: flex-end;
