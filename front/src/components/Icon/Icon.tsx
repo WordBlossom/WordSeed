@@ -41,6 +41,7 @@ export default function Icon({ iconName, size = 35 }: Props) {
   return (
     <Image
       src={iconPath}
+      priority={true}
       alt={iconName}
       width={size}
       height={size}
