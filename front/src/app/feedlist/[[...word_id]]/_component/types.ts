@@ -1,4 +1,4 @@
-import { MutableRefObject } from "react";
+import { MutableRefObject, TouchEvent } from "react";
 import {
   FetchNextPageOptions,
   InfiniteQueryObserverResult,
@@ -25,10 +25,19 @@ export type FeedListFetchNextPage = (
   >
 >;
 
-export type ListenerProps = {
-  activeContentRef: MutableRefObject<HTMLDivElement | null>;
-  activeInterfaceRef: MutableRefObject<HTMLDivElement | null>;
-  // any... :(
-  touchContent: any;
-  touchInterface: any;
-};
+interface HandleTouchParams {
+  swiper: any;
+  touchStartY: MutableRefObject<number | null>;
+}
+
+export type HandleTouch = ({
+  swiper,
+  touchStartY,
+}: HandleTouchParams) => (e: TouchEvent) => void;
+
+export interface ListenerProps extends HandleTouchParams {
+  activeContent: HTMLDivElement;
+  activeInterface: HTMLDivElement;
+  handleTouchContent: HandleTouch;
+  handleTouchInterface: HandleTouch;
+}
