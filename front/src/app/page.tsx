@@ -11,7 +11,7 @@ import { getWordseed } from "@/api/wordseed";
 export default async function Home() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ["todayWordseed", todaysDate],
+    queryKey: ["wordseed", todaysDate],
     queryFn: () => getWordseed(todaysDate),
   });
 
