@@ -9,12 +9,7 @@ export default function FeedContent({ feedData }: FeedContentProps) {
   return (
     <div className={style["content-container"]}>
       <div className={style["content-wrapper"]}>
-        <div className={style["content"]}>
-          {
-            "feedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.contentfeedData.content"
-          }
-        </div>
-        {/* <div className={style["content"]}>{feedData.content}</div> */}
+        <div className={style["content"]}>{feedData.content}</div>
       </div>
     </div>
   );
