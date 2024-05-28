@@ -8,6 +8,10 @@ export type PostType =
   | "VIDEO"
   | typeof DEFAULT_POST_TYPE;
 
+export type PostAlign = "LEFT" | "CENTER" | "RIGHT";
+
+export type PostVisibility = "PUBLIC" | "PRIVATE";
+
 export type FeedType = "word" | "my" | "bookmark" | "user" | "follow";
 
 export enum FeedTypeEnum {
@@ -54,9 +58,9 @@ export type FeedDetail = {
   postId: number;
   userId: number;
   userName: string;
-  postAlign: "LEFT" | "CENTER" | "RIGHT";
-  postType: "TEXT" | "PAINT" | "MUSIC" | "VIDEO";
-  PostVisibility: "PUBLIC" | "PRIVATE";
+  postAlign: PostAlign;
+  postType: PostType;
+  postVisibility: PostVisibility;
   content: string;
   url: string;
   likedCnt: number;
@@ -102,3 +106,12 @@ export type InfiniteQueriesUpdater<Data> = Updater<
   InfiniteData<Data, unknown> | undefined,
   InfiniteData<Data, unknown> | undefined
 >;
+
+export type PostFeedDTO = {
+  content: string;
+  url: string;
+  wordId: number;
+  postType: PostType;
+  postAlign: PostAlign;
+  postVisibility: PostVisibility;
+};
