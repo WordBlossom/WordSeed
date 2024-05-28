@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-type IconType =
+export type IconType =
   | "menu"
   | "search"
   | "add"

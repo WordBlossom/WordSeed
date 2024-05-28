@@ -5,13 +5,13 @@ import createContentStore from "@/stores/create-content";
 export default function CreateCategory() {
   const useContentStore = createContentStore();
 
-  type CategoryType = "text" | "paint" | "video" | "music";
+  type CategoryType = "TEXT" | "PAINT" | "MUSIC" | "VIDEO";
 
   const categories: { [key: string]: CategoryType } = {
-    글: "text",
-    그림: "paint",
-    영상: "video",
-    음악: "music",
+    글: "TEXT",
+    그림: "PAINT",
+    영상: "MUSIC",
+    음악: "VIDEO",
   };
 
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {

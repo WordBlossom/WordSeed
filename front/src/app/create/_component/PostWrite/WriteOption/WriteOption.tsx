@@ -1,30 +1,28 @@
 import { Icon } from "@/components";
 import styles from "./WriteOption.module.scss";
-import { useState } from "react";
 import createContentStore from "@/stores/create-content";
+import { IconType } from "@/components/Icon/Icon";
+import { PostAlign } from "@/api/feed/types";
 
 export default function WriteOption() {
-  const [textAlign, setTextAlign] = useState<
-    "alignLeft" | "alignCenter" | "alignRight"
-  >("alignLeft");
-  const useContentStore = createContentStore();
-  const setAlign = useContentStore.setTextAlign;
-
+  const { textAlign, textContent, setTextAlign } = createContentStore();
+  const iconNames: { [key in PostAlign]: IconType } = {
+    LEFT: "alignLeft",
+    CENTER: "alignCenter",
+    RIGHT: "alignRight",
+  };
   const copyHandler = () => {};
 
   const textAlignHandler = () => {
     switch (textAlign) {
-      case "alignLeft":
-        setTextAlign("alignCenter");
-        setAlign("alignCenter");
+      case "LEFT":
+        setTextAlign("CENTER");
         break;
-      case "alignCenter":
-        setTextAlign("alignRight");
-        setAlign("alignRight");
+      case "CENTER":
+        setTextAlign("RIGHT");
         break;
-      case "alignRight":
-        setTextAlign("alignLeft");
-        setAlign("alignLeft");
+      case "RIGHT":
+        setTextAlign("LEFT");
         break;
       default:
         break;
@@ -41,9 +39,9 @@ export default function WriteOption() {
         <Icon iconName="copy" />
       </button>
       <button onClick={textAlignHandler}>
-        <Icon iconName={textAlign} />
+        <Icon iconName={iconNames[textAlign]} />
       </button>
-      <div>{useContentStore.textContent.length} 자</div>
+      <div>{textContent.length} 자</div>
       <button onClick={saveHandler}>임시저장</button>
     </footer>
   );
