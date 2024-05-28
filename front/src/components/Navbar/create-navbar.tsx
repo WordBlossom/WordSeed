@@ -1,28 +1,55 @@
 "use client";
 
+import { useParams, useRouter } from "next/navigation";
+import { getQueryClient } from "@/lib/react-query";
+import { usePostFeed } from "@/api/feed/hooks/post-feed";
 import createContentStore from "@/stores/create-content";
 import Button from "../Button/Button";
 import styles from "./navbar.module.scss";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { Wordseed } from "@/api/wordseed/types";
 
 export default function CreateNavbar() {
   const router = useRouter();
-  const useContentStore = createContentStore();
-  const params = useParams();
-  const wordseed = decodeURIComponent(params.wordseed as string);
+
+  // 현재 말씨 찾기
+  // wordseed query 중 wordId와 같은 말씨를 찾음
+  const wordId = Number(useParams().word_id);
+  const queryClient = getQueryClient();
+  const wordseeds = queryClient
+    .getQueriesData({
+      queryKey: ["wordseed"],
+    })[0]
+    .slice(1) as Wordseed[];
+  const wordseed = wordseeds.filter((data) => data.wordId === wordId)[0].word;
+
   // selectedCategory 형식으로 게시글 업로드 요청
+  const {
+    type: postType,
+    textAlign: postAlign,
+    textContent: content,
+    postVisibility,
+  } = createContentStore();
 
-  const handleSubmitButtonClick = (e: React.MouseEvent) => {
+  const postFeed = usePostFeed({ wordId });
+
+  const handleSubmitButtonClick = () => {
+    if (postFeed.isPending) return;
+
+    if (postType === "TEXT" && !content) {
+      alert("내용을 작성해주세요");
+      return;
+    }
+
     // 작성된 내용 post 요청
-
-    // 스토어에 저장된 내용 초기화
-    useContentStore.cleanCreateContentState();
+    postFeed.mutate({
+      wordId,
+      postType,
+      postAlign,
+      content,
+      postVisibility,
+      url: "",
+    });
   };
-
-  useEffect(() => {
-    useContentStore.setWordseed(wordseed);
-  }, []);
 
   return (
     <div>
