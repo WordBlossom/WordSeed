@@ -8,7 +8,7 @@ import AudioPreview from "./AudioPreview/AudioPreview";
 export default function PostMedia() {
   const useContentStore = createContentStore();
   const [preview, sePreview] = useState<string>("");
-  type MediaType = "paint" | "video" | "music";
+  type MediaType = "PAINT" | "MUSIC" | "VIDEO";
   const type = useContentStore.type as MediaType;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,9 +31,9 @@ export default function PostMedia() {
   };
 
   const categories: { [key in MediaType]: string[] } = {
-    paint: ["그림", "image/"],
-    video: ["영상", "video/"],
-    music: ["음악", "audio/"],
+    PAINT: ["그림", "image/"],
+    VIDEO: ["영상", "video/"],
+    MUSIC: ["음악", "audio/"],
   };
 
   useEffect(() => {
@@ -60,9 +60,9 @@ export default function PostMedia() {
           </div>
           <div className={styles["preview-wrapper"]}>
             <div className={styles.media}>
-              {type === "paint" && <Image src={preview} alt="Preview" fill />}
-              {type === "video" && <video controls src={preview}></video>}
-              {type === "music" && <AudioPreview preview={preview} />}
+              {type === "PAINT" && <Image src={preview} alt="Preview" fill />}
+              {type === "VIDEO" && <video controls src={preview}></video>}
+              {type === "MUSIC" && <AudioPreview preview={preview} />}
             </div>
           </div>
         </div>

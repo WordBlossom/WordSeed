@@ -1,10 +1,14 @@
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import Button from "./Button";
 import Icon from "@/components/Icon/Icon";
 
 export default function CreateFeedButton() {
-  const onClick = () => {
-    // create 페이지로 이동
-  };
+  const wordId = useParams().word_id[0];
 
-  return <Button content={<Icon iconName="add" />} onClick={onClick} />;
+  return (
+    <Link href={`/create/${wordId}`}>
+      <Button content={<Icon iconName="add" />} />
+    </Link>
+  );
 }

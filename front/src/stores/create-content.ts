@@ -2,16 +2,17 @@ import { create } from "zustand";
 
 interface CreateContentProps {
   wordseed: string;
-  type: "text" | "paint" | "video" | "music";
-  textAlign: "alignLeft" | "alignCenter" | "alignRight";
+  type: "TEXT" | "PAINT" | "MUSIC" | "VIDEO";
+  textAlign: "LEFT" | "CENTER" | "RIGHT";
   textContent: string;
   file: File | null;
+  postVisibility: "PUBLIC" | "PRIVATE";
 }
 
 interface CreateContentState extends CreateContentProps {
   setWordseed: (wordseed: string) => void;
-  setType: (type: "text" | "paint" | "video" | "music") => void;
-  setTextAlign: (align: "alignLeft" | "alignCenter" | "alignRight") => void;
+  setType: (type: CreateContentProps["type"]) => void;
+  setTextAlign: (align: CreateContentProps["textAlign"]) => void;
   setTextContent: (content: string) => void;
   setFile: (paint: File) => void;
   cleanFile: () => void;
@@ -20,10 +21,11 @@ interface CreateContentState extends CreateContentProps {
 
 const initialState: CreateContentProps = {
   wordseed: "",
-  type: "text",
-  textAlign: "alignLeft",
+  type: "TEXT",
+  textAlign: "LEFT",
   textContent: "",
   file: null,
+  postVisibility: "PUBLIC",
 };
 
 const createContentStore = create<CreateContentState>((set) => ({
