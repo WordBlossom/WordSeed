@@ -24,7 +24,7 @@ export const usePostFeed = ({ wordId }: usePostFeedOptions) => {
         queryKey: invalidateQueryKey,
       });
       // 작성한 wordId의 feedlist 페이지로 이동
-      router.push(`/feedlist/${wordId}`);
+      router.replace(`/feedlist/${wordId}`);
       // 스토어에 저장된 내용 초기화
       cleanCreateContentState();
     },
