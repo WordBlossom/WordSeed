@@ -10,7 +10,7 @@ export default function CreateFeed() {
   return (
     <>
       <CreateCategory />
-      {type === "text" ? <PostWrite /> : <PostMedia />}
+      {type === "TEXT" ? <PostWrite /> : <PostMedia />}
     </>
   );
 }
