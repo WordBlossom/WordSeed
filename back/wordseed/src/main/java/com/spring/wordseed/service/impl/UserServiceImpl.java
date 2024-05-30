@@ -12,6 +12,7 @@ import com.spring.wordseed.dto.out.UpdateUserOutDTO;
 import com.spring.wordseed.dto.tool.TokenDTO;
 import com.spring.wordseed.dto.tool.UserDTO;
 import com.spring.wordseed.dto.tool.UserInfoDTO;
+import com.spring.wordseed.encoder.JwtTokenEncoder;
 import com.spring.wordseed.entity.User;
 import com.spring.wordseed.entity.UserInfo;
 import com.spring.wordseed.enu.Informable;
@@ -31,11 +32,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final UserInfoRepo userInfoRepo;
+    private final JwtTokenEncoder jwtTokenEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepo userRepo, UserInfoRepo userInfoRepo) {
+    public UserServiceImpl(UserRepo userRepo, UserInfoRepo userInfoRepo, JwtTokenEncoder jwtTokenEncoder) {
         this.userRepo = userRepo;
         this.userInfoRepo = userInfoRepo;
+        this.jwtTokenEncoder = jwtTokenEncoder;
     }
     @Override
     public User createUser(CreateUserInDTO createUserInDTO) throws Exception{
@@ -147,9 +150,12 @@ public class UserServiceImpl implements UserService {
                     .provider(userInfoDTO.getProvider())
                     .build());
         }
+        String accessToken = jwtTokenEncoder.createAccessToken(user.getUserId().toString());
+        String refreshToken = jwtTokenEncoder.createRefreshToken(user.getUserId().toString());
+        user.setRefreshToken(refreshToken);
         return TokenDTO.builder()
-                .accessToken(user.getUserId().toString())
-                .refreshToken(user.getUserId().toString())
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 }
