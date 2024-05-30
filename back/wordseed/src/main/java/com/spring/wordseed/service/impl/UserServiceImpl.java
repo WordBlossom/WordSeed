@@ -9,7 +9,9 @@ import com.spring.wordseed.dto.out.ReadUserInfoByIdOutDTO;
 import com.spring.wordseed.dto.out.ReadUserOutDTO;
 import com.spring.wordseed.dto.out.ReadUserOutDTOs;
 import com.spring.wordseed.dto.out.UpdateUserOutDTO;
+import com.spring.wordseed.dto.tool.TokenDTO;
 import com.spring.wordseed.dto.tool.UserDTO;
+import com.spring.wordseed.dto.tool.UserInfoDTO;
 import com.spring.wordseed.entity.User;
 import com.spring.wordseed.entity.UserInfo;
 import com.spring.wordseed.enu.Informable;
@@ -29,13 +31,14 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final UserInfoRepo userInfoRepo;
+
     @Autowired
     public UserServiceImpl(UserRepo userRepo, UserInfoRepo userInfoRepo) {
         this.userRepo = userRepo;
         this.userInfoRepo = userInfoRepo;
     }
     @Override
-    public long createUser(CreateUserInDTO createUserInDTO) throws Exception{
+    public User createUser(CreateUserInDTO createUserInDTO) throws Exception{
         try {
             UserInfo userInfo = UserInfo.builder()
                     .followDstCnt(0L)
@@ -48,11 +51,12 @@ public class UserServiceImpl implements UserService {
             User user = User.builder()
                     .userName(createUserInDTO.getUserName())
                     .email(createUserInDTO.getEmail())
+                    .oauthId(createUserInDTO.getOauthId())
+                    .provider(createUserInDTO.getProvider())
                     .userInfo(userInfo)
                     .userType(UserType.USER)
                     .build();
-            user = userRepo.save(user);
-            return user.getUserId();
+            return userRepo.save(user);
         }catch (Exception e) {
             throw new IllegalArgumentException();
         }
@@ -128,6 +132,24 @@ public class UserServiceImpl implements UserService {
                 .orElse(new ArrayList<>());
         return ReadUserOutDTOs.builder()
                 .users(users)
+                .build();
+    }
+
+    @Override
+    public TokenDTO getTokens(UserInfoDTO userInfoDTO) throws Exception {
+        User user = userRepo.findByOauthIdAndProviderAndEmail(userInfoDTO.getOauthId(),
+                userInfoDTO.getProvider(), userInfoDTO.getEmail());
+        if(user == null) {
+             user = createUser(CreateUserInDTO.builder()
+                    .userName("식집사")
+                    .email(userInfoDTO.getEmail())
+                    .oauthId(userInfoDTO.getOauthId())
+                    .provider(userInfoDTO.getProvider())
+                    .build());
+        }
+        return TokenDTO.builder()
+                .accessToken(user.getUserId().toString())
+                .refreshToken(user.getUserId().toString())
                 .build();
     }
 }
