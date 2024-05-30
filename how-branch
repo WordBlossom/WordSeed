@@ -1,0 +1,187 @@
+[33m128ce17[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32m226-back-fix-post-coment-자료형-변경[m[33m, [m[1;31morigin/226-back-fix-post-coment-자료형-변경[m[33m)[m HEAD@{0}: commit: payControllerTest - readpayments 생성
+[33meef0e2f[m[33m ([m[1;31morigin/back[m[33m, [m[1;32mback[m[33m)[m HEAD@{1}: checkout: moving from 193-back-feat-readposts-조회수-추가 to 226-back-fix-post-coment-자료형-변경
+[33m09ffc70[m[33m ([m[1;32m193-back-feat-readposts-조회수-추가[m[33m)[m HEAD@{2}: reset: moving to HEAD
+[33m09ffc70[m[33m ([m[1;32m193-back-feat-readposts-조회수-추가[m[33m)[m HEAD@{3}: checkout: moving from back to 193-back-feat-readposts-조회수-추가
+[33meef0e2f[m[33m ([m[1;31morigin/back[m[33m, [m[1;32mback[m[33m)[m HEAD@{4}: pull: Fast-forward
+[33mab2613b[m[33m ([m[1;31morigin/feat/#200-Redis-View[m[33m, [m[1;31morigin/feat/#199-Oauth[m[33m, [m[1;31morigin/193-back-feat-readposts-조회수-추가[m[33m)[m HEAD@{5}: checkout: moving from 209-back-fix-readcomment-작성자-추가 to back
+[33meb7709c[m[33m ([m[1;31morigin/209-back-fix-readcomment-작성자-추가[m[33m, [m[1;32m209-back-fix-readcomment-작성자-추가[m[33m)[m HEAD@{6}: commit: Fix: readComment 반환 DTO 중 userName 추가
+[33mab2613b[m[33m ([m[1;31morigin/feat/#200-Redis-View[m[33m, [m[1;31morigin/feat/#199-Oauth[m[33m, [m[1;31morigin/193-back-feat-readposts-조회수-추가[m[33m)[m HEAD@{7}: checkout: moving from back to 209-back-fix-readcomment-작성자-추가
+[33mab2613b[m[33m ([m[1;31morigin/feat/#200-Redis-View[m[33m, [m[1;31morigin/feat/#199-Oauth[m[33m, [m[1;31morigin/193-back-feat-readposts-조회수-추가[m[33m)[m HEAD@{8}: checkout: moving from ab2613b0d850d448e0ec0ee531e6ec18aba86b3e to back
+[33mab2613b[m[33m ([m[1;31morigin/feat/#200-Redis-View[m[33m, [m[1;31morigin/feat/#199-Oauth[m[33m, [m[1;31morigin/193-back-feat-readposts-조회수-추가[m[33m)[m HEAD@{9}: checkout: moving from back to remotes/origin/209-back-fix-readcomment-작성자-추가
+[33mab2613b[m[33m ([m[1;31morigin/feat/#200-Redis-View[m[33m, [m[1;31morigin/feat/#199-Oauth[m[33m, [m[1;31morigin/193-back-feat-readposts-조회수-추가[m[33m)[m HEAD@{10}: checkout: moving from 193-back-feat-readposts-조회수-추가 to back
+[33m09ffc70[m[33m ([m[1;32m193-back-feat-readposts-조회수-추가[m[33m)[m HEAD@{11}: commit: Feat: optimistic lock을 이용한 readPostById - 조회수 구현2
+[33me86b6e3[m HEAD@{12}: commit: Feat: optimistic lock을 이용한 readPostById - 조회수 구현
+[33m4d2dd11[m HEAD@{13}: commit: Feat: 변경 감지를 이용한 readPostById - 조회수 구현
+[33m8388501[m HEAD@{14}: commit: Feat: redis를 이용한 조회수 관리 완성
+[33ma72d80e[m HEAD@{15}: commit: Init: redis 의존성 추가
+[33m1f92cc5[m HEAD@{16}: commit: Init: redis 환경 구축
+[33me40f742[m HEAD@{17}: commit: Feat: readPost 조회수 업데이트2: JPQL을 이용한 update 진행
+[33m0f1d199[m HEAD@{18}: commit: Feat: readPost API 1차 테스트(post당 update 진행)
+[33mc46b369[m HEAD@{19}: commit: Feat: readPost API 5종에 view 추가
+[33m43c04d9[m HEAD@{20}: commit: Feat: post 엔티티 및 createPost 에 view 추가
+[33mab2613b[m[33m ([m[1;31morigin/feat/#200-Redis-View[m[33m, [m[1;31morigin/feat/#199-Oauth[m[33m, [m[1;31morigin/193-back-feat-readposts-조회수-추가[m[33m)[m HEAD@{21}: checkout: moving from back to 193-back-feat-readposts-조회수-추가
+[33mab2613b[m[33m ([m[1;31morigin/feat/#200-Redis-View[m[33m, [m[1;31morigin/feat/#199-Oauth[m[33m, [m[1;31morigin/193-back-feat-readposts-조회수-추가[m[33m)[m HEAD@{22}: pull: Fast-forward
+[33me49c735[m HEAD@{23}: checkout: moving from 191-back-fix-postservice-readpost-쿼리-중-subscribe-쿼리-변경 to back
+[33mde5016a[m[33m ([m[1;31morigin/191-back-fix-postservice-readpost-쿼리-중-subscribe-쿼리-변경[m[33m, [m[1;32m191-back-fix-postservice-readpost-쿼리-중-subscribe-쿼리-변경[m[33m)[m HEAD@{24}: commit: Fix : postService: readPost 중 subscribe subquery 수정 [#191]
+[33me49c735[m HEAD@{25}: checkout: moving from back to 191-back-fix-postservice-readpost-쿼리-중-subscribe-쿼리-변경
+[33me49c735[m HEAD@{26}: checkout: moving from e49c7358f4d21aa2d8adca925425cdbf4af6ff0a to back
+[33me49c735[m HEAD@{27}: checkout: moving from back to origin/191-back-fix-postservice-readpost-쿼리-중-subscribe-쿼리-변경
+[33me49c735[m HEAD@{28}: pull: Fast-forward
+[33md2597d7[m HEAD@{29}: checkout: moving from main to back
+[33m99b4c9c[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mmain[m[33m)[m HEAD@{30}: checkout: moving from back to main
+[33md2597d7[m HEAD@{31}: reset: moving to HEAD
+[33md2597d7[m HEAD@{32}: checkout: moving from 183-back-fix-postservice-readpost-api-mark-제거-및-readpostswithword-쿼리-변경 to back
+[33m13009f3[m[33m ([m[1;31morigin/183-back-fix-postservice-readpost-api-mark-제거-및-readpostswithword-쿼리-변경[m[33m, [m[1;32m183-back-fix-postservice-readpost-api-mark-제거-및-readpostswithword-쿼리-변경[m[33m)[m HEAD@{33}: commit: Fix : springBook server 포트 변경 [#183]
+[33mcd77621[m HEAD@{34}: commit: Fix : readPosts API 5종 query 파라미터 삭제 [#183]
+[33m6d8b315[m HEAD@{35}: commit: Fix : springBook server 포트 변경 [#183]
+[33mfbf7437[m HEAD@{36}: commit: Fix : readPosts API 5중에 mark 파라미터 삭제 [#183]
+[33m6bf0d09[m HEAD@{37}: commit: Fix : readPostsWIthWord 메서드에서 query, mark 파라미터 삭제 [#183]
+[33md2597d7[m HEAD@{38}: checkout: moving from back to 183-back-fix-postservice-readpost-api-mark-제거-및-readpostswithword-쿼리-변경
+[33md2597d7[m HEAD@{39}: pull: Fast-forward
+[33mdf469bc[m HEAD@{40}: pull: Fast-forward
+[33m9b51b84[m HEAD@{41}: checkout: moving from 166-back-fix-postservice-하드코딩-수정-및-목록조회시-상세조회dto로-조회 to back
+[33m0116c9a[m[33m ([m[1;31morigin/166-back-fix-postservice-하드코딩-수정-및-목록조회시-상세조회dto로-조회[m[33m, [m[1;32m166-back-fix-postservice-하드코딩-수정-및-목록조회시-상세조회dto로-조회[m[33m)[m HEAD@{42}: commit: Fix : 작품 목록 출력 API Optional 자료형 반환 [#166]
+[33m58b9aa8[m HEAD@{43}: commit: Fix : 작품 목록 출력 API 쿼리 변경 (postVisibility 추가) [#166]
+[33mbcb5e45[m HEAD@{44}: commit: Fix : postService: createPost 하드 코딩 제거 및 userId 입력 [#166]
+[33m79f242e[m HEAD@{45}: commit: Fix : postService 주석 제거 및 findPostByPostId 하드 코딩 제거[#166]
+[33m1906660[m HEAD@{46}: commit: Fix : postService 목록조회 API DTO 변경[#166]
+[33mc4c95f1[m HEAD@{47}: commit: Fix : postService 하드 코딩 제거[#166]
+[33m9b51b84[m HEAD@{48}: checkout: moving from back to 166-back-fix-postservice-하드코딩-수정-및-목록조회시-상세조회dto로-조회
+[33m9b51b84[m HEAD@{49}: pull: Fast-forward
+[33me52a00c[m[33m ([m[1;31morigin/feat/#139-Follow-List[m[33m)[m HEAD@{50}: checkout: moving from 133-back-fix-postservice-readposts-usingQueryDSL to back
+[33m60d6f34[m[33m ([m[1;31morigin/133-back-fix-postservice-readposts-usingQueryDSL[m[33m, [m[1;32m133-back-fix-postservice-readposts-usingQueryDSL[m[33m)[m HEAD@{51}: commit: Fix : readPosts 필요 없는 코드 제거 [#133]
+[33mf5bcc48[m HEAD@{52}: commit: Feat : readPosts를 상황에 따른 5개의 메서드로 분리 및 구현 완료 [#133]
+[33m75cb4e1[m HEAD@{53}: commit: Feat : readPosts를 상황에 따른 5개의 메서드로 분리 [#133]
+[33md941a85[m HEAD@{54}: commit: Fix : readPosts QueryDSL 구현 (구현 완료)[#133]
+[33m900ecb0[m HEAD@{55}: checkout: moving from back to 133-back-fix-postservice-readposts-usingQueryDSL
+[33me52a00c[m[33m ([m[1;31morigin/feat/#139-Follow-List[m[33m)[m HEAD@{56}: pull: Fast-forward
+[33m54b7d36[m HEAD@{57}: checkout: moving from 142-back-fix-postserviceimpl-패키지-긴급-변경 to back
+[33md4d3feb[m[33m ([m[1;31morigin/142-back-fix-postserviceimpl-패키지-긴급-변경[m[33m, [m[1;32m142-back-fix-postserviceimpl-패키지-긴급-변경[m[33m)[m HEAD@{58}: reset: moving to HEAD
+[33md4d3feb[m[33m ([m[1;31morigin/142-back-fix-postserviceimpl-패키지-긴급-변경[m[33m, [m[1;32m142-back-fix-postserviceimpl-패키지-긴급-변경[m[33m)[m HEAD@{59}: commit: Fix: postService 불필요한 메서드 제거 및 Impl과 동기화
+[33maf2d008[m HEAD@{60}: commit: Fix: poserService 불필요한 메서드 제거 및 Impl과 동기화
+[33m54b7d36[m HEAD@{61}: checkout: moving from back to 142-back-fix-postserviceimpl-패키지-긴급-변경
+[33m54b7d36[m HEAD@{62}: checkout: moving from 142-back-fix-postserviceimpl-패키지-긴급-변경 to back
+[33m54b7d36[m HEAD@{63}: checkout: moving from back to 142-back-fix-postserviceimpl-패키지-긴급-변경
+[33m54b7d36[m HEAD@{64}: pull: Fast-forward
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{65}: checkout: moving from 102-back-feat-postservice-deletePost to back
+[33m2c3530b[m[33m ([m[1;31morigin/102-back-feat-postservice-deletePost[m[33m, [m[1;32m102-back-feat-postservice-deletePost[m[33m)[m HEAD@{66}: checkout: moving from 133-back-fix-postservice-readposts-usingQueryDSL to 102-back-feat-postservice-deletePost
+[33m900ecb0[m HEAD@{67}: commit: Fix : readPosts QueryDSL 구현 (구현중)[#133]
+[33mf749b97[m HEAD@{68}: commit: Fix : readPosts QueryDSL 구현 (구현중)[#133]
+[33m876739c[m HEAD@{69}: checkout: moving from 96-back-feat-postservice-readPosts to 133-back-fix-postservice-readposts-usingQueryDSL
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{70}: checkout: moving from 133-back-fix-postservice-readposts-usingQueryDSL to 96-back-feat-postservice-readPosts
+[33m876739c[m HEAD@{71}: checkout: moving from 96-back-feat-postservice-readPosts to 133-back-fix-postservice-readposts-usingQueryDSL
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{72}: checkout: moving from 111-back-feat-postservice-bookmarkcreate-delete-구현 to 96-back-feat-postservice-readPosts
+[33m3645acc[m[33m ([m[1;31morigin/111-back-feat-postservice-bookmarkcreate-delete-구현[m[33m, [m[1;32m111-back-feat-postservice-bookmarkcreate-delete-구현[m[33m)[m HEAD@{73}: commit: Fix : bookMarkService:deleteBookMark 쿼리 개선(join 삭제) [#111]
+[33m828fcbe[m HEAD@{74}: checkout: moving from 110-back-feat-postservice-deletelike-구현 to 111-back-feat-postservice-bookmarkcreate-delete-구현
+[33m554b47c[m[33m ([m[1;31morigin/110-back-feat-postservice-deletelike-구현[m[33m, [m[1;32m110-back-feat-postservice-deletelike-구현[m[33m)[m HEAD@{75}: commit: Fix : postLikedService 중 deleteLike 쿼리 개선 및 다중 컬럼 유니크 지정 [#110]
+[33mdab40ca[m HEAD@{76}: checkout: moving from 103-back-feat-postservice-readcomments-구현 to 110-back-feat-postservice-deletelike-구현
+[33m95752ae[m[33m ([m[1;31morigin/103-back-feat-postservice-readcomments-구현[m[33m, [m[1;32m103-back-feat-postservice-readcomments-구현[m[33m)[m HEAD@{77}: commit: Fix : PostService 중 readComment 출력 순서를 createdAt 기준으로 내림차순으로 변경 [#103]
+[33me491a3b[m HEAD@{78}: checkout: moving from 102-back-feat-postservice-deletePost to 103-back-feat-postservice-readcomments-구현
+[33m2c3530b[m[33m ([m[1;31morigin/102-back-feat-postservice-deletePost[m[33m, [m[1;32m102-back-feat-postservice-deletePost[m[33m)[m HEAD@{79}: commit: Fix : PostService 중 deletePost 에 존재하는 주석 삭제 [#102]
+[33m5b57612[m HEAD@{80}: commit: Fix : PostService 중 deletePost 에 userId 매개변수 추가[#102]
+[33m2c63cb0[m HEAD@{81}: checkout: moving from back to 102-back-feat-postservice-deletePost
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{82}: checkout: moving from 106-back-feat-postservice-updatecomment-구현 to back
+[33m891420c[m[33m ([m[1;31morigin/106-back-feat-postservice-updatecomment-구현[m[33m, [m[1;32m106-back-feat-postservice-updatecomment-구현[m[33m)[m HEAD@{83}: reset: moving to HEAD
+[33m891420c[m[33m ([m[1;31morigin/106-back-feat-postservice-updatecomment-구현[m[33m, [m[1;32m106-back-feat-postservice-updatecomment-구현[m[33m)[m HEAD@{84}: checkout: moving from 103-back-feat-postservice-readcomments-구현 to 106-back-feat-postservice-updatecomment-구현
+[33me491a3b[m HEAD@{85}: checkout: moving from 104-back-feat-postservice-createpost-구현 to 103-back-feat-postservice-readcomments-구현
+[33m0037b76[m[33m ([m[1;31morigin/104-back-feat-postservice-createpost-구현[m[33m, [m[1;32m104-back-feat-postservice-createpost-구현[m[33m)[m HEAD@{86}: checkout: moving from 102-back-feat-postservice-deletePost to 104-back-feat-postservice-createpost-구현
+[33m2c63cb0[m HEAD@{87}: checkout: moving from 108-back-fix-postservice-createlike-구현 to 102-back-feat-postservice-deletePost
+[33m24fde6c[m[33m ([m[1;31morigin/108-back-fix-postservice-createlike-구현[m[33m, [m[1;32m108-back-fix-postservice-createlike-구현[m[33m)[m HEAD@{88}: commit: Fix: postLikedService : createLike 중 userId 추가 구현 [#108]
+[33mb60d4e7[m HEAD@{89}: checkout: moving from 104-back-feat-postservice-createpost-구현 to 108-back-fix-postservice-createlike-구현
+[33m0037b76[m[33m ([m[1;31morigin/104-back-feat-postservice-createpost-구현[m[33m, [m[1;32m104-back-feat-postservice-createpost-구현[m[33m)[m HEAD@{90}: commit: Fix: CommentService : createComment 중 userId 추가 구현 [#104]
+[33m54a2c38[m HEAD@{91}: checkout: moving from 103-back-feat-postservice-readcomments-구현 to 104-back-feat-postservice-createpost-구현
+[33me491a3b[m HEAD@{92}: checkout: moving from 111-back-feat-postservice-bookmarkcreate-delete-구현 to 103-back-feat-postservice-readcomments-구현
+[33m828fcbe[m HEAD@{93}: reset: moving to HEAD
+[33m828fcbe[m HEAD@{94}: commit: Feat: PostService : deleteBookMark 구현 [#111]
+[33mae88370[m HEAD@{95}: commit: Fix: PostService : createBookMark 수정 [#111]
+[33m33e0971[m HEAD@{96}: commit: Feat: PostService : webConfig 추가 [#111]
+[33m4bfb93c[m HEAD@{97}: commit: Feat: PostService : createBookMark 구현 [#111]
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{98}: checkout: moving from back to 111-back-feat-postservice-bookmarkcreate-delete-구현
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{99}: checkout: moving from 111-back-feat-postservice-bookmarkcreate-delete-구현 to back
+[33mdab40ca[m HEAD@{100}: checkout: moving from 110-back-feat-postservice-deletelike-구현 to 111-back-feat-postservice-bookmarkcreate-delete-구현
+[33mdab40ca[m HEAD@{101}: checkout: moving from back to 110-back-feat-postservice-deletelike-구현
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{102}: checkout: moving from 111-back-feat-postservice-bookmarkcreate-delete-구현 to back
+[33mdab40ca[m HEAD@{103}: checkout: moving from back to 111-back-feat-postservice-bookmarkcreate-delete-구현
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{104}: checkout: moving from 111-back-feat-postservice-bookmarkcreate-delete-구현 to back
+[33mdab40ca[m HEAD@{105}: checkout: moving from 110-back-feat-postservice-deletelike-구현 to 111-back-feat-postservice-bookmarkcreate-delete-구현
+[33mdab40ca[m HEAD@{106}: checkout: moving from 111-back-feat-postservice-bookmarkcreate-delete-구현 to 110-back-feat-postservice-deletelike-구현
+[33mdab40ca[m HEAD@{107}: checkout: moving from 111-back-feat-postservice-bookmarkcreate-delete-구현 to 111-back-feat-postservice-bookmarkcreate-delete-구현
+[33mdab40ca[m HEAD@{108}: checkout: moving from 110-back-feat-postservice-deletelike-구현 to 111-back-feat-postservice-bookmarkcreate-delete-구현
+[33mdab40ca[m HEAD@{109}: commit: Feat: PostService : deleteLike 구현 [#110]
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{110}: checkout: moving from 109-back-fix-postservice-createpost-수정 to 110-back-feat-postservice-deletelike-구현
+[33me7b7f79[m[33m ([m[1;32m109-back-fix-postservice-createpost-수정[m[33m)[m HEAD@{111}: commit: Fix: PostService : createPost 수정 (wordId 입력값 생성 및 header를 통한 userId 입력 생성) [#109]
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{112}: checkout: moving from 108-back-fix-postservice-createlike-구현 to 109-back-fix-postservice-createpost-수정
+[33mb60d4e7[m HEAD@{113}: commit: Feat: PostService : createLike 구현 [#108]
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{114}: checkout: moving from 107-back-feat-postservice-deleteComment-구현 to 108-back-fix-postservice-createlike-구현
+[33mc84e493[m[33m ([m[1;31morigin/107-back-feat-postservice-deleteComment-구현[m[33m, [m[1;32m107-back-feat-postservice-deleteComment-구현[m[33m)[m HEAD@{115}: commit: Feat: PostService : createPost deleteComment 구현 [#107]
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{116}: checkout: moving from 106-back-feat-postservice-updatecomment-구현 to 107-back-feat-postservice-deleteComment-구현
+[33m891420c[m[33m ([m[1;31morigin/106-back-feat-postservice-updatecomment-구현[m[33m, [m[1;32m106-back-feat-postservice-updatecomment-구현[m[33m)[m HEAD@{117}: commit: Feat: PostService : createPost updateComment 구현 [#106]
+[33mae88c0a[m HEAD@{118}: checkout: moving from 104-back-feat-postservice-createpost-구현 to 106-back-feat-postservice-updatecomment-구현
+[33m54a2c38[m HEAD@{119}: commit: Fix: PostService : createPost createService 이주 및 구현 [#104]
+[33m4d04b20[m HEAD@{120}: checkout: moving from 106-back-feat-postservice-updatecomment-구현 to 104-back-feat-postservice-createpost-구현
+[33mae88c0a[m HEAD@{121}: commit: Feat: PostService : updatePost 구현 [#106]
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{122}: checkout: moving from 104-back-feat-postservice-createpost-구현 to 106-back-feat-postservice-updatecomment-구현
+[33m4d04b20[m HEAD@{123}: checkout: moving from 102-back-feat-postservice-deletePost to 104-back-feat-postservice-createpost-구현
+[33m2c63cb0[m HEAD@{124}: checkout: moving from 103-back-feat-postservice-readcomments-구현 to 102-back-feat-postservice-deletePost
+[33me491a3b[m HEAD@{125}: checkout: moving from 104-back-feat-postservice-createpost-구현 to 103-back-feat-postservice-readcomments-구현
+[33m4d04b20[m HEAD@{126}: commit: Fix: PostService : createPost 구현 [#104]
+[33m2752f0c[m HEAD@{127}: commit: Fix: comment 관련 메서드 이름 변경 [#104]
+[33mdf87168[m HEAD@{128}: commit: Fix: comment 관련 메서드 이름 변경 [#104]
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{129}: checkout: moving from 103-back-feat-postservice-readcomments-구현 to 104-back-feat-postservice-createpost-구현
+[33me491a3b[m HEAD@{130}: commit: Feat: PostService: readComments 구현 [#103]
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{131}: checkout: moving from 102-back-feat-postservice-deletePost to 103-back-feat-postservice-readcomments-구현
+[33m2c63cb0[m HEAD@{132}: commit: Fix: updatePost 중 save JPA 메서드 삭제 [#102]
+[33md1358cc[m HEAD@{133}: commit: Feat: queryDSL을 이용한 deletePost 구현 [#102]
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{134}: checkout: moving from 94-back-fix-repo-fix-package to 102-back-feat-postservice-deletePost
+[33mceeb645[m[33m ([m[1;32m94-back-fix-repo-fix-package[m[33m)[m HEAD@{135}: commit: Feat: queryDSL을 이용한 readPosts 재구현 (projection 미구현) [#96]
+[33m83edc91[m HEAD@{136}: commit: Feat: queryDSL을 이용한 readPosts 재구현(구현중) [#96]
+[33m4fffac8[m[33m ([m[1;31morigin/94-back-fix-repo-fix-package[m[33m)[m HEAD@{137}: checkout: moving from back to 94-back-fix-repo-fix-package
+[33mbd1d47e[m[33m ([m[1;31morigin/feat/#97-Read-User-List[m[33m, [m[1;31morigin/feat/#112-Read-User-Info[m[33m, [m[1;31morigin/96-back-feat-postservice-readPosts[m[33m, [m[1;31morigin/109-back-fix-postservice-createpost-수정[m[33m, [m[1;32m96-back-feat-postservice-readPosts[m[33m)[m HEAD@{138}: pull: Fast-forward
+[33m8b5cf9f[m HEAD@{139}: checkout: moving from 94-back-fix-repo-fix-package to back
+[33m4fffac8[m[33m ([m[1;31morigin/94-back-fix-repo-fix-package[m[33m)[m HEAD@{140}: commit: Fix: custom 패키지 긴급 변경 [#94]
+[33m8b5cf9f[m HEAD@{141}: checkout: moving from back to 94-back-fix-repo-fix-package
+[33m8b5cf9f[m HEAD@{142}: pull: Fast-forward
+[33mfb925a6[m[33m ([m[1;31morigin/feat/#81-User-Update[m[33m)[m HEAD@{143}: checkout: moving from feat/#83-Post-Service-readPosts to back
+[33maac4594[m[33m ([m[1;31morigin/feat/#83-Post-Service-readPosts[m[33m, [m[1;32mfeat/#83-Post-Service-readPosts[m[33m)[m HEAD@{144}: reset: moving to HEAD
+[33maac4594[m[33m ([m[1;31morigin/feat/#83-Post-Service-readPosts[m[33m, [m[1;32mfeat/#83-Post-Service-readPosts[m[33m)[m HEAD@{145}: checkout: moving from feat/#83-Post-Service-readPosts to feat/#83-Post-Service-readPosts
+[33maac4594[m[33m ([m[1;31morigin/feat/#83-Post-Service-readPosts[m[33m, [m[1;32mfeat/#83-Post-Service-readPosts[m[33m)[m HEAD@{146}: checkout: moving from feat/#87-Post-Service-readPostByPostId to feat/#83-Post-Service-readPosts
+[33m5808656[m[33m ([m[1;31morigin/feat/#87-Post-Service-readPostByPostId[m[33m, [m[1;32mfeat/#87-Post-Service-readPostByPostId[m[33m)[m HEAD@{147}: checkout: moving from feat/#88-Post-Service-updatePost to feat/#87-Post-Service-readPostByPostId
+[33m5d19ed2[m[33m ([m[1;31morigin/feat/#88-Post-Service-updatePost[m[33m, [m[1;32mfeat/#88-Post-Service-updatePost[m[33m)[m HEAD@{148}: commit: Feat: 추가 - PostServiceImpl:updatePost 메서드 구현 [#88]
+[33mfb925a6[m[33m ([m[1;31morigin/feat/#81-User-Update[m[33m)[m HEAD@{149}: checkout: moving from feat/#87-Post-Service-readPostByPostId to feat/#88-Post-Service-updatePost
+[33m5808656[m[33m ([m[1;31morigin/feat/#87-Post-Service-readPostByPostId[m[33m, [m[1;32mfeat/#87-Post-Service-readPostByPostId[m[33m)[m HEAD@{150}: commit: Feat: 추가 - PostServiceImpl:readPostByPostId 메서드 재구현 [#87]
+[33m1e3d581[m HEAD@{151}: commit: Feat: 추가 - PostServiceImpl:readPostByPostId 메서드 구현 [#87]
+[33mcd996f6[m HEAD@{152}: checkout: moving from feat/#83-Post-Service-readPosts to feat/#87-Post-Service-readPostByPostId
+[33maac4594[m[33m ([m[1;31morigin/feat/#83-Post-Service-readPosts[m[33m, [m[1;32mfeat/#83-Post-Service-readPosts[m[33m)[m HEAD@{153}: checkout: moving from feat/#87-Post-Service-readPostByPostId to feat/#83-Post-Service-readPosts
+[33mcd996f6[m HEAD@{154}: checkout: moving from feat/#83-Post-Service-readPosts to feat/#87-Post-Service-readPostByPostId
+[33maac4594[m[33m ([m[1;31morigin/feat/#83-Post-Service-readPosts[m[33m, [m[1;32mfeat/#83-Post-Service-readPosts[m[33m)[m HEAD@{155}: checkout: moving from feat/#87-Post-Service-readPostByPostId to feat/#83-Post-Service-readPosts
+[33mcd996f6[m HEAD@{156}: commit: Feat: 추가 - PostServiceImpl:readPostByPostId 메서드 생성 [#87]
+[33mfb925a6[m[33m ([m[1;31morigin/feat/#81-User-Update[m[33m)[m HEAD@{157}: checkout: moving from feat/#83-Post-Service-readPosts to feat/#87-Post-Service-readPostByPostId
+[33maac4594[m[33m ([m[1;31morigin/feat/#83-Post-Service-readPosts[m[33m, [m[1;32mfeat/#83-Post-Service-readPosts[m[33m)[m HEAD@{158}: commit: Feat: 추가 - PostServiceImpl:readPosts repo method name 변경 [#83]
+[33m7ddb751[m HEAD@{159}: commit: Feat: 추가 - PostServiceImpl:readPosts 페이징 구현 [#83]
+[33ma8359db[m HEAD@{160}: commit: Feat: 추가 - PostServiceImpl:readPosts NativeSQL 구현(word, page 제외) [#83]
+[33m6e06d55[m HEAD@{161}: commit: Feat: 추가 - PostServiceImpl:readPosts NativeSQL 변경 [#83]
+[33mf3c5846[m HEAD@{162}: commit: Feat: 추가 - PostServiceImpl:readPosts 기본 구현 [#83]
+[33mfb925a6[m[33m ([m[1;31morigin/feat/#81-User-Update[m[33m)[m HEAD@{163}: checkout: moving from back to feat/#83-Post-Service-readPosts
+[33mfb925a6[m[33m ([m[1;31morigin/feat/#81-User-Update[m[33m)[m HEAD@{164}: pull: Fast-forward
+[33md002dbf[m[33m ([m[1;31morigin/feat/#74-Read-User[m[33m)[m HEAD@{165}: checkout: moving from update to back
+[33m621b4f0[m[33m ([m[1;31morigin/feat/#66-Post-Controller[m[33m, [m[1;32mupdate[m[33m, [m[1;32mfeat/#66-Post-Controller[m[33m)[m HEAD@{166}: checkout: moving from feat/#75-PostService to update
+[33mc7a3b9c[m[33m ([m[1;31morigin/feat/#75-PostService[m[33m, [m[1;32mfeat/#75-PostService[m[33m)[m HEAD@{167}: commit: Refactor: 수정 - PostServiceImpl 시간입력 삭제 [#75]
+[33m802cd57[m HEAD@{168}: commit: Refactor: 수정 - Post Entity Method 삭제 [#75]
+[33m9f07c15[m HEAD@{169}: commit: Init: 설정- QueryDSL 초기 오류 수정 [#75]
+[33mc5c5356[m HEAD@{170}: commit: Init: 설정- QueryDSL 초기 설정 구현 [#75]
+[33mc1a787d[m HEAD@{171}: commit: Feat: 작성 - PostService - createPost 구현 [#75]
+[33md002dbf[m[33m ([m[1;31morigin/feat/#74-Read-User[m[33m)[m HEAD@{172}: checkout: moving from back to feat/#75-PostService
+[33md002dbf[m[33m ([m[1;31morigin/feat/#74-Read-User[m[33m)[m HEAD@{173}: pull: Fast-forward
+[33m2fb176b[m[33m ([m[1;31morigin/feat/#65-User-Word-Controller[m[33m)[m HEAD@{174}: checkout: moving from feat/#66-Post-Controller to back
+[33m621b4f0[m[33m ([m[1;31morigin/feat/#66-Post-Controller[m[33m, [m[1;32mupdate[m[33m, [m[1;32mfeat/#66-Post-Controller[m[33m)[m HEAD@{175}: commit: Refactor: 변경 - DTOs 변경 및 RequestBody 오류 관리 [#66]
+[33m1900a6c[m HEAD@{176}: commit: Feat: 작성 - DeleteLikeOutDTO 파일 위치 변경 [#66]
+[33mee31bdb[m HEAD@{177}: commit: Feat: 작성 - Post Controller 구현 [#66]
+[33md661da4[m HEAD@{178}: commit: Feat: 작성 - Post Controller 구현 [#66]
+[33m2fb176b[m[33m ([m[1;31morigin/feat/#65-User-Word-Controller[m[33m)[m HEAD@{179}: checkout: moving from back to feat/#66-Post-Controller
+[33m2fb176b[m[33m ([m[1;31morigin/feat/#65-User-Word-Controller[m[33m)[m HEAD@{180}: pull: Fast-forward
+[33ma97ed58[m HEAD@{181}: checkout: moving from back to back
+[33ma97ed58[m HEAD@{182}: checkout: moving from feat/#53-Create-Entity to back
+[33m5f3da24[m[33m ([m[1;31morigin/feat/#53-Create-Entity[m[33m, [m[1;32mfeat/#53-Create-Entity[m[33m)[m HEAD@{183}: checkout: moving from back to feat/#53-Create-Entity
+[33ma97ed58[m HEAD@{184}: reset: moving to HEAD
+[33ma97ed58[m HEAD@{185}: checkout: moving from main to back
+[33m99b4c9c[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mmain[m[33m)[m HEAD@{186}: clone: from https://github.com/Project-0123/0123.git
