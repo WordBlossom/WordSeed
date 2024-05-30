@@ -51,7 +51,6 @@ public class PostServiceImpl implements PostService {
                 .build();
 
         Post result = postRepo.save(post);
-
         CreatePostOutDTO createPostOutDTO =
                 CreatePostOutDTO.builder()
                         .content(result.getContent())
