@@ -22,7 +22,7 @@ public class Post extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
-    @Column(length = 6000)
+    @Column(length = 7000)
     private String content;
     private String url;
     @Column(nullable = false)
