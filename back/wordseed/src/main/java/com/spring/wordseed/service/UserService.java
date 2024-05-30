@@ -23,5 +23,6 @@ public interface UserService {
     ReadUserOutDTOs readUsers(ReadUserInDTOs readUserInDTOs)throws Exception;
     ReadUserInfoByIdOutDTO readUserInfo(long srcUserId, long dstUserId) throws Exception;
     ReadUserOutDTOs readFollowers(ReadFollowerInDTOs readFollowerInDTOs) throws Exception;
-    TokenDTO getTokens(UserInfoDTO userInfoDTO) throws Exception;
+    TokenDTO oauthLogin(UserInfoDTO userInfoDTO) throws Exception;
+    String getRefreshToken(long userId) throws Exception;
 }

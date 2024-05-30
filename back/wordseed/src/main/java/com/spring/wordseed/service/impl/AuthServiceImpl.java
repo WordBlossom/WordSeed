@@ -1,15 +1,15 @@
 package com.spring.wordseed.service.impl;
 
+import com.spring.wordseed.dto.tool.TokenDTO;
 import com.spring.wordseed.service.AuthService;
 import com.spring.wordseed.encoder.TokenEncoder;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import jakarta.security.auth.message.AuthException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -22,21 +22,22 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String[] createToken(long userId) throws Exception {
+    public TokenDTO createToken(long userId) throws Exception {
         String accessToken = tokenEncoder.createAccessToken(String.valueOf(userId));
         String refreshToken = tokenEncoder.createRefreshToken(String.valueOf(userId));
-        return new String[] {accessToken, refreshToken};
+        return TokenDTO.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
     @Override
     public String validateToken(String token) throws Exception {
         try{
             Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-            Date expiration = claims.getExpiration();
-            if(expiration.before(new Date(System.currentTimeMillis()))) {
-                throw new JwtException("Authorization Expired");
-            }
             return claims.getSubject();
+        }catch (ExpiredJwtException e){
+            throw new ExpiredJwtException(e.getHeader(), e.getClaims(), e.getMessage());
         }catch(JwtException e) {
             throw new AuthException();
         }

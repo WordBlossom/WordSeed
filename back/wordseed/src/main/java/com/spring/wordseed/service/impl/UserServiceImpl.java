@@ -12,13 +12,13 @@ import com.spring.wordseed.dto.out.UpdateUserOutDTO;
 import com.spring.wordseed.dto.tool.TokenDTO;
 import com.spring.wordseed.dto.tool.UserDTO;
 import com.spring.wordseed.dto.tool.UserInfoDTO;
-import com.spring.wordseed.encoder.JwtTokenEncoder;
 import com.spring.wordseed.entity.User;
 import com.spring.wordseed.entity.UserInfo;
 import com.spring.wordseed.enu.Informable;
 import com.spring.wordseed.enu.UserType;
 import com.spring.wordseed.repo.UserInfoRepo;
 import com.spring.wordseed.repo.UserRepo;
+import com.spring.wordseed.service.AuthService;
 import com.spring.wordseed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,13 +32,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final UserInfoRepo userInfoRepo;
-    private final JwtTokenEncoder jwtTokenEncoder;
+    private final AuthService authService;
 
     @Autowired
-    public UserServiceImpl(UserRepo userRepo, UserInfoRepo userInfoRepo, JwtTokenEncoder jwtTokenEncoder) {
+    public UserServiceImpl(UserRepo userRepo, UserInfoRepo userInfoRepo, AuthService authService) {
         this.userRepo = userRepo;
         this.userInfoRepo = userInfoRepo;
-        this.jwtTokenEncoder = jwtTokenEncoder;
+        this.authService = authService;
     }
     @Override
     public User createUser(CreateUserInDTO createUserInDTO) throws Exception{
@@ -139,7 +139,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public TokenDTO getTokens(UserInfoDTO userInfoDTO) throws Exception {
+    public TokenDTO oauthLogin(UserInfoDTO userInfoDTO) throws Exception {
         User user = userRepo.findByOauthIdAndProviderAndEmail(userInfoDTO.getOauthId(),
                 userInfoDTO.getProvider(), userInfoDTO.getEmail());
         if(user == null) {
@@ -150,12 +150,17 @@ public class UserServiceImpl implements UserService {
                     .provider(userInfoDTO.getProvider())
                     .build());
         }
-        String accessToken = jwtTokenEncoder.createAccessToken(user.getUserId().toString());
-        String refreshToken = jwtTokenEncoder.createRefreshToken(user.getUserId().toString());
-        user.setRefreshToken(refreshToken);
+        TokenDTO tokenDTO = authService.createToken(user.getUserId());
+        user.setRefreshToken(tokenDTO.getRefreshToken());
         return TokenDTO.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
+                .accessToken(tokenDTO.getAccessToken())
+                .refreshToken(tokenDTO.getRefreshToken())
                 .build();
+    }
+
+    @Override
+    public String getRefreshToken(long userId) throws Exception {
+        User user = userRepo.findById(userId).orElseThrow(IllegalArgumentException::new);
+        return user.getRefreshToken();
     }
 }

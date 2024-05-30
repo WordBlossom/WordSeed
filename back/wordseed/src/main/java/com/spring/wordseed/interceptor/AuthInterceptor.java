@@ -31,7 +31,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             String token = authorizationHeader.substring(AUTHORIZATION_PREFIX.length() + 1);
             long userId = Long.parseLong(authService.validateToken(token));
             request.setAttribute("userId", userId);
-        }catch (NumberFormatException e) {
+        }catch (Exception e) {
             throw new AuthException();
         }
         return HandlerInterceptor.super.preHandle(request, response, handler);
