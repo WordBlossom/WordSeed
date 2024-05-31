@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import FollowButton from "@/components/Button/follow-button";
 import MoreVertButton from "@/components/Button/more-vert-button";
@@ -39,7 +40,11 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
     <div className={styles["interface-bottom-container"]}>
       <div className={styles["interface-bottom-common-wrapper"]}>
         <div className={styles["artist-wrapper"]}>
-          <span className={styles["artist-name"]}>{userName}</span>
+          {/* <span className={styles["artist-name"]}>{userName}</span> */}
+          <Link className={styles["artist-name"]} href={`/profile/${userId}`}>
+            <span>{userName}</span>
+          </Link>
+
           {myId !== userId && (
             <FollowButton
               userId={userId}
@@ -74,6 +79,7 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
             postId={postId}
             wordId={wordId}
             postType={postType}
+            userId={userId}
           />
         </>
       )}

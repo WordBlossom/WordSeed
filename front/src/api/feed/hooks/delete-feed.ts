@@ -8,6 +8,7 @@ type useDeleteFeedOptions = {
   postId: FeedDetail["postId"];
   wordId: FeedDetail["wordId"];
   postType: FeedDetail["postType"];
+  userId: FeedDetail["userId"];
   config?: MutationConfig<typeof deleteFeed>;
 };
 
@@ -15,6 +16,7 @@ export const useDeleteFeed = ({
   postId,
   wordId,
   postType,
+  userId,
 }: useDeleteFeedOptions) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -72,6 +74,11 @@ export const useDeleteFeed = ({
     onSuccess: () => {
       queryClient.invalidateQueries(wordFeedListQueryKey);
       queryClient.invalidateQueries(myFeedListQueryKey);
+
+      // feeddetail 화면이면 profile 페이지로 돌아감
+      if (pathname.split("/")[1] === "feed") {
+        router.replace(`/profile/${userId}`);
+      }
     },
     onError: (error, newData, context) => {
       console.log(context);
