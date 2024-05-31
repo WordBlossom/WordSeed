@@ -55,10 +55,7 @@ export default function SwiperComponent({
         contentDiv.scrollTop = 0;
       });
     },
-    onReachEnd: () => {
-      if (data?.pages.length === 1) return;
-      fetchNextPage();
-    },
+    onReachEnd: () => fetchNextPage(),
   };
 
   // swiperKey가 달라져서 새로운 swiper가 생성되어
