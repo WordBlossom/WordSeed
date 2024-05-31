@@ -81,7 +81,14 @@ export const useDeleteFeed = ({
       }
     },
     onError: (error, newData, context) => {
-      console.log(context);
+      if (context) {
+        Object.values(context).forEach((previousFeedLists) => {
+          previousFeedLists.forEach((oldWordFeedList) => {
+            const queryKey = oldWordFeedList[0];
+            queryClient.setQueryData(queryKey, oldWordFeedList[1]);
+          });
+        });
+      }
     },
   });
 };
