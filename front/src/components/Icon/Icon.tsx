@@ -28,6 +28,7 @@ export type IconType =
   | "profileEdit"
   | "audioPlay"
   | "audioStop"
+  | "moreVert"
   | "sun"
   | "water";
 
