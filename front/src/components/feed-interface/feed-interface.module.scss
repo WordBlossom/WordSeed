@@ -41,6 +41,7 @@
 
 .artist-name {
   @include font($fs: $h3, $fw: $regular, $fc: $gray, $ff: $noto-sans);
+  text-decoration: none;
 }
 
 .button-wrapper {
