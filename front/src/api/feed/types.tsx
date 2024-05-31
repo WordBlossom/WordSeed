@@ -115,7 +115,3 @@ export type PostFeedDTO = {
   postAlign: PostAlign;
   postVisibility: PostVisibility;
 };
-
-export type DeleteFeedDTO = {
-  postId: FeedDetail["postId"];
-};
