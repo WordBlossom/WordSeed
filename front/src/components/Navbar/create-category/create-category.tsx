@@ -10,8 +10,8 @@ export default function CreateCategory() {
   const categories: { [key: string]: CategoryType } = {
     글: "TEXT",
     그림: "PAINT",
-    영상: "MUSIC",
-    음악: "VIDEO",
+    영상: "VIDEO",
+    음악: "MUSIC",
   };
 
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
