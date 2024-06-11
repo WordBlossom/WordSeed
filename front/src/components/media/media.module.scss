@@ -1,0 +1,22 @@
+.media {
+  @include flex;
+  position: relative;
+  width: 100%;
+  height: inherit;
+  max-height: 100%;
+
+  img {
+    object-fit: contain;
+  }
+
+  &:has(video) {
+    @include shadow-drop1();
+    background-color: $light-gray;
+    height: fit-content;
+  }
+
+  video {
+    max-height: inherit;
+    width: inherit;
+  }
+}

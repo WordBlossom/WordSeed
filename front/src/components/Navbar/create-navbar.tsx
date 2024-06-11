@@ -33,10 +33,9 @@ export default function CreateNavbar() {
 
   // media 작품 임시 url 설정
   let url: string;
-  if (postType === "PAINT") url = "https://picsum.photos/200/300";
+  if (postType === "PAINT") url = "https://picsum.photos/800/1600";
   if (postType === "VIDEO")
-    url =
-      "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_5mb.mp4";
+    url = "https://cdn.pixabay.com/video/2024/03/31/206294_large.mp4";
   if (postType === "MUSIC")
     url = "https://sample-videos.com/audio/mp3/crowd-cheering.mp3";
 

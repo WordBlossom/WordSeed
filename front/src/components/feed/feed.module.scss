@@ -1,25 +1,3 @@
-// .content-container {
-//   width: 100%;
-//   flex-grow: 1;
-//   height: calc(100% - 8.75rem);
-//   padding: 3rem;
-//   overflow-y: scroll;
-
-//   .content-wrapper {
-//     @include flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     width: 100%;
-//     min-height: 100%;
-
-//     .content {
-//       @include font($fs: $body1);
-//       text-align: center;
-//       word-break: normal;
-//       width: 100%;
-//     }
-//   }
-// }
 .disable-touch {
   touch-action: none;
   * {
@@ -48,9 +26,13 @@
   justify-content: center;
   width: 100%;
   min-height: 100%;
+
+  &:not(:has(.text)) {
+    height: 100%;
+  }
 }
 
-.content {
+.text {
   @include font($fs: $body1);
   text-align: center;
   word-break: break-all;
