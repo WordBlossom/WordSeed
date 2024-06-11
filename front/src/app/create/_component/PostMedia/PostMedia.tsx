@@ -1,9 +1,8 @@
-import { Icon } from "@/components";
-import styles from "./PostMedia.module.scss";
-import createContentStore from "@/stores/create-content";
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import AudioPreview from "./AudioPreview/AudioPreview";
+import { Icon } from "@/components";
+import { Paint, Video, Music } from "@/components/media";
+import createContentStore from "@/stores/create-content";
+import styles from "./PostMedia.module.scss";
 
 export default function PostMedia() {
   const useContentStore = createContentStore();
@@ -59,11 +58,9 @@ export default function PostMedia() {
             />
           </div>
           <div className={styles["preview-wrapper"]}>
-            <div className={styles.media}>
-              {type === "PAINT" && <Image src={preview} alt="Preview" fill />}
-              {type === "VIDEO" && <video controls src={preview}></video>}
-              {type === "MUSIC" && <AudioPreview preview={preview} />}
-            </div>
+            {type === "PAINT" && <Paint dataUrl={preview} />}
+            {type === "VIDEO" && <Video dataUrl={preview} />}
+            {type === "MUSIC" && <Music dataUrl={preview} />}
           </div>
         </div>
       ) : (
