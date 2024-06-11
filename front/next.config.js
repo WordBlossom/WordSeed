@@ -25,6 +25,18 @@ module.exports = {
         port: "",
         // pathname: "",
       },
+      {
+        protocol: "https",
+        hostname: "sample-videos",
+        port: "",
+        // pathname: "",
+      },
+      {
+        protocol: "https",
+        hostname: "pixabay",
+        port: "",
+        // pathname: "",
+      },
     ],
   },
 };
