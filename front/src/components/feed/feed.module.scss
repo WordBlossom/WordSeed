@@ -32,9 +32,31 @@
   }
 }
 
+.title-word {
+  @include font($fs: $h3, $fc: $black, $fw: $bold, $ff: $noto-serif);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
 .text {
   @include font($fs: $body1);
-  text-align: center;
   word-break: break-all;
+  white-space: pre-wrap;
   width: 100%;
+  padding: 0 2rem 0 2rem;
+  border: none;
+  resize: none;
+  background-color: $white;
+}
+
+.alignLeft {
+  text-align: left;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.alignRight {
+  text-align: right;
 }
