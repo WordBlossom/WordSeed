@@ -2,8 +2,12 @@
   @include flex;
   position: relative;
   width: 100%;
-  height: inherit;
+  height: fit-content;
   max-height: 100%;
+
+  &:has(img) {
+    height: inherit;
+  }
 
   img {
     object-fit: contain;
@@ -12,7 +16,6 @@
   &:has(video) {
     @include shadow-drop1();
     background-color: $light-gray;
-    height: fit-content;
   }
 
   video {

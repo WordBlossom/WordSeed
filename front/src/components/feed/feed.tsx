@@ -6,14 +6,23 @@ type FeedContentProps = {
   feedData: FeedDetail;
 };
 
+const align = {
+  LEFT: "alignLeft",
+  CENTER: "alignCenter",
+  RIGHT: "alignRight",
+};
+
 export default function FeedContent({ feedData }: FeedContentProps) {
-  const { postType, url } = { ...feedData };
+  const { word, postAlign, content, postType, url } = { ...feedData };
 
   return (
     <div className={styles["content-container"]}>
       <div className={styles["content-wrapper"]}>
+        <span className={styles["title-word"]}>{word}</span>
         {postType === "TEXT" && (
-          <div className={styles["text"]}>{feedData.content}</div>
+          <p className={`${styles["text"]} ${styles[align[postAlign]]}`}>
+            {content}
+          </p>
         )}
         {postType === "PAINT" && <Paint dataUrl={url} />}
         {postType === "VIDEO" && <Video dataUrl={url} />}
