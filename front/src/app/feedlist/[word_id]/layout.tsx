@@ -8,14 +8,14 @@ import { MainFeedListDTO } from "@/api/feed/types";
 
 type FeedLayoutProps = {
   children: React.ReactNode;
-  params: { word_id?: number[] };
+  params: { word_id: number };
 };
 
 export default async function FeedLayout({
   children,
   params,
 }: FeedLayoutProps) {
-  const wordId = params.word_id && params.word_id[0];
+  const wordId = params.word_id;
 
   const queryClient = new QueryClient();
   const defaultParams: MainFeedListDTO = {

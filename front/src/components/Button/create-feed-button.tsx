@@ -4,7 +4,7 @@ import Button from "./Button";
 import Icon from "@/components/Icon/Icon";
 
 export default function CreateFeedButton() {
-  const wordId = useParams().word_id[0];
+  const wordId = useParams().word_id;
 
   return (
     <Link href={`/create/${wordId}`}>
