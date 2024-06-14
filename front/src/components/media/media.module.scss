@@ -1,25 +1,30 @@
-.media {
-  @include flex;
+.image-wrapper {
   position: relative;
   width: 100%;
-  height: fit-content;
-  max-height: 100%;
-
-  &:has(img) {
-    height: inherit;
-  }
+  height: 100%;
 
   img {
     object-fit: contain;
   }
+}
 
-  &:has(video) {
-    @include shadow-drop1();
-    background-color: $light-gray;
-  }
+.video-wrapper {
+  @include flex;
+  width: 100%;
+  height: 100%;
 
   video {
-    max-height: inherit;
-    width: inherit;
+    height: 100%;
+    width: 100%;
   }
+}
+
+.audio-wrapper {
+  @include flex;
+  width: 100%;
+}
+
+.shadow {
+  @include shadow-drop1();
+  background-color: $light-gray;
 }
