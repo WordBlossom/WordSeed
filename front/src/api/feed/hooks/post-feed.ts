@@ -22,6 +22,7 @@ export const usePostFeed = ({ wordId }: usePostFeedOptions) => {
       // 현재 작성한 작품까지 fetching할 수 있도록 해당 feedlist 페이지의 query invalidate
       queryClient.invalidateQueries({
         queryKey: invalidateQueryKey,
+        refetchType: "all",
       });
       // 작성한 wordId의 feedlist 페이지로 이동
       router.replace(`/feedlist/${wordId}`);
