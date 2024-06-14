@@ -8,11 +8,11 @@ import { useEffect } from "react";
 import useFeedTypeStateStore from "@/stores/feed-type";
 
 type FeedlistProps = {
-  params: { word_id?: number[] };
+  params: { word_id: number };
 };
 
 export default function Feedlist({ params }: FeedlistProps) {
-  const wordId = params.word_id && params.word_id[0];
+  const wordId = params.word_id;
   const { selectedType, isLatest } = useSearchFilterStateStore();
   const { setFeedType } = useFeedTypeStateStore();
   const postType = selectedType ? selectedType : DEFAULT_POST_TYPE;

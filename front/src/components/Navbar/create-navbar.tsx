@@ -1,12 +1,11 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { getQueryClient } from "@/lib/react-query";
 import { usePostFeed } from "@/api/feed/hooks/post-feed";
 import createContentStore from "@/stores/create-content";
+import { findWordseed } from "@/utils/findWordseed";
 import Button from "../Button/Button";
 import styles from "./navbar.module.scss";
-import { Wordseed } from "@/api/wordseed/types";
 
 export default function CreateNavbar() {
   const router = useRouter();
@@ -14,13 +13,7 @@ export default function CreateNavbar() {
   // 현재 말씨 찾기
   // wordseed query 중 wordId와 같은 말씨를 찾음
   const wordId = Number(useParams().word_id);
-  const queryClient = getQueryClient();
-  const wordseeds = queryClient
-    .getQueriesData({
-      queryKey: ["wordseed"],
-    })[0]
-    .slice(1) as Wordseed[];
-  const wordseed = wordseeds.filter((data) => data.wordId === wordId)[0].word;
+  const wordseed = findWordseed(wordId);
 
   // selectedCategory 형식으로 게시글 업로드 요청
   const {
@@ -33,7 +26,7 @@ export default function CreateNavbar() {
 
   // media 작품 임시 url 설정
   let url: string;
-  if (postType === "PAINT") url = "https://picsum.photos/800/1600";
+  if (postType === "PAINT") url = "https://picsum.photos/800/400";
   if (postType === "VIDEO")
     url = "https://cdn.pixabay.com/video/2024/03/31/206294_large.mp4";
   if (postType === "MUSIC")
