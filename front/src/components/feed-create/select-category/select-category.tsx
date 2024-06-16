@@ -1,8 +1,10 @@
-import Button from "@/components/Button/Button";
-import styles from "./create-category.module.scss";
-import createContentStore from "@/stores/create-content";
+"use client";
 
-export default function CreateCategory() {
+import createContentStore from "@/stores/create-content";
+import Button from "@/components/Button/Button";
+import styles from "./select-category.module.scss";
+
+export default function SelectCategory() {
   const useContentStore = createContentStore();
 
   type CategoryType = "TEXT" | "PAINT" | "MUSIC" | "VIDEO";
