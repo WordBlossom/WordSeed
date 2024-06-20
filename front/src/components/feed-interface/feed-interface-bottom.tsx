@@ -18,6 +18,10 @@ type FeedInterfaceProps = {
 export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
   const {
     userName,
+    word,
+    postAlign,
+    content,
+    url,
     userId,
     postId,
     wordId,
@@ -76,6 +80,10 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
           <MoreVertButton setShowPopover={setShowPopover} />
           <Popover
             showPopover={showPopover}
+            wordseed={word}
+            postAlign={postAlign}
+            content={content}
+            url={url}
             postId={postId}
             wordId={wordId}
             postType={postType}
