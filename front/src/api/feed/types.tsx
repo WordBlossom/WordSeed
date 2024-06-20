@@ -116,6 +116,15 @@ export type PostFeedDTO = {
   postVisibility: PostVisibility;
 };
 
+export type PutFeedDTO = {
+  postId: number;
+  content: string;
+  url: string;
+  postType: PostType;
+  postAlign: PostAlign;
+  postVisibility: PostVisibility;
+};
+
 export type DeleteFeedDTO = {
   postId: FeedDetail["postId"];
 };
