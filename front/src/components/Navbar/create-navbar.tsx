@@ -22,6 +22,7 @@ export default function CreateNavbar() {
     textContent: content,
     postVisibility,
     file,
+    cleanCreateContentState,
   } = createContentStore();
 
   // media 작품 임시 url 설정
@@ -33,6 +34,11 @@ export default function CreateNavbar() {
     url = "https://sample-videos.com/audio/mp3/crowd-cheering.mp3";
 
   const postFeed = usePostFeed({ wordId });
+
+  const handleCloseButtonClick = () => {
+    cleanCreateContentState();
+    router.back();
+  };
 
   const handleSubmitButtonClick = () => {
     if (postFeed.isPending) return;
@@ -56,7 +62,7 @@ export default function CreateNavbar() {
   return (
     <div>
       <div className={styles.navbar}>
-        <Button content={"닫기"} onClick={() => router.back()} />
+        <Button content={"닫기"} onClick={handleCloseButtonClick} />
         <header className={styles.wordseed}>{wordseed}</header>
         <Button content={"완료"} onClick={handleSubmitButtonClick} />
       </div>
