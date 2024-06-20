@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import createContentStore from "@/stores/create-content";
 import GetWork from "./get-work";
 import GetOtherWork from "./get-other-word";
@@ -16,28 +16,14 @@ const categories: { [key in MediaType]: string[] } = {
 };
 
 export default function CreateMedia() {
-  const { file, type, setFile, cleanFile } = createContentStore();
-  const [preview, setPreview] = useState<string>("");
+  const { previewUrl, type, setFile, cleanFile } = createContentStore();
   const [typeDesc, typeContent] = categories[type as MediaType];
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile: File | null = e.target.files ? e.target.files[0] : null;
-    if (selectedFile) {
-      setFile(selectedFile);
-      previewFile(selectedFile);
-    }
+    if (selectedFile) setFile(selectedFile);
   };
   // navigator.mediaDevices.getUserMedia();
-
-  const previewFile = (file: File) => {
-    const reader: FileReader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = (): void => {
-      if (typeof reader.result === "string") {
-        setPreview(reader.result);
-      }
-    };
-  };
 
   useEffect(() => {
     cleanFile();
@@ -45,14 +31,14 @@ export default function CreateMedia() {
 
   return (
     <main className={styles.container}>
-      {file && preview ? (
+      {previewUrl ? (
         <div className={styles["preview-container"]}>
           <GetOtherWork
             typeDesc={typeDesc}
             typeContent={typeContent}
             handleFileChange={handleFileChange}
           />
-          <MediaPreview preview={preview} />
+          <MediaPreview preview={previewUrl} />
         </div>
       ) : (
         <GetWork
