@@ -32,6 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
                         HttpMethod.DELETE.name()
                 )
                 .allowedHeaders("*")
+                .exposedHeaders("access-token", "refresh-token")
                 .allowCredentials(true);
     }
 
