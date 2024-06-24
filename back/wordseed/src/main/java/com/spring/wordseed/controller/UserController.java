@@ -84,4 +84,9 @@ public class UserController {
         followService.deleteFollow(deleteFollowInDTO);
         return ResponseEntity.status(HttpStatus.OK).body("SUCCESS");
     }
+
+    @GetMapping("/pass")
+    public ResponseEntity<String> pass() throws Exception{
+        return ResponseEntity.status(HttpStatus.OK).body("SUCCESS");
+    }
 }

@@ -32,6 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
                         HttpMethod.DELETE.name()
                 )
                 .allowedHeaders("*")
+                .exposedHeaders("access-token", "refresh-token")
                 .allowCredentials(true);
     }
 
@@ -39,6 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/user/**")
-                .addPathPatterns("/post/**");
+                .addPathPatterns("/post/**")
+                .addPathPatterns("/word/**");
     }
 }
