@@ -17,16 +17,17 @@ export default function WordseedContent({
   date,
   wordseed,
 }: WordseedContentProps) {
-  const params = { code: "4%2F0ATx3LY6Dw7hs3fXClUnzpa_8t7bMgpqP4-Qj5U_jkxNcH3MWySZ5QZNBWykIvpKs1RBOPA" }
+  const params = { code: "4%2F0ATx3LY6QK0fUUDal-gSI4IIGA_PJ1FIDhwbxWaVmuW6voHxomWag4M7FfxAwkjBeU7OF-A" }
 
 
   const loginHandler = async () => {
     const response = await axios.get(`${API_URL}/account/login/google/callback`, { params })
 
-    const refreshToken = response.headers["refresh"]
-    const token = response.headers["authorization"]
+    const refreshToken = await response.headers["refresh"]
+    const accessToken = await response.headers["authorization"]
 
-    console.log(response.headers)
+    localStorage.setItem("accessToken", accessToken)
+    localStorage.setItem("refreshToken", refreshToken)
   }
 
 
