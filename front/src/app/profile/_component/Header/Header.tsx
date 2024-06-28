@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function Header({ userId }: { userId: number }) {
   // 내 아이디
-  const myId = 4;
+  const myId = 1119;
   const { queryKey, queryFn } = userInfoQuery.userInfo(userId);
   const { data } = useQuery({ queryKey, queryFn });
 

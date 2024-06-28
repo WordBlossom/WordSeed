@@ -15,7 +15,7 @@ export default function CommentItem({ comment }: CommentItemProps) {
     commentId: comment.commentId,
     postId: comment.postId,
   });
-  const handleModifyClick = () => {};
+  const handleModifyClick = () => { };
   const handleDeleteClick = () => {
     if (confirm("삭제하시겠습니까?")) {
       deleteComment.mutate();
@@ -23,7 +23,7 @@ export default function CommentItem({ comment }: CommentItemProps) {
   };
 
   // 임시 myID
-  const myId = 4;
+  const myId = 1119;
 
   return (
     <div className={styles["comment-item"]}>

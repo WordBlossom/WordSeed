@@ -7,7 +7,7 @@ import { useFeedList } from "@/api/feed";
 import { useFeedProps } from "@/hooks/useFeedProps";
 
 export default function ContentCardList({ userId }: { userId: number }) {
-  const myId = 4;
+  const myId = 1119;
   const isMe = myId === userId;
 
   const [props] = useFeedProps(isMe);

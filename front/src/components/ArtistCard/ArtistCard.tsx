@@ -27,7 +27,7 @@ export function ArtistCardMemo({
   type,
 }: ArtistCardProps) {
   // 내 아이디
-  const myId = 4;
+  const myId = 1119;
 
   const followMutation = useListFollow(userId, "followUser", type);
   const unFollowMutation = useListFollow(userId, "unFollowUser", type);

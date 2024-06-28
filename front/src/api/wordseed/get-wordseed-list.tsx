@@ -6,11 +6,12 @@ import {
 } from "@tanstack/react-query";
 import { WordseedListDTO, WordseedList } from "./types";
 import { InfiniteQueryConfig } from "@/lib/react-query";
+import { axiosClient } from "@/lib/axios-client";
 
 const REQUEST_SIZE = 10;
 
 async function getWordseedList(params: WordseedListDTO): Promise<WordseedList> {
-  return axios.get(`/word/list`, { params });
+  return axiosClient.get(`/word/list`, { params });
 }
 
 type QueryFnType = typeof getWordseedList;

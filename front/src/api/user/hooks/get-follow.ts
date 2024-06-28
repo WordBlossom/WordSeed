@@ -70,7 +70,7 @@ export const useListFollow = (
         : ["FollowAuthorList"],
   };
 
-  const myId = 4;
+  const myId = 1119;
 
   const newData: InfiniteQueriesUpdater<AuthorList> = (previousEachData) => {
     const updatedPages = previousEachData?.pages.map((page) => {

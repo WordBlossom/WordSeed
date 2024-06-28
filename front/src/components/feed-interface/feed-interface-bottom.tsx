@@ -39,7 +39,7 @@ export default function FeedInterfaceBottom({ feedData }: FeedInterfaceProps) {
   }, [postId]);
 
   // 임시로 내 userId 설정, follow 버튼 렌더링 유무
-  const myId = 4;
+  const myId = 1119;
   return (
     <div className={styles["interface-bottom-container"]}>
       <div className={styles["interface-bottom-common-wrapper"]}>

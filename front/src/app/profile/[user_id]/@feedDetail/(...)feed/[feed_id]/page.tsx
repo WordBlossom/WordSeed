@@ -12,9 +12,9 @@ type FeedType = {
 };
 
 export default function Feed({ params }: FeedType) {
-  const myId = 4;
+  const myId = 1119;
   const feedId = Number(params.feed_id);
-  const isMe = myId === 4;
+  const isMe = myId === 1119;
 
   const filterFnc = (feedData: FeedDetail) => feedData.postId === feedId;
 

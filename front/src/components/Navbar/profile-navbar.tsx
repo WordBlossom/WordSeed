@@ -16,7 +16,7 @@ export default function ProfileNavbar({ userId }: ProfileNavbarProps) {
   const [isFilterHidden, setFilterIsHidden] = useState(true);
   // userId로 본인 여부 판단
   // 임시 본인 아이디 1
-  const myId = "1";
+  const myId = "1119";
   // 본인이면 내 작품, 북마크 표시
   // 본인 아니면 표시 안함
 

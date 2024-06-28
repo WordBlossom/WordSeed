@@ -13,7 +13,7 @@ export default async function FollowLayout({
 }: FollowLayoutProps) {
   const queryClient = new QueryClient();
 
-  const myId = 4;
+  const myId = 1119;
   const userId = Number(params.user_id);
 
   const followParams = {

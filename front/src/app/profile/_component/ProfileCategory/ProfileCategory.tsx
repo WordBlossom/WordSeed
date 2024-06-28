@@ -11,7 +11,7 @@ export default function ProfileCategory({
   params,
   categoryRef,
 }: ProfileCategoryProps) {
-  const myId = 4;
+  const myId = 1119;
   const userId = Number(params.user_id);
 
   return (

@@ -11,7 +11,7 @@ type UseAuthorListOptions = {
 };
 
 export function useAuthorList({ params, config }: UseAuthorListOptions) {
-  const { queryKey, queryFn } = authorQuery.authorList();
+  const { queryKey, queryFn } = authorQuery.clientAuthorList();
 
   return useInfiniteQuery({
     ...config,

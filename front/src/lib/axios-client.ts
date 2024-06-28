@@ -1,10 +1,10 @@
-"use server"
+
 import Axios from "axios";
 import { API_URL } from "@/config";
 import { cookies } from "next/headers";
 
 
-export const axios = Axios.create({
+export const axiosClient = Axios.create({
   baseURL: API_URL,
   withCredentials: true,
   headers: {
@@ -13,7 +13,7 @@ export const axios = Axios.create({
   },
 });
 
-axios.interceptors.request.use((config) => {
+axiosClient.interceptors.request.use((config) => {
   const auth_header = config.headers["x-auth-not-required"];
   if (auth_header) return config;
 
@@ -23,7 +23,7 @@ axios.interceptors.request.use((config) => {
   return config;
 })
 
-axios.interceptors.response.use(
+axiosClient.interceptors.response.use(
   (response) => {
     return response.data;
   },
